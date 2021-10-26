@@ -33,3 +33,18 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 .env.sample
+
+# vercel
+.vercel
+
+# functions
+/functions/lib/**/*.js
+/functions/lib/**/*.js.map
+
+/functions/typings/
+
+/functions/node_modules/
+
+/functions/firebase-debug.log
+
+/functions/serviceAccountKey.json
