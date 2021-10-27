@@ -11,6 +11,7 @@ type Params = {
   photo: ImageType;
   imagesLength: number;
   allImages: Record<string, ImageType[]>;
+  index: number;
 };
 
 const DisplayingPhoto: React.FC<Params> = ({
@@ -76,7 +77,7 @@ const DisplayingPhoto: React.FC<Params> = ({
     tapPositionX = info.point.x;
   }
 
-  const necessaryMoveX = 30;
+  const necessaryMoveX = 100;
   function onTap(event: any, info: any) {
     unTapPositionX = info.point.x;
     const movedPositionX = unTapPositionX - tapPositionX;
@@ -129,7 +130,7 @@ const DisplayingPhoto: React.FC<Params> = ({
           onClick={(e) => clickImage(e)}
         >
           <Image
-            className={`pointer-events-none`}
+            // className={`pointer-events-none`}
             src={photo.url}
             layout="fill"
             objectFit="cover"

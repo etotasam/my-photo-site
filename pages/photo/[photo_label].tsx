@@ -58,10 +58,10 @@ const PhotoLabel: React.FC<ParamsType> = ({ images }) => {
       <Head>
         <title>{locationTitle ? `Location ${locationTitle}` : siteTitle}</title>
       </Head>
-      <div className={`flex t-main-height justify-center items-center`}>
+      <div className={`t-main-height flex justify-center items-center`}>
         {sortImagesByIdInDesc.map(
           (imageRef, index) =>
-            index === viewImageIndex && (
+            viewImageIndex === index && (
               <ViewPhotoElment
                 key={imageRef.id}
                 imageRef={imageRef}

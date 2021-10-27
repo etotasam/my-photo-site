@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Head from "next/head";
 import TopPhotoViewer from "@/components/top-photo-viewer/TopPhotoViewer";
@@ -13,6 +13,7 @@ import * as fs from "fs";
 import * as path from "path";
 import matter from "gray-matter";
 import moment from "moment";
+import Loading from "@/components/Loading";
 
 type Params = {
   allImages: Record<string, ImageType[]>;
@@ -34,11 +35,25 @@ const Home = ({
 }: Params) => {
   const isModalActive = useSelector((state: StoreState) => state.isModalActive);
   const siteTitle = useSelector((state: StoreState) => state.siteTitle);
+  const [isImgLoaded, setIsImgLoaded] = useState(false);
 
   // imageのpre-loading
+  let imagesState = {};
   useEffect(() => {
     topImagesByRandom.forEach((el) => {
+      const label = el.id.split(`_`)[0];
+      imagesState[label] = false;
       const img = new Image();
+      img.onload = () => {
+        imagesState[label] = true;
+        const state = Object.keys(imagesState).reduce(
+          (acc: boolean, next: string) => {
+            return true === imagesState[next];
+          },
+          true
+        );
+        setIsImgLoaded(state);
+      };
       img.src = el.url;
     });
   }, []);
@@ -64,6 +79,11 @@ const Home = ({
       <div>
         <Location locations={locations} />
       </div>
+      {!isImgLoaded && (
+        <div>
+          <Loading />
+        </div>
+      )}
     </>
   );
 };

@@ -2,11 +2,7 @@ import React, { useEffect } from "react";
 import { GetStaticProps } from "next";
 import fs from "fs";
 import path from "path";
-import axios from "axios";
-// const matter = require("gray-matter");
 import matter from "gray-matter";
-import Photo from "./photo";
-import { json } from "stream/consumers";
 
 interface Props {
   posts: {
@@ -41,12 +37,12 @@ const Test = ({ posts }: Props) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const postDirectoy = path.join(process.cwd(), "posts");
-  const filenames = fs.readdirSync(postDirectoy);
+  const postDir = path.join(process.cwd(), "posts");
+  const filenames = fs.readdirSync(postDir);
 
   const posts = filenames
     .map((filename) => {
-      const filepath = path.join(postDirectoy, filename);
+      const filepath = path.join(postDir, filename);
       const file = fs.statSync(filepath);
       if (file.isDirectory()) return;
       const fileContents = fs.readFileSync(filepath, `utf-8`);

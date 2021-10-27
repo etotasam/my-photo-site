@@ -42,6 +42,7 @@ const TopPhotoViewer = ({ topImagesByRandom, allImages }: Params) => {
               (photo, index) =>
                 currentPhotoIndex === index && (
                   <PhotoDisplay
+                    index={index}
                     key={photo.id}
                     photo={photo}
                     imagesLength={topImagesLength}

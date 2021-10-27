@@ -47,7 +47,7 @@ const ViewPhotoElment: React.FC<Params> = ({ imageRef, length }) => {
     tapPositionX = info.point.x;
   }
 
-  const necessaryMoveX = 30;
+  const necessaryMoveX = 100;
   function onTap(event: any, info: any) {
     unTapPositionX = info.point.x;
     const movedPositionX = unTapPositionX - tapPositionX;
@@ -60,7 +60,7 @@ const ViewPhotoElment: React.FC<Params> = ({ imageRef, length }) => {
       return;
     }
   }
-
+  // ${isVerticalPhoto ? `w-3/4 max-w-[450px]` : `max-w-[800px]`}
   return (
     <>
       <motion.div
@@ -70,7 +70,7 @@ const ViewPhotoElment: React.FC<Params> = ({ imageRef, length }) => {
         onTap={onTap}
         transition={{ duration: 0.5 }}
         className={`relative leading-3 ${
-          isVerticalPhoto ? `w-3/4 max-w-[500px]` : `max-w-[800px]`
+          isVerticalPhoto ? `w-3/4 t-img-vertical` : `t-img-horizon`
         }`}
         style={{ touchAction: "none" }}
       >
@@ -86,8 +86,10 @@ const ViewPhotoElment: React.FC<Params> = ({ imageRef, length }) => {
           src={imageRef.url}
           alt={``}
           priority={true}
-          width={imageRef.width}
-          height={imageRef.height}
+          // width={imageRef.width}
+          // height={imageRef.height}
+          layout={`fill`}
+          objectFit={`contain`}
           onLoad={photoLoaded}
         />
       </motion.div>

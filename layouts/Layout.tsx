@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { StoreState } from "@/store/index"; //useSelectorのstateの型
 import Header from "@/components/header/Header";
@@ -11,14 +11,27 @@ type ChildElement = {
 const Layout: React.FC<ChildElement> = ({ children }) => {
   const siteTitle = useSelector((state: StoreState) => state.siteTitle);
 
+  // globals.cssの var(--vh を取得する為の関数
+  function setHeight() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
+  useEffect(() => {
+    setHeight();
+    window.addEventListener(`resize`, setHeight);
+    return () => {
+      window.removeEventListener(`resize`, setHeight);
+    };
+  }, []);
+
   return (
     <>
       <HeadersContextProvider>
         <Header />
       </HeadersContextProvider>
-      <main className={`t-def-main`}>{children}</main>
-      <footer className={`t-def-footer flex justify-center items-center`}>
-        <div className={`test`}>{`©${siteTitle}`}</div>
+      <main className={`t-main-height`}>{children}</main>
+      <footer className={`t-footer-height flex justify-center items-center`}>
+        <div>{`©${siteTitle}`}</div>
       </footer>
     </>
   );
