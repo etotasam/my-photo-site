@@ -19,22 +19,26 @@
   :root {
     --header-height: 45px;
     --footer-height: 50px;
+    --vh: 1vh;
+    --img-ver-width: 500px;
+    --img-ver-height: 750px;
+    --img-hor-width: 750px;
+    --img-hor-height: 500px;
   }
 
-  .t-def-header {
+  .t-header-height {
     @apply h-[var(--header-height)];
   }
 
-  .t-def-footer {
+  .t-footer-height {
     @apply h-[var(--footer-height)];
   }
 
-  .t-def-main {
-    @apply min-h-[calc(100vh-var(--footer-height))] w-[90%] max-w-[1024px] mx-auto pt-[var(--header-height)];
-  }
-
   .t-main-height {
-    @apply min-h-[calc(100vh-(var(--header-height)+var(--footer-height)))];
+    @apply min-h-[calc(100vh-(var(--header-height)+var(--footer-height)))] w-[90%] max-w-[1024px] mx-auto mt-[var(--header-height)];
+    min-height: calc(
+      (var(--vh, 1vh) * 100) - (var(--header-height)) - (var(--footer-height))
+    );
   }
 
   .t-loading-text {
@@ -48,6 +52,28 @@
   .t-vertical {
     writing-mode: vertical-rl;
     text-orientation: upright;
+  }
+
+  .t-img-vertical {
+    width: var(--img-ver-width);
+    min-height: calc(var(--img-ver-height) * 0.6);
+    height: var(--img-ver-height);
+    max-height: calc(
+      (var(--vh, 1vh) * 100) - (var(--header-height)) - (var(--footer-height))
+    );
+  }
+
+  .t-img-horizon {
+    width: var(--img-hor-width);
+    min-height: calc(var(--img-hor-height) * 0.6);
+    height: var(--img-hor-height);
+    max-height: calc(
+      (var(--vh, 1vh) * 100) - (var(--header-height)) - (var(--footer-height))
+    );
+  }
+
+  .link {
+    @apply text-green-600;
   }
 }
 

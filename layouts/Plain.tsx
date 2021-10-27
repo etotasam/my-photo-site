@@ -13,7 +13,7 @@ const Plain: React.FC<ChildElement> = ({ children }) => {
   return (
     <>
       <header
-        className={`t-def-header bg-white fixed flex justify-center top-0 left-0 w-full z-50 duration-300`}
+        className={`t-header-height bg-white fixed flex justify-center top-0 left-0 w-full z-50 duration-300`}
       >
         <div className={``}>
           <Link href={`/`}>
@@ -25,7 +25,7 @@ const Plain: React.FC<ChildElement> = ({ children }) => {
           </Link>
         </div>
       </header>
-      <main className={`t-def-main`}>{children}</main>
+      <main className={`t-main-height`}>{children}</main>
     </>
   );
 };
