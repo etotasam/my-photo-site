@@ -18,8 +18,12 @@ interface DataType {
 const Title = ({ data, content }: Props) => {
   return (
     <div className={`font-serif`}>
-      {data.date && <p>{moment(data.date).format(`YYYY年M月D日`)}</p>}
-      <div dangerouslySetInnerHTML={{ __html: marked(content) }} />
+      {/* {data.date && <p>{moment(data.date).format(`YYYY年M月D日`)}</p>} */}
+      <p>{data.date}</p>
+      <div
+        className={`mt-5`}
+        dangerouslySetInnerHTML={{ __html: marked(content) }}
+      />
     </div>
   );
 };
@@ -37,7 +41,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params: { title } }) => {
   const { content, data } = getPostsAll().find((p) => p.data.title === title);
-  console.log(data);
   return {
     props: {
       data,
@@ -55,8 +58,8 @@ const getPostsAll = () => {
       const filePath = path.join(postsDirPath, dirEnt.name);
       return fs.readFileSync(filePath);
     })
-    .map((f) => {
-      const { orig, ...post } = matter(f);
+    .map((file) => {
+      const { orig, ...post } = matter(file);
       return post;
     });
 };

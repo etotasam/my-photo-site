@@ -51,7 +51,7 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className={`t-def-header bg-white fixed flex justify-center top-0 left-0 w-full z-50 duration-300 ${
+      className={`t-header-height bg-white fixed flex justify-center top-0 left-0 w-full z-50 duration-300 ${
         state.isModalActive ? `bg-opacity-100` : `bg-opacity-90`
       }`}
     >
