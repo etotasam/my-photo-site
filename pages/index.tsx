@@ -9,11 +9,11 @@ import { StoreState } from "@/store/index";
 import { GetStaticProps } from "next";
 import { getFirestore } from "firebase/firestore";
 import axios from "axios";
+import matter from "gray-matter";
+// import moment from "moment";
+import Loading from "@/components/Loading";
 import * as fs from "fs";
 import * as path from "path";
-import matter from "gray-matter";
-import moment from "moment";
-import Loading from "@/components/Loading";
 
 type Params = {
   allImages: Record<string, ImageType[]>;
@@ -146,28 +146,37 @@ export const getStaticProps: GetStaticProps = async () => {
 //posts/内の.mdファイルを取得してdateでsortしてorigのデータは弾くrestructureして
 const getPostsTitles = () => {
   const dirPath = path.join(process.cwd(), `posts`);
-  return fs
-    .readdirSync(dirPath, { withFileTypes: true })
-    .filter((dirEnt) => !dirEnt.isDirectory())
-    .map((dirEnt) => {
-      const filePath = path.join(dirPath, dirEnt.name);
-      return fs.readFileSync(filePath);
-    })
-    .map((f) => {
-      const { orig, ...post } = matter(f);
-      return post;
-    })
-    .sort((a, b) => {
-      const NumA = Number(moment(a.data.date).format(`YYYYMMDD`));
-      const NumB = Number(moment(b.data.date).format(`YYYYMMDD`));
-      if (NumA > NumB) return -1;
-      if (NumA < NumB) return 1;
-      return 0;
-    })
-    .map((f) => {
-      return { title: f.data.title, date: f.data.date };
-    })
-    .slice(0, 5);
+  return (
+    fs
+      .readdirSync(dirPath, { withFileTypes: true })
+      .filter(
+        (dirEnt) =>
+          !dirEnt.isDirectory() &&
+          dirEnt.name.slice(dirEnt.name.lastIndexOf(`.`)).match(/\.mdx?/)
+      )
+      .map((dirEnt) => {
+        const filePath = path.join(dirPath, dirEnt.name);
+        return fs.readFileSync(filePath);
+      })
+      .map((f) => {
+        const { orig, ...post } = matter(f);
+        if (post.data.title === undefined || post.data.date === undefined)
+          return;
+        return post;
+      })
+      .filter((el) => el !== undefined)
+      // .sort((a, b) => {
+      //   const NumA = Number(moment(a.data.date).format(`YYYYMMDD`));
+      //   const NumB = Number(moment(b.data.date).format(`YYYYMMDD`));
+      //   if (NumA > NumB) return -1;
+      //   if (NumA < NumB) return 1;
+      //   return 0;
+      // })
+      .map((f) => {
+        return { title: f.data.title, date: f.data.date };
+      })
+      .slice(0, 5)
+  );
 };
 
 export default Home;
