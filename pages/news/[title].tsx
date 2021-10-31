@@ -18,10 +18,9 @@ interface DataType {
 const Title = ({ data, content }: Props) => {
   return (
     <div className={`font-serif`}>
-      {/* {data.date && <p>{moment(data.date).format(`YYYY年M月D日`)}</p>} */}
-      <p>{data.date}</p>
+      <p className={`text-gray-400 pt-5`}>{data.date}</p>
       <div
-        className={`mt-5`}
+        className={`py-5`}
         dangerouslySetInnerHTML={{ __html: marked(content) }}
       />
     </div>
@@ -53,15 +52,21 @@ const getPostsAll = () => {
   const postsDirPath = path.join(process.cwd(), `posts`);
   return fs
     .readdirSync(postsDirPath, { withFileTypes: true })
-    .filter((dirEnt) => !dirEnt.isDirectory())
+    .filter(
+      (dirEnt) =>
+        !dirEnt.isDirectory() &&
+        dirEnt.name.slice(dirEnt.name.lastIndexOf(`.`)).match(/\.mdx?/)
+    )
     .map((dirEnt) => {
       const filePath = path.join(postsDirPath, dirEnt.name);
       return fs.readFileSync(filePath);
     })
     .map((file) => {
       const { orig, ...post } = matter(file);
+      if (post.data.title === undefined || post.data.date === undefined) return;
       return post;
-    });
+    })
+    .filter((el) => el !== undefined);
 };
 
 export default Title;
