@@ -44,7 +44,7 @@ const ImagePhoto = ({ location, index, hasBreak }: Props) => {
             transition={{ duration: 0.5, delay: index / 2 }}
             className={`font-extralight`}
           >
-            {label}
+            {`${label.charAt(0).toUpperCase()}${label.slice(1)}`}
           </motion.h2>
         </li>
       ) : (

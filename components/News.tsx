@@ -19,12 +19,14 @@ const News = ({ news }: Props) => {
           news.map((f, index) => (
             <li
               key={index}
-              className={`font-thin text-sm mb-2 last-of-type:mb-0`}
+              className={`flex flex-col font-thin text-sm mb-2 last-of-type:mb-0`}
             >
-              <Link href={`/news/${f.title}`}>
-                <a>{f.title}</a>
-              </Link>
-              <time>{f.date}</time>
+              <time className={`text-xs`}>{f.date}</time>
+              <div>
+                <Link href={`/news/${f.title}`}>
+                  <a>{f.title}</a>
+                </Link>
+              </div>
             </li>
           ))}
       </ul>

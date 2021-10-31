@@ -37,7 +37,7 @@ const Home = ({
   const siteTitle = useSelector((state: StoreState) => state.siteTitle);
   const [isImgLoaded, setIsImgLoaded] = useState(false);
 
-  // imageのpre-loading
+  // imageのpre loading;
   let imagesState = {};
   useEffect(() => {
     topImagesByRandom.forEach((el) => {

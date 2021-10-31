@@ -18,10 +18,9 @@ interface DataType {
 const Title = ({ data, content }: Props) => {
   return (
     <div className={`font-serif`}>
-      {/* {data.date && <p>{moment(data.date).format(`YYYY年M月D日`)}</p>} */}
-      <p>{data.date}</p>
+      <p className={`text-gray-400 pt-5`}>{data.date}</p>
       <div
-        className={`mt-5`}
+        className={`py-5`}
         dangerouslySetInnerHTML={{ __html: marked(content) }}
       />
     </div>
