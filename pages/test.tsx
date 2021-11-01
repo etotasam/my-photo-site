@@ -13,7 +13,6 @@ interface Props {
 }
 
 const Test = ({ posts }: Props) => {
-  console.log(posts);
   return (
     <div className={`bg-red-200 p-5`}>
       <pre>{JSON.stringify(posts[0], null, 2)}</pre>
@@ -34,15 +33,15 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const postDirPath = path.join(process.cwd(), "posts");
   const filenames = fs
     .readdirSync(postDirPath, { withFileTypes: true })
-    .filter((file) =>
-      file.name.slice(file.name.lastIndexOf(`.`)).match(/\.mdx?/)
+    .filter(
+      (file) =>
+        file.name.slice(file.name.lastIndexOf(`.`)).match(/\.mdx?/) &&
+        !file.isDirectory()
     );
 
   const posts = filenames
     .map((filename) => {
       const filepath = path.join(postDirPath, filename.name);
-      const file = fs.statSync(filepath);
-      if (file.isDirectory()) return;
       const fileContents = fs.readFileSync(filepath, `utf-8`);
       const { orig, ...prop } = matter(fileContents);
       return {
