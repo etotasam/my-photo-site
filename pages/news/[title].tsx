@@ -18,7 +18,9 @@ interface DataType {
 const Title = ({ data, content }: Props) => {
   return (
     <div className={`font-serif`}>
-      <p className={`text-gray-400 pt-5`}>{data.date}</p>
+      <p className={`text-gray-400 pt-5`}>
+        {moment(data.date).format(`YYYY年M月D日`)}
+      </p>
       <div
         className={`py-5`}
         dangerouslySetInnerHTML={{ __html: marked(content) }}
@@ -64,6 +66,7 @@ const getPostsAll = () => {
     .map((file) => {
       const { orig, ...post } = matter(file);
       if (post.data.title === undefined || post.data.date === undefined) return;
+      // post.data.date = moment(post.data.date).format(`YYYY年M月D日`);
       return post;
     })
     .filter((el) => el !== undefined);
