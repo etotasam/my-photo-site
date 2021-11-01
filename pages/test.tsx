@@ -3,32 +3,25 @@ import { GetStaticProps } from "next";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import moment from "moment";
 
 interface Props {
   posts: {
-    content: string;
-    data: {
-      title: string;
-    };
-    isEnpty: boolean;
+    date: string;
+    title: string;
   }[];
 }
 
 const Test = ({ posts }: Props) => {
-  console.log(posts);
   return (
     <div className={`bg-red-200 p-5`}>
       <pre>{JSON.stringify(posts[0], null, 2)}</pre>
       <h1>Test page</h1>
       <ul>
         {posts.map((post, index) => (
-          <li key={index} className={`rounded bg-blue-400 p-3 mt-5`}>
-            {Object.keys(post.data).length ? (
-              <h3>ファイル名:{post.data.title}</h3>
-            ) : (
-              <h3>タイトルあり</h3>
-            )}
-            <p>コンテンツ:{post.content}</p>
+          <li key={index} className={`bg-green-400 my-5 p-3 rounded`}>
+            <p>投稿日時:{moment(post.date).format(`YYYY年M月D日`)}</p>
+            <p>記事タイトル:{post.title}</p>
           </li>
         ))}
       </ul>
@@ -37,18 +30,24 @@ const Test = ({ posts }: Props) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const postDir = path.join(process.cwd(), "posts");
-  const filenames = fs.readdirSync(postDir);
+  const postDirPath = path.join(process.cwd(), "posts");
+  const filenames = fs
+    .readdirSync(postDirPath, { withFileTypes: true })
+    .filter(
+      (file) =>
+        file.name.slice(file.name.lastIndexOf(`.`)).match(/\.mdx?/) &&
+        !file.isDirectory()
+    );
 
   const posts = filenames
     .map((filename) => {
-      const filepath = path.join(postDir, filename);
-      const file = fs.statSync(filepath);
-      if (file.isDirectory()) return;
+      const filepath = path.join(postDirPath, filename.name);
       const fileContents = fs.readFileSync(filepath, `utf-8`);
       const { orig, ...prop } = matter(fileContents);
-      console.log(prop);
-      return prop;
+      return {
+        title: prop.data.title,
+        date: moment(prop.data.date).toJSON(),
+      };
     })
     .filter((el) => el !== undefined);
 

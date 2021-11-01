@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import moment from "moment";
 
 type Props = {
   news: {
@@ -19,12 +20,16 @@ const News = ({ news }: Props) => {
           news.map((f, index) => (
             <li
               key={index}
-              className={`font-thin text-sm mb-2 last-of-type:mb-0`}
+              className={`flex flex-col font-thin text-sm mb-2 last-of-type:mb-0`}
             >
-              <Link href={`/news/${f.title}`}>
-                <a>{f.title}</a>
-              </Link>
-              <time>{f.date}</time>
+              <time className={`text-xs`}>
+                {moment(f.date).format(`YYYY/M/D`)}
+              </time>
+              <div>
+                <Link href={`/news/${f.title}`}>
+                  <a>{f.title}</a>
+                </Link>
+              </div>
             </li>
           ))}
       </ul>

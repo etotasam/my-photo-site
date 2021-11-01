@@ -9,11 +9,11 @@ import { StoreState } from "@/store/index";
 import { GetStaticProps } from "next";
 import { getFirestore } from "firebase/firestore";
 import axios from "axios";
-import * as fs from "fs";
-import * as path from "path";
 import matter from "gray-matter";
 import moment from "moment";
 import Loading from "@/components/Loading";
+import * as fs from "fs";
+import * as path from "path";
 
 type Params = {
   allImages: Record<string, ImageType[]>;
@@ -37,7 +37,7 @@ const Home = ({
   const siteTitle = useSelector((state: StoreState) => state.siteTitle);
   const [isImgLoaded, setIsImgLoaded] = useState(false);
 
-  // imageのpre-loading
+  // imageのpre loading;
   let imagesState = {};
   useEffect(() => {
     topImagesByRandom.forEach((el) => {
@@ -148,24 +148,33 @@ const getPostsTitles = () => {
   const dirPath = path.join(process.cwd(), `posts`);
   return fs
     .readdirSync(dirPath, { withFileTypes: true })
-    .filter((dirEnt) => !dirEnt.isDirectory())
+    .filter(
+      (dirEnt) =>
+        !dirEnt.isDirectory() &&
+        dirEnt.name.slice(dirEnt.name.lastIndexOf(`.`)).match(/\.mdx?/)
+    )
     .map((dirEnt) => {
       const filePath = path.join(dirPath, dirEnt.name);
-      return fs.readFileSync(filePath);
+      return fs.readFileSync(filePath, `utf-8`);
     })
     .map((f) => {
       const { orig, ...post } = matter(f);
+      if (post.data.title === undefined || post.data.date === undefined) return;
       return post;
     })
+    .filter((el) => el !== undefined)
     .sort((a, b) => {
-      const NumA = Number(moment(a.data.date).format(`YYYYMMDD`));
-      const NumB = Number(moment(b.data.date).format(`YYYYMMDD`));
+      const NumA = moment(a.data.date);
+      const NumB = moment(b.data.date);
       if (NumA > NumB) return -1;
       if (NumA < NumB) return 1;
       return 0;
     })
     .map((f) => {
-      return { title: f.data.title, date: f.data.date };
+      return {
+        title: f.data.title,
+        date: moment(f.data.date).toJSON(),
+      };
     })
     .slice(0, 5);
 };
