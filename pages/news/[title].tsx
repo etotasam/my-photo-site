@@ -6,19 +6,17 @@ import marked from "marked";
 import moment from "moment";
 
 interface Props {
-  content: string;
-  data: DataType;
-}
-
-interface DataType {
-  title: string;
   date: string;
+  content: string;
 }
 
-const Title = ({ data, content }: Props) => {
+const Title = ({ date, content }: Props) => {
+  console.log(content);
   return (
     <div className={`font-serif`}>
-      <p className={`text-gray-400 pt-5`}>{data.date}</p>
+      <p className={`text-gray-400 pt-5`}>
+        {moment(date).format(`YYYY年M月D日`)}
+      </p>
       <div
         className={`py-5`}
         dangerouslySetInnerHTML={{ __html: marked(content) }}
@@ -29,7 +27,7 @@ const Title = ({ data, content }: Props) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = getPostsAll().map((post) => {
-    return { params: { title: post.data.title } };
+    return { params: { title: post.title } };
   });
 
   return {
@@ -39,11 +37,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params: { title } }) => {
-  const { content, data } = getPostsAll().find((p) => p.data.title === title);
+  const posts = getPostsAll().find((p) => p.title === title);
   return {
     props: {
-      data,
-      content,
+      date: posts.date,
+      content: posts.content,
     },
   };
 };
@@ -64,7 +62,11 @@ const getPostsAll = () => {
     .map((file) => {
       const { orig, ...post } = matter(file);
       if (post.data.title === undefined || post.data.date === undefined) return;
-      return post;
+      return {
+        content: post.content,
+        title: post.data.title,
+        date: moment(post.data.date).toJSON(),
+      };
     })
     .filter((el) => el !== undefined);
 };
