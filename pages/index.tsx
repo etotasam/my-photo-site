@@ -34,7 +34,7 @@ const Home = ({
   newsTitles,
 }: Params) => {
   const isModalActive = useSelector((state: StoreState) => state.isModalActive);
-  const siteTitle = useSelector((state: StoreState) => state.siteTitle);
+  // const siteTitle = useSelector((state: StoreState) => state.siteTitle);
   const [isImgLoaded, setIsImgLoaded] = useState(false);
 
   // imageのpre loading;
@@ -61,29 +61,25 @@ const Home = ({
   return (
     <>
       <Head>
-        <title>{siteTitle}</title>
+        <title>{process.env.NEXT_PUBLIC_SITE_TITLE}</title>
         {isModalActive && <style>{`body {overflow-y: hidden}`}</style>}
       </Head>
-      <div className={`md:flex md:justify-between`}>
+      <div className={`md:flex md:justify-between relative`}>
         <TopPhotoViewer
           topImagesByRandom={topImagesByRandom}
           allImages={allImages}
         />
-        <section className={`md:w-1/3 flex md:justify-end`}>
+        <section className={`flex md:w-1/3 md:justify-end`}>
           <SiteDiscription />
         </section>
+        {!isImgLoaded && <Loading />}
       </div>
-      <div className={`mt-5`}>
+      <section className={`mt-5`}>
         <News news={newsTitles} />
-      </div>
-      <div>
+      </section>
+      <section>
         <Location locations={locations} />
-      </div>
-      {!isImgLoaded && (
-        <div>
-          <Loading />
-        </div>
-      )}
+      </section>
     </>
   );
 };

@@ -9,7 +9,6 @@ import { ImageType } from "@/pages/index";
 
 type ParamsType = {
   images: ImageType[];
-  // photo: ImageType;
 };
 
 const PhotoLabel: React.FC<ParamsType> = ({ images }) => {
