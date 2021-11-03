@@ -9,7 +9,6 @@ import { ImageType } from "@/pages/index";
 
 type ParamsType = {
   images: ImageType[];
-  // photo: ImageType;
 };
 
 const PhotoLabel: React.FC<ParamsType> = ({ images }) => {
@@ -51,12 +50,16 @@ const PhotoLabel: React.FC<ParamsType> = ({ images }) => {
 
   const locationTitle =
     typeof photo_label === "string" && photo_label.toUpperCase();
-  const siteTitle = useSelector((state: StoreState) => state.siteTitle);
+  // const siteTitle = useSelector((state: StoreState) => state.siteTitle);
 
   return (
     <>
       <Head>
-        <title>{locationTitle ? `Location ${locationTitle}` : siteTitle}</title>
+        <title>
+          {locationTitle
+            ? `Location ${locationTitle}`
+            : process.env.NEXT_PUBLIC_SITE_TITLE}
+        </title>
       </Head>
       <div className={`t-main-height flex justify-center items-center`}>
         {sortImagesByIdInDesc.map(

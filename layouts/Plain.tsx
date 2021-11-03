@@ -8,7 +8,7 @@ type ChildElement = {
 };
 
 const Plain: React.FC<ChildElement> = ({ children }) => {
-  const siteTitle = useSelector((state: StoreState) => state.siteTitle);
+  // const siteTitle = useSelector((state: StoreState) => state.siteTitle);
 
   return (
     <>
@@ -20,7 +20,7 @@ const Plain: React.FC<ChildElement> = ({ children }) => {
             <a
               className={`n-title-font text-green-600 text-xl tracking-wider font-extralight`}
             >
-              {siteTitle}
+              {process.env.NEXT_PUBLIC_SITE_TITLE}
             </a>
           </Link>
         </div>
