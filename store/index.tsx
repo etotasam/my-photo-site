@@ -6,7 +6,6 @@ type Action = { type: string };
 const initialSatate = {
   isModalActive: false,
   breakpoint: 768,
-  siteTitle: "Journey's Photo",
 };
 
 const reducer = (state = initialSatate, action: Partial<Action>) => {

@@ -9,7 +9,7 @@ const LoadingModal = (): JSX.Element => {
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.3 } }}
-      className={`fixed top-0 left-0 w-full min-h-screen bg-white flex justify-center items-center z-20`}
+      className={`absolute top-0 left-0 w-full h-full bg-white flex justify-center items-center z-20`}
     >
       <div>
         {loading.map((el, index) => (

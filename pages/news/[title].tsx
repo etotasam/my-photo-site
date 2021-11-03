@@ -11,7 +11,6 @@ interface Props {
 }
 
 const Title = ({ date, content }: Props) => {
-  console.log(content);
   return (
     <div className={`font-serif`}>
       <p className={`text-gray-400 pt-5`}>
