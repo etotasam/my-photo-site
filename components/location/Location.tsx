@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect, useRef } from "react";
-import ImagePhoto from "./ImagePhoto";
+import Photo from "./Photo";
 import { ImageType } from "@/pages/index";
 
 type props = {
@@ -49,7 +49,7 @@ const Location = ({ locations }: props) => {
       <ul ref={el} className={`mt-10 mx-auto`}>
         {locations &&
           locations.map((location, index) => (
-            <ImagePhoto
+            <Photo
               index={index}
               key={location.id}
               location={location}

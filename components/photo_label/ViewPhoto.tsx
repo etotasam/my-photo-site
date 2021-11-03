@@ -10,7 +10,7 @@ type Params = {
   length: number;
 };
 
-const ViewPhotoElment: React.FC<Params> = ({ imageRef, length }) => {
+const ViewPhoto: React.FC<Params> = ({ imageRef, length }) => {
   const router = useRouter();
   const [isVerticalPhoto, setIsPhotoVertical] = useState<boolean>();
   const { photo_label, num } = router.query;
@@ -96,4 +96,4 @@ const ViewPhotoElment: React.FC<Params> = ({ imageRef, length }) => {
   );
 };
 
-export default ViewPhotoElment;
+export default ViewPhoto;
