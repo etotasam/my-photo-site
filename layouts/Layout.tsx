@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { StoreState } from "@/store/index"; //useSelectorのstateの型
 import Header from "@/components/header/Header";
 import Footer from "@/components/Footer";
+import Head from "next/head";
 import { HeadersContextProvider } from "@/components/header/HeadersContext";
 
 type ChildElement = {
@@ -10,6 +11,7 @@ type ChildElement = {
 };
 
 const Layout: React.FC<ChildElement> = ({ children }) => {
+  const isModalActive = useSelector((state: StoreState) => state.isModalActive);
   // globals.cssの var(--vh を取得する為の関数
   function setHeight() {
     const vh = window.innerHeight * 0.01;
@@ -25,6 +27,10 @@ const Layout: React.FC<ChildElement> = ({ children }) => {
 
   return (
     <>
+      <Head>
+        <title>{process.env.NEXT_PUBLIC_SITE_TITLE}</title>
+        {isModalActive && <style>{`body {overflow-y: hidden}`}</style>}
+      </Head>
       <HeadersContextProvider>
         <Header />
       </HeadersContextProvider>

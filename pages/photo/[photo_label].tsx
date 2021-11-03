@@ -1,7 +1,5 @@
 import React, { memo, useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import { StoreState } from "@/store/index";
 import Head from "next/head";
 import ViewPhotoElment from "@/components/photo_label/ViewPhotoElment";
 import axios from "axios";
@@ -50,7 +48,6 @@ const PhotoLabel: React.FC<ParamsType> = ({ images }) => {
 
   const locationTitle =
     typeof photo_label === "string" && photo_label.toUpperCase();
-  // const siteTitle = useSelector((state: StoreState) => state.siteTitle);
 
   return (
     <>
