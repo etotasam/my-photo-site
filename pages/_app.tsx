@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import dynamic from "next/dynamic";
-import Layout from "@/layouts/Layout";
+import Default from "@/layouts/Default";
 import CSRLayout from "../layouts/CSRLayout";
 import Plain from "@/layouts/Plain";
 import { Provider } from "react-redux";
@@ -49,9 +49,9 @@ function MyApp({ Component, pageProps }) {
       return (
         <>
           <Provider store={store}>
-            <Layout>
+            <Default>
               <Component {...pageProps} />
-            </Layout>
+            </Default>
           </Provider>
         </>
       );

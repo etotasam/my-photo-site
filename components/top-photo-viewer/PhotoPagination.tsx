@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { CurrentPhotoIndexContext } from "./TopPhotoViewer";
+import { CurrentPhotoIndexContext } from "./PhotoViewerContainer";
 import { ImageType } from "@/pages/index";
 
 type Params = {

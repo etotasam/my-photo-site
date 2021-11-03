@@ -5,8 +5,8 @@ import { StoreState } from "@/store/index";
 import { AnimatePresence } from "framer-motion";
 import useSWR from "swr";
 import axios from "axios";
-import HeaderNavByMobile from "./HeaderNavByMobile";
-import HeaderNavByPC from "./HeaderNavByPC";
+import HeaderNavOnMobile from "./HeaderNavOnMobile";
+import HeaderNavOnPC from "./HeaderNavOnPC";
 import MainModal from "./MainModal";
 import { useHeadersContext, InitialState } from "./HeadersContext";
 
@@ -59,10 +59,10 @@ const Header: React.FC = () => {
         className={`flex relative items-center w-[90%] max-w-[1024px] mx-auto`}
       >
         {isMobile ? (
-          <HeaderNavByMobile />
+          <HeaderNavOnMobile />
         ) : (
           isMobile !== undefined && (
-            <HeaderNavByPC params={data} error={error} />
+            <HeaderNavOnPC params={data} error={error} />
           )
         )}
         <div className={`absolute right-0`}>

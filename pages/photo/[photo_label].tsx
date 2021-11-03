@@ -1,7 +1,7 @@
 import React, { memo, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import ViewPhotoElment from "@/components/photo_label/ViewPhotoElment";
+import ViewPhoto from "@/components/photo_label/ViewPhoto";
 import axios from "axios";
 import { ImageType } from "@/pages/index";
 
@@ -62,7 +62,7 @@ const PhotoLabel: React.FC<ParamsType> = ({ images }) => {
         {sortImagesByIdInDesc.map(
           (imageRef, index) =>
             viewImageIndex === index && (
-              <ViewPhotoElment
+              <ViewPhoto
                 key={imageRef.id}
                 imageRef={imageRef}
                 length={imagesLength}
