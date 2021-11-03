@@ -86,14 +86,12 @@ const ViewPhotoElment: React.FC<Params> = ({ imageRef, length }) => {
           src={imageRef.url}
           alt={``}
           priority={true}
-          // width={imageRef.width}
-          // height={imageRef.height}
           layout={`fill`}
           objectFit={`contain`}
           onLoad={photoLoaded}
         />
+        <AnimatePresence>{isImageLoading && <Loading />}</AnimatePresence>
       </motion.div>
-      <AnimatePresence>{isImageLoading && <Loading />}</AnimatePresence>
     </>
   );
 };
