@@ -4,23 +4,30 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import matter from "gray-matter";
 import marked from "marked";
 import moment from "moment";
+import Head from "next/head";
 
 interface Props {
   date: string;
   content: string;
+  title: string;
 }
 
-const Title = ({ date, content }: Props) => {
+const Title = ({ date, content, title }: Props) => {
   return (
-    <div className={`font-serif`}>
-      <p className={`text-gray-400 pt-5`}>
-        {moment(date).format(`YYYY年M月D日`)}
-      </p>
-      <div
-        className={`py-5`}
-        dangerouslySetInnerHTML={{ __html: marked(content) }}
-      />
-    </div>
+    <>
+      <Head>
+        <title>{`News ${title}`}</title>
+      </Head>
+      <div className={`font-serif`}>
+        <p className={`text-gray-400 pt-5`}>
+          {moment(date).format(`YYYY年M月D日`)}
+        </p>
+        <div
+          className={`py-5`}
+          dangerouslySetInnerHTML={{ __html: marked(content) }}
+        />
+      </div>
+    </>
   );
 };
 
@@ -41,6 +48,7 @@ export const getStaticProps: GetStaticProps = async ({ params: { title } }) => {
     props: {
       date: posts.date,
       content: posts.content,
+      title,
     },
   };
 };
