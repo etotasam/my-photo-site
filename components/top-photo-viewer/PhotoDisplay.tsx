@@ -5,7 +5,7 @@ import { ImageType } from "@/pages/index";
 import Image from "next/image";
 import { useRouter } from "next/router";
 //context component
-import { CurrentPhotoIndexContext } from "./TopPhotoViewer";
+import { CurrentPhotoIndexContext } from "./PhotoViewerContainer";
 
 type Params = {
   photo: ImageType;

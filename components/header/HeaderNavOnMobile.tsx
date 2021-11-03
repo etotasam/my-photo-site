@@ -66,6 +66,6 @@ const Humburger = () => {
   );
 };
 
-const MenuByMobile = () => <Humburger />;
+const HeaderNavOnMobile = () => <Humburger />;
 
-export default MenuByMobile;
+export default HeaderNavOnMobile;
