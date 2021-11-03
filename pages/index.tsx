@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import Head from "next/head";
 import TopPhotoViewer from "@/components/top-photo-viewer/TopPhotoViewer";
 import SiteDiscription from "@/components/SiteDiscription";
 import Location from "@/components/photo-category/Location";
 import News from "@/components/News";
-import { StoreState } from "@/store/index";
 import { GetStaticProps } from "next";
 import { getFirestore } from "firebase/firestore";
 import axios from "axios";
@@ -33,8 +30,6 @@ const Home = ({
   locations,
   newsTitles,
 }: Params) => {
-  const isModalActive = useSelector((state: StoreState) => state.isModalActive);
-  // const siteTitle = useSelector((state: StoreState) => state.siteTitle);
   const [isImgLoaded, setIsImgLoaded] = useState(false);
 
   // imageのpre loading;
@@ -60,10 +55,6 @@ const Home = ({
 
   return (
     <>
-      <Head>
-        <title>{process.env.NEXT_PUBLIC_SITE_TITLE}</title>
-        {isModalActive && <style>{`body {overflow-y: hidden}`}</style>}
-      </Head>
       <div className={`md:flex md:justify-between relative`}>
         <TopPhotoViewer
           topImagesByRandom={topImagesByRandom}
