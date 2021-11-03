@@ -96,6 +96,7 @@ export const getStaticProps: GetStaticProps = async () => {
     const topImagesByRandom = Object.keys(allImages)
       .map((key) => {
         const length = allImages[key].length;
+        if (!length) return;
         const min = 0;
         const max = length - 1;
         const randam = Math.floor(Math.random() * (max + 1 - min)) + min;
@@ -103,20 +104,22 @@ export const getStaticProps: GetStaticProps = async () => {
       })
       .filter((e) => e !== undefined);
 
-    const locations = Object.keys(allImages).map((key) => {
-      const length = allImages[key].length;
-      const min = 0;
-      const max = length - 1;
-      let isSame: boolean;
-      let randomLocation: ImageType;
-      do {
-        const randamIndexNumber =
-          Math.floor(Math.random() * (max + 1 - min)) + min;
-        randomLocation = allImages[key][randamIndexNumber];
-        isSame = topImagesByRandom.some((e) => e.id === randomLocation.id);
-      } while (isSame);
-      return randomLocation;
-    });
+    const locations = Object.keys(allImages)
+      .map((key) => {
+        const length = allImages[key].length;
+        if (!length) return;
+        const min = 0;
+        const max = length - 1;
+        let isSame: boolean;
+        let randomLocation: ImageType;
+        do {
+          const randam = Math.floor(Math.random() * (max + 1 - min)) + min;
+          randomLocation = allImages[key][randam];
+          isSame = topImagesByRandom.some((e) => e.id === randomLocation.id);
+        } while (isSame);
+        return randomLocation;
+      })
+      .filter((e) => e !== undefined);
 
     return {
       props: {
