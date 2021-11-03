@@ -15,7 +15,7 @@ const Plain: React.FC<ChildElement> = ({ children }) => {
       <header
         className={`t-header-height bg-white fixed flex justify-center top-0 left-0 w-full z-50 duration-300`}
       >
-        <div className={``}>
+        <div>
           <Link href={`/`}>
             <a
               className={`n-title-font text-green-600 text-xl tracking-wider font-extralight`}

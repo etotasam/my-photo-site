@@ -110,8 +110,9 @@ export const getStaticProps: GetStaticProps = async () => {
       let isSame: boolean;
       let randomLocation: ImageType;
       do {
-        const randam = Math.floor(Math.random() * (max + 1 - min)) + min;
-        randomLocation = allImages[key][randam];
+        const randamIndexNumber =
+          Math.floor(Math.random() * (max + 1 - min)) + min;
+        randomLocation = allImages[key][randamIndexNumber];
         isSame = topImagesByRandom.some((e) => e.id === randomLocation.id);
       } while (isSame);
       return randomLocation;
