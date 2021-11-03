@@ -19,7 +19,7 @@ const Header: React.FC = () => {
   const router = useRouter();
   const { state, dispatch }: State = useHeadersContext();
   const [isMobile, setIsMobile] = useState<boolean>();
-  const siteTitle = useSelector((state: StoreState) => state.siteTitle);
+  // const siteTitle = useSelector((state: StoreState) => state.siteTitle);
   const breakpoint = useSelector((state: StoreState) => state.breakpoint);
 
   const apiUrl = process.env.API_URL;
@@ -71,7 +71,7 @@ const Header: React.FC = () => {
             className={`n-title-font text-green-600 text-xl tracking-wider font-extralight`}
             onClick={(e) => handleClick(e)}
           >
-            {siteTitle}
+            {process.env.NEXT_PUBLIC_SITE_TITLE}
           </a>
         </div>
       </div>
