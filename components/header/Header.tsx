@@ -19,13 +19,12 @@ const Header: React.FC = () => {
   const router = useRouter();
   const { state, dispatch }: State = useHeadersContext();
   const [isMobile, setIsMobile] = useState<boolean>();
-  // const siteTitle = useSelector((state: StoreState) => state.siteTitle);
   const breakpoint = useSelector((state: StoreState) => state.breakpoint);
 
   const apiUrl = process.env.API_URL;
   const fetcher = async (url: string) =>
     await axios.get(url).then((res) => res.data);
-  const { data, error } = useSWR(`${apiUrl}/locations`, fetcher);
+  const { data: locations, error } = useSWR(`${apiUrl}/locations`, fetcher);
 
   let viewPortwWidth: number;
   useEffect(() => {
@@ -62,7 +61,7 @@ const Header: React.FC = () => {
           <HeaderNavOnMobile />
         ) : (
           isMobile !== undefined && (
-            <HeaderNavOnPC params={data} error={error} />
+            <HeaderNavOnPC locations={locations} error={error} />
           )
         )}
         <div className={`absolute right-0`}>
@@ -76,7 +75,9 @@ const Header: React.FC = () => {
         </div>
       </div>
       <AnimatePresence>
-        {state.isModalActive && <MainModal params={data} error={error} />}
+        {state.isModalActive && (
+          <MainModal locations={locations} error={error} />
+        )}
       </AnimatePresence>
     </header>
   );

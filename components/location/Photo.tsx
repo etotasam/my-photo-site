@@ -2,10 +2,10 @@ import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import NextImage from "next/image";
-import { ImageType } from "@/pages/index";
+import { ImagesType } from "@/assets/type/types";
 
 type Props = {
-  location: ImageType;
+  location: ImagesType;
   index: number;
   hasBreak: boolean;
 };

@@ -3,15 +3,15 @@ import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import PhotoDisplay from "@/components/top-photo-viewer/PhotoDisplay";
 import PhotoPagination from "./PhotoPagination";
-import { ImageType } from "@/pages/index";
+import { ImagesType } from "@/assets/type/types";
 
 // const PhotoImages = Photos.top_view_photos;
 // const photosLength = PhotoImages.length;
 export const CurrentPhotoIndexContext = createContext(null);
 
 type Params = {
-  topImagesByRandom: ImageType[];
-  allImages: Record<string, ImageType[]>;
+  topImagesByRandom: ImagesType[];
+  allImages: Record<string, ImagesType[]>;
 };
 
 const TopPhotoViewer = ({ topImagesByRandom, allImages }: Params) => {
