@@ -3,23 +3,16 @@ import NextImage from "next/image";
 import { useRouter } from "next/router";
 import { AnimatePresence, motion } from "framer-motion";
 import Loading from "../Loading";
-import { ImageType } from "@/pages/index";
+import { ImagesType } from "@/assets/type/types";
 
 type Params = {
-  imageRef: ImageType;
+  imageRef: ImagesType;
   length: number;
 };
 
-const ViewPhoto: React.FC<Params> = ({ imageRef, length }) => {
+const ViewPhoto = ({ imageRef, length }: Params) => {
   const router = useRouter();
-  const [isVerticalPhoto, setIsPhotoVertical] = useState<boolean>();
   const { photo_label, num } = router.query;
-  const [isImageLoading, setImageLoad] = useState(true);
-
-  function photoLoaded() {
-    setImageLoad(false);
-  }
-
   function prevPhoto() {
     let prev: number;
     if (num) prev = Number(num) - 1;
@@ -36,6 +29,7 @@ const ViewPhoto: React.FC<Params> = ({ imageRef, length }) => {
     router.push(`/photo/${photo_label}?num=${next}`);
   }
 
+  const [isVerticalPhoto, setIsPhotoVertical] = useState<boolean>();
   useEffect(() => {
     if (!imageRef) return;
     setIsPhotoVertical(imageRef.width < imageRef.height);
@@ -60,7 +54,12 @@ const ViewPhoto: React.FC<Params> = ({ imageRef, length }) => {
       return;
     }
   }
-  // ${isVerticalPhoto ? `w-3/4 max-w-[450px]` : `max-w-[800px]`}
+
+  const [isImageLoading, setImageLoad] = useState(true);
+  function photoLoaded() {
+    setImageLoad(false);
+  }
+
   return (
     <>
       <motion.div

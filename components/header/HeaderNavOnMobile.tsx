@@ -8,7 +8,6 @@ type State = {
 };
 
 const Humburger = () => {
-  const controls = useAnimation();
   const { state, dispatch }: State = useHeadersContext();
 
   function toggleModal() {
@@ -23,6 +22,7 @@ const Humburger = () => {
     return () => {};
   });
 
+  const controls = useAnimation();
   function startAnimate() {
     if (state.isModalActive) {
       controls.start(

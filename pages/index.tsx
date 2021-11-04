@@ -11,11 +11,12 @@ import moment from "moment";
 import Loading from "@/components/Loading";
 import * as fs from "fs";
 import * as path from "path";
+import { ImagesType } from "@/assets/type/types";
 
 type Params = {
-  allImages: Record<string, ImageType[]>;
-  topImagesByRandom: ImageType[];
-  locations: ImageType[];
+  allImages: Record<string, ImagesType[]>;
+  topImagesByRandom: ImagesType[];
+  locations: ImagesType[];
   newsTitles: NewsTitles[];
 };
 
@@ -78,21 +79,11 @@ const Home = ({
 // firestore
 const db = getFirestore();
 
-export type ImageType = {
-  documentId: string;
-  id: string;
-  url: string;
-  filename: string;
-  width: number;
-  height: number;
-};
-
 export const getStaticProps: GetStaticProps = async () => {
   const apiUrl = process.env.API_URL;
   try {
-    const allImagesData = await axios.get(`${apiUrl}/all_images`);
-    const allImages: Record<string, ImageType[]> = allImagesData.data;
-
+    const { data: allImages }: { data: Record<string, ImagesType[]> } =
+      await axios.get(`${apiUrl}/all_images`);
     const topImagesByRandom = Object.keys(allImages)
       .map((key) => {
         const length = allImages[key].length;
@@ -111,7 +102,7 @@ export const getStaticProps: GetStaticProps = async () => {
         const min = 0;
         const max = length - 1;
         let isSame: boolean;
-        let randomLocation: ImageType;
+        let randomLocation: ImagesType;
         do {
           const randam = Math.floor(Math.random() * (max + 1 - min)) + min;
           randomLocation = allImages[key][randam];
