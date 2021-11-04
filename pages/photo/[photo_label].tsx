@@ -3,17 +3,29 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import ViewPhoto from "@/components/photo_label/ViewPhoto";
 import axios from "axios";
-import { ImageType } from "@/pages/index";
+import { GetStaticProps, GetStaticPaths } from "next";
+import { ImagesType } from "@/assets/type/types";
 
-type ParamsType = {
-  images: ImageType[];
-};
-
-const PhotoLabel: React.FC<ParamsType> = ({ images }) => {
-  const [viewImageIndex, setViewImageIndex] = useState<number>();
+const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   const route = useRouter();
-  const { photo_label, num } = route.query;
+  const [viewImageIndex, setViewImageIndex] = useState<number>();
   const imagesLength = images.length;
+  const { photo_label, num } = route.query;
+
+  useEffect(() => {
+    if (!num) return;
+    if (Number(num) > imagesLength || Number(num) < 1 || isNaN(Number(num))) {
+      route.push(`/photo/${photo_label}?num=1`);
+      return;
+    }
+    const index = Number(num) - 1;
+    setViewImageIndex(index);
+  }, [num]);
+
+  useEffect(() => {
+    if (num) return;
+    setViewImageIndex(0);
+  }, [photo_label]);
 
   const sortImagesByIdInDesc = images.sort((a, b) => {
     const idA = a.id.split(`_`)[1];
@@ -31,21 +43,6 @@ const PhotoLabel: React.FC<ParamsType> = ({ images }) => {
     });
   }, []);
 
-  useEffect(() => {
-    if (!num) return;
-    if (Number(num) > imagesLength || Number(num) < 1 || isNaN(Number(num))) {
-      route.push(`/photo/${photo_label}?num=1`);
-      return;
-    }
-    const index = Number(num) - 1;
-    setViewImageIndex(index);
-  }, [num]);
-
-  useEffect(() => {
-    if (num) return;
-    setViewImageIndex(0);
-  }, [photo_label]);
-
   const locationTitle =
     typeof photo_label === "string" && photo_label.toUpperCase();
 
@@ -54,7 +51,7 @@ const PhotoLabel: React.FC<ParamsType> = ({ images }) => {
       <Head>
         <title>
           {locationTitle
-            ? `Location ${locationTitle}`
+            ? `${process.env.NEXT_PUBLIC_SITE_TITLE} ${locationTitle}`
             : process.env.NEXT_PUBLIC_SITE_TITLE}
         </title>
       </Head>
@@ -76,9 +73,10 @@ const PhotoLabel: React.FC<ParamsType> = ({ images }) => {
 
 const apiUrl = process.env.API_URL;
 
-export const getStaticPaths = async () => {
-  const { data } = await axios.get(`${apiUrl}/locations`);
-  const locations = data.locations;
+export const getStaticPaths: GetStaticPaths = async () => {
+  const { data: locations }: { data: string[] } = await axios.get(
+    `${apiUrl}/locations`
+  );
 
   const params = locations.map((doc) => {
     return { params: { photo_label: doc } };
@@ -89,12 +87,16 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params: { photo_label } }) => {
-  const { data } = await axios.get(`${apiUrl}/images/${photo_label}`);
+export const getStaticProps: GetStaticProps = async ({
+  params: { photo_label },
+}) => {
+  const { data: images }: { data: ImagesType[] } = await axios.get(
+    `${apiUrl}/images/${photo_label}`
+  );
 
   return {
     props: {
-      images: data.images,
+      images,
     },
   };
 };

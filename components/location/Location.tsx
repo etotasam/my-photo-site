@@ -1,13 +1,13 @@
 import React, { memo, useState, useEffect, useRef } from "react";
 import Photo from "./Photo";
-import { ImageType } from "@/pages/index";
+import { ImagesType } from "@/assets/type/types";
 
 type props = {
-  locations: ImageType[];
+  locations: ImagesType[];
 };
 
 const Location = ({ locations }: props) => {
-  const el = useRef(null);
+  const element = useRef(null);
 
   const [hasBreak, setHasBreak] = useState(false);
 
@@ -20,9 +20,9 @@ const Location = ({ locations }: props) => {
     function checkWhetherReachBreakpoint(): void {
       const scrollPositionY = window.scrollY;
       const windowBottomY = scrollPositionY + window.innerHeight;
-      if (el.current === null) return;
+      if (element.current === null) return;
       const breakpoint =
-        el.current.getBoundingClientRect().top + scrollPositionY;
+        element.current.getBoundingClientRect().top + scrollPositionY;
       if (breakpoint < windowBottomY) {
         setHasBreak(true);
       }
@@ -46,7 +46,7 @@ const Location = ({ locations }: props) => {
           Location
         </h1>
       </div>
-      <ul ref={el} className={`mt-10 mx-auto`}>
+      <ul ref={element} className={`mt-10 mx-auto`}>
         {locations &&
           locations.map((location, index) => (
             <Photo

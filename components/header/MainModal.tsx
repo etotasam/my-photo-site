@@ -5,20 +5,18 @@ import { useRouter } from "next/router";
 import { useHeadersContext } from "./HeadersContext";
 
 type Params = {
-  params: {
-    locations: string[];
-  };
+  locations: string[];
   error: Error;
 };
 
-const MainModal = ({ params, error }: Params) => {
+const MainModal = ({ locations, error }: Params) => {
   const router = useRouter();
-  const { state, dispatch } = useHeadersContext();
-
   let photo_label: string;
   if (typeof router.query.photo_label === "string") {
     photo_label = router.query.photo_label;
   }
+
+  const { state, dispatch } = useHeadersContext();
   function handleClick(
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     location: string
@@ -27,6 +25,7 @@ const MainModal = ({ params, error }: Params) => {
     dispatch({ type: state.isModalActive ? `inactive` : `active` });
     router.push(`/photo/${location}`);
   }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -42,8 +41,8 @@ const MainModal = ({ params, error }: Params) => {
       ) : (
         <div className={`border border-gray-400 px-5 py-7 min-w-[200px]`}>
           <ul>
-            {params &&
-              params.locations.map((location) => (
+            {locations &&
+              locations.map((location) => (
                 <li
                   key={location}
                   className={`text-center pb-2 last-of-type:pb-0 ${

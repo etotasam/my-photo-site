@@ -21,7 +21,7 @@ router
       }
       res.set("Access-Control-Allow-Origin", "*");
       res.set('Access-Control-Allow-Methods', 'GET');
-      res.json({ locations })
+      res.json(locations)
     } catch (error) {
       console.log(error);
     }
@@ -69,11 +69,11 @@ router
       let images: any[] = []
       snapshoto.forEach(doc => {
         images.push({
-          imageId: doc.id,
+          documentId: doc.id,
           ...doc.data()
         })
       })
-      res.json({ images: images })
+      res.json(images)
     } catch (error) {
       console.error(error)
     }

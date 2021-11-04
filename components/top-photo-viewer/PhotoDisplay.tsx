@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { ImageType } from "@/pages/index";
+import { ImagesType } from "@/assets/type/types";
 import Image from "next/image";
 import { useRouter } from "next/router";
 //context component
 import { CurrentPhotoIndexContext } from "./PhotoViewerContainer";
 
 type Params = {
-  photo: ImageType;
+  photo: ImagesType;
   imagesLength: number;
-  allImages: Record<string, ImageType[]>;
+  allImages: Record<string, ImagesType[]>;
   index: number;
 };
 

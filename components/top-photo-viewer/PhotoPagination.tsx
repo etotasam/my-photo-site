@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { CurrentPhotoIndexContext } from "./PhotoViewerContainer";
-import { ImageType } from "@/pages/index";
+import { ImagesType } from "@/assets/type/types";
 
 type Params = {
-  topImagesByRandom: ImageType[];
+  topImagesByRandom: ImagesType[];
 };
 
 const PhotoPagination = ({ topImagesByRandom }: Params) => {
