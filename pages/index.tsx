@@ -13,6 +13,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { ImagesType } from "@/assets/type/types";
 
+
 type Params = {
   allImages: Record<string, ImagesType[]>;
   topImagesByRandom: ImagesType[];

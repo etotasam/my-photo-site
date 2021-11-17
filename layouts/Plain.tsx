@@ -25,7 +25,7 @@ const Plain: React.FC<ChildElement> = ({ children }) => {
           </Link>
         </div>
       </header>
-      <main className={`t-main-height`}>{children}</main>
+      <main className={`t-main`}>{children}</main>
     </>
   );
 };

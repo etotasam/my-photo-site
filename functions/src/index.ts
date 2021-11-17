@@ -37,13 +37,15 @@ export const addImageUrl = functions.region(`asia-northeast1`).storage.object().
   // imagesコレクション内にimage/jpegを追加した場合の処理
   try {
     if (!obj.contentType?.match(/image\//)) return
-    if (topCollection !== `images`) throw new Error(`imagesじゃないところに入れてるよ`)
+    if (topCollection !== `images`) throw new Error(`imagesに入れて下さい`)
     const imageUrl = `https://storage.googleapis.com/${obj.bucket}/${obj.name}`
     const firebaseUrl = `https://firebasestorage.googleapis.com/v0/b/${obj.bucket}/o/${topCollection}%2F${photoLabel}%2F${fileName}?alt=media`
 
     // 画像のwidth heightを取得
-    const response = await axios.get(firebaseUrl, { responseType: 'arraybuffer' })
-    const img = imageSize(response.data as string)
+    const {data: res} = await axios.get(firebaseUrl, { responseType: 'arraybuffer' })
+    const img = imageSize(res as string)
+
+    // const res = await fetch(firebaseUrl, { responseType: 'arraybuffer' })
 
     // transactionでidをuniqueな値(連番の数字)にする
     const photoLabelDocRef = db.collection(topCollection).doc(photoLabel)

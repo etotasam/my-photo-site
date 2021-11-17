@@ -23,7 +23,7 @@ const Humburger = () => {
   });
 
   const controls = useAnimation();
-  function startAnimate() {
+  const startAnimate = () => {
     if (state.isModalActive) {
       controls.start(
         (i) => i === 0 && { rotate: 45, y: "9.5px", width: "100%" }

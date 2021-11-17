@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { StoreState } from "@/store/index";
@@ -28,7 +28,7 @@ const Header: React.FC = () => {
 
   let viewPortwWidth: number;
   useEffect(() => {
-    function setViewPortWidth() {
+    const setViewPortWidth = () => {
       viewPortwWidth = window.innerWidth;
       const isWidthMobile = viewPortwWidth < breakpoint;
       setIsMobile(isWidthMobile);
@@ -41,15 +41,24 @@ const Header: React.FC = () => {
     };
   }, [isMobile]);
 
-  function handleClick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     dispatch({ type: `inactive` });
     router.push(`/`);
     return;
   }
 
+
+  // get <header> height
+  const element = useRef(null)
+  useEffect(() => {
+    const headerHeight: number = element.current.clientHeight;
+    dispatch({ type: `headerHeight`, payload: (state.headerHeight = headerHeight) });
+  }, [element])
+
   return (
     <header
+      ref={element}
       className={`t-header-height bg-white fixed flex justify-center top-0 left-0 w-full z-50 duration-300 ${
         state.isModalActive ? `bg-opacity-100` : `bg-opacity-90`
       }`}
