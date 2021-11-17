@@ -13,6 +13,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { ImagesType } from "@/assets/type/types";
 
+
 type Params = {
   allImages: Record<string, ImagesType[]>;
   topImagesByRandom: ImagesType[];
@@ -56,12 +57,12 @@ const Home = ({
 
   return (
     <>
-      <div className={`md:flex md:justify-between relative`}>
+      <div className={`sm:flex sm:justify-between relative`}>
         <PhotoViewerContainer
           topImagesByRandom={topImagesByRandom}
           allImages={allImages}
         />
-        <section className={`flex md:w-1/3 md:justify-end`}>
+        <section className={`flex sm:w-1/3 sm:justify-end`}>
           <SiteDiscription />
         </section>
         {!isImgLoaded && <Loading />}

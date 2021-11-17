@@ -11,7 +11,7 @@ const MenuOnPC = ({ locations, error }: Params) => {
   const router = useRouter();
   const label = router.query.photo_label;
 
-  function toLink(el: string, e: React.MouseEvent<HTMLAnchorElement>) {
+  const toLink = (el: string, e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault;
     if (el === label) return;
     router.push(`/photo/${el}`);

@@ -4,37 +4,124 @@ import { useRouter } from "next/router";
 import { AnimatePresence, motion } from "framer-motion";
 import Loading from "../Loading";
 import { ImagesType } from "@/assets/type/types";
+import { useHeadersContext, InitialState } from "@/components/header/HeadersContext";
+
+type State = {
+  state: InitialState;
+  dispatch: React.Dispatch<any>;
+}
 
 type Params = {
   imageRef: ImagesType;
   length: number;
+  element: React.MutableRefObject<any>
 };
 
-const ViewPhoto = ({ imageRef, length }: Params) => {
+
+const ViewPhoto = ({ imageRef, length, element }: Params) => {
   const router = useRouter();
-  const { photo_label, num } = router.query;
+  const { photo_label, image } = router.query;
   function prevPhoto() {
     let prev: number;
-    if (num) prev = Number(num) - 1;
-    if (!num) prev = length;
-    if (prev < 1) return router.push(`/photo/${photo_label}?num=${length}`);
-    router.push(`/photo/${photo_label}?num=${prev}`);
+    if (image) prev = Number(image) - 1;
+    if (!image) prev = length;
+    if (prev < 1) return router.push(`/photo/${photo_label}?image=${length}`);
+    router.push(`/photo/${photo_label}?image=${prev}`);
   }
 
+  // get values headerHeight and footerHeight by useContext
+  const { state: contextState, dispatch }: State = useHeadersContext();
+
+  // check window aspect ratio
+  const [imageStyle, setImageStyle] = useState<string>()
+  const adjustContainerToImage = (): void => {
+    const headerHeight = contextState.headerHeight;
+    const footerHeight = contextState.footerHeight;
+    const windowHeight = window.innerHeight;
+    const containerWidth: number = element.current.clientWidth;
+    // const containerHeight = element.current.clientHeight;
+    const containerHeight: number = windowHeight - (headerHeight + footerHeight);
+
+    const isWindowHorizontal: boolean = containerWidth > containerHeight;
+
+    const imgWidth = imageRef.width;
+    const imgHeight = imageRef.height;
+
+    const isImageHorizontal = imgWidth > imgHeight;
+
+    let maxImgWidth: number;
+    let maxImgHeight: number;
+    const maxImageLongSideNum = 750;
+    if(isImageHorizontal) {
+      const aspectRatio = imgHeight / imgWidth;
+      const maxHeight = maxImageLongSideNum * aspectRatio
+      maxImgWidth = Math.min(imgWidth, maxImageLongSideNum)
+      maxImgHeight = Math.min(imgHeight, maxHeight)
+    }else {
+      const aspectRatio = imgWidth / imgHeight
+      const maxWidth = maxImageLongSideNum * aspectRatio;
+      maxImgWidth = Math.min(imgWidth, maxWidth)
+      maxImgHeight = Math.min(imgHeight, maxImageLongSideNum)
+    }
+
+
+    document.documentElement.style.setProperty(`--img-container-width`, `${containerWidth}px`)
+    // document.documentElement.style.setProperty(`--img-container-height`, `${containerHeight}px`)
+    document.documentElement.style.setProperty(`--img-width`, `${imgWidth}px`)
+    document.documentElement.style.setProperty(`--img-width`, `${imgHeight}px`)
+
+    document.documentElement.style.setProperty(`--max-img-width`, `${maxImgWidth}px`)
+    document.documentElement.style.setProperty(`--max-img-height`, `${maxImgHeight}px`)
+
+    const aspectRatioForHeight = imgHeight / imgWidth;
+    const aspectRatioForWidth = imgWidth / imgHeight;
+    document.documentElement.style.setProperty(`--img-aspect-ratio-for-height`, `${aspectRatioForHeight}`)
+    document.documentElement.style.setProperty(`--img-aspect-ratio-for-width`, `${aspectRatioForWidth}`)
+
+    if(isImageHorizontal) {
+      const isContainerWidthLarge = containerWidth > maxImgWidth
+      const isContainerHeightLarge = containerHeight > maxImgHeight
+      if(isContainerWidthLarge) {
+        isContainerHeightLarge ? setImageStyle(`t-img-horizon-container-both-high`) : setImageStyle(`t-img-horizon-container-width_high-height_low`);
+      }else {
+        isContainerHeightLarge ? setImageStyle(`t-img-horizon-container-width_low-height_high`) : isWindowHorizontal ? setImageStyle(`test-css`) : setImageStyle(`t-img-horizon-container-both-low`);
+      }
+
+    }else {
+      const isContainerWidthLarge = containerWidth > maxImgWidth
+      const isContainerHeightLarge = containerHeight > maxImgHeight
+      if(isContainerWidthLarge) {
+        isContainerHeightLarge ? setImageStyle(`t-img-vertical-container-both-high`) : setImageStyle(`t-img-vertical-container-width_high-height_low`);
+      }else {
+        isWindowHorizontal ? setImageStyle(`t-img-vertical-container-width_low-window_horizon`) : setImageStyle(`t-img-vertical-container-width_low-window_vertical`)
+      }
+    }
+  }
+  useEffect(() => {
+    adjustContainerToImage()
+    window.addEventListener(`resize`, adjustContainerToImage)
+    return () => {
+      window.removeEventListener(`resize`, adjustContainerToImage)
+    }
+  }, [])
+
+  // photo transition
   function nextPhoto() {
     let next: number;
-    if (num) next = Number(num) + 1;
-    if (!num) next = 2;
-    if (next > length) return router.push(`/photo/${photo_label}?num=1`);
-    router.push(`/photo/${photo_label}?num=${next}`);
+    if (image) next = Number(image) + 1;
+    if (!image) next = 2;
+    if (next > length) return router.push(`/photo/${photo_label}?image=1`);
+    router.push(`/photo/${photo_label}?image=${next}`);
   }
 
+  // check image aspect ratio
   const [isVerticalPhoto, setIsPhotoVertical] = useState<boolean>();
   useEffect(() => {
     if (!imageRef) return;
     setIsPhotoVertical(imageRef.width < imageRef.height);
   }, [imageRef]);
 
+  // tap reaction
   let tapPositionX: number;
   let unTapPositionX: number;
   function onTapStart(event: any, info: any) {
@@ -55,9 +142,23 @@ const ViewPhoto = ({ imageRef, length }: Params) => {
     }
   }
 
+  // image loading check
   const [isImageLoading, setImageLoad] = useState(true);
   function photoLoaded() {
     setImageLoad(false);
+  }
+
+  // image transtion
+  const imageTranstion = (e: any) => {
+    const elWidth = e.target.clientWidth;
+    const elPosition = Math.floor(e.target.getBoundingClientRect().left);
+    const centerPoint = elWidth / 2;
+    const clickPoint = e.pageX;
+    if((clickPoint - elPosition) > centerPoint) {
+      nextPhoto();
+    }else {
+      prevPhoto();
+    }
   }
 
   return (
@@ -68,21 +169,16 @@ const ViewPhoto = ({ imageRef, length }: Params) => {
         onTapStart={onTapStart}
         onTap={onTap}
         transition={{ duration: 0.5 }}
-        className={`relative leading-3 ${
-          isVerticalPhoto ? `w-3/4 t-img-vertical` : `t-img-horizon`
-        }`}
+        className={`relative leading-3 bg-green-200 ${imageStyle}`}
         style={{ touchAction: "none" }}
+        onClick={(e) => imageTranstion(e)}
       >
-        <span
-          className={`absolute top-0 left-0 h-full w-1/2 cursor-pointer z-10`}
-          onClick={prevPhoto}
-        ></span>
-        <span
-          className={`absolute top-0 right-0 h-full w-1/2 cursor-pointer z-10`}
-          onClick={nextPhoto}
-        ></span>
         <NextImage
+          // onClick={(e) => click(e)}
+          className={`cursor-pointer`}
           src={imageRef.url}
+          width={imageRef.width}
+          height={imageRef.height}
           alt={``}
           priority={true}
           layout={`fill`}

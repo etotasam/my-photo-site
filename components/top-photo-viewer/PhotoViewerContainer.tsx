@@ -22,7 +22,7 @@ const TopPhotoViewer = ({ topImagesByRandom, allImages }: Params) => {
     setCurrentPhotoIndex,
   };
 
-  function getInitialPhotoIndex(): void {
+  const getInitialPhotoIndex = (): void => {
     const min = 0;
     const max = topImagesLength - 1;
     const randamIndex = Math.floor(Math.random() * (max + 1 - min)) + min;
@@ -35,7 +35,7 @@ const TopPhotoViewer = ({ topImagesByRandom, allImages }: Params) => {
 
   return (
     <CurrentPhotoIndexContext.Provider value={contextValue}>
-      <div className={`md:w-[60%]`}>
+      <div className={`sm:w-[60%]`}>
         <div className={`relative pt-[100%]`}>
           <AnimatePresence>
             {topImagesByRandom.map(

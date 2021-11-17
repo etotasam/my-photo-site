@@ -19,11 +19,18 @@
   :root {
     --header-height: 45px;
     --footer-height: 50px;
-    --vh: 1vh;
-    --img-ver-width: 500px;
-    --img-ver-height: 750px;
-    --img-hor-width: 750px;
-    --img-hor-height: 500px;
+    --img-min-long-side: 250px;
+
+    --window-vh: 1vh;
+    --max-img-width: 1px;
+    --max-img-height: 1px;
+    --img-container-width: 1px;
+    --img-aspect-ratio-for-height: 1;
+    --img-aspect-ratio-for-width: 1;
+
+    --inner-main-div-height: calc((var(--window-vh) * 100) - (var(--header-height)) - (var(--footer-height)));
+    --img-container-height: calc((var(--window-vh) * 100) - (var(--header-height)) - (var(--footer-height)));
+    --img-adjust-width: calc(var(--img-container-width) * (3 / 4))
   }
 
   .t-header-height {
@@ -34,11 +41,12 @@
     @apply h-[var(--footer-height)];
   }
 
+  .t-main {
+    @apply min-h-[var(--inner-main-div-height)] w-[90%] max-w-[1024px] mx-auto mt-[var(--header-height)];
+  }
+
   .t-main-height {
-    @apply min-h-[calc(100vh-(var(--header-height)+var(--footer-height)))] w-[90%] max-w-[1024px] mx-auto mt-[var(--header-height)];
-    min-height: calc(
-      (var(--vh, 1vh) * 100) - (var(--header-height)) - (var(--footer-height))
-    );
+    @apply min-h-[var(--inner-main-div-height)];
   }
 
   .t-loading-text {
@@ -49,28 +57,70 @@
     @apply fixed left-0 top-[var(--header-height)] min-h-[calc(100vh-var(--header-height))];
   }
 
-  .t-vertical {
+  .t-text-vertical {
     writing-mode: vertical-rl;
     text-orientation: upright;
   }
 
-  .t-img-vertical {
-    width: var(--img-ver-width);
-    min-height: calc(var(--img-ver-height) * 0.6);
-    height: var(--img-ver-height);
-    max-height: calc(
-      (var(--vh, 1vh) * 100) - (var(--header-height)) - (var(--footer-height))
-    );
+
+  /*
+  * image horizontal
+  */
+  .t-img-horizon-container-both-high {
+    width: var(--max-img-width);
+    height: calc(var(--max-img-width) * var(--img-aspect-ratio-for-height));
+  }
+  .t-img-horizon-container-width_high-height_low {
+    width: calc(var(--img-container-height) * var(--img-aspect-ratio-for-width));
+
+    height: var(--img-container-height);
+  }
+  .t-img-horizon-container-width_low-height_high {
+    width: var(--img-container-width);
+
+    height: calc(var(--img-container-width) * var(--img-aspect-ratio-for-height));
+  }
+  .test-css {
+    min-width: var(--img-min-long-side);
+    width: calc(var(--img-container-height) * var(--img-aspect-ratio-for-width));
+
+    min-height: calc(var(--img-min-long-side) * var(--img-aspect-ratio-for-height));
+    height: var(--img-container-height);
+    max-height: calc(var(--img-container-width) * var(--img-aspect-ratio-for-height));
+  }
+  .t-img-horizon-container-both-low {
+    width: var(--img-container-width);
+    min-width: var(--img-min-long-side);
+    height: calc(var(--img-container-width) * var(--img-aspect-ratio-for-height));
+    min-height: calc(var(--img-min-long-side) * var(--img-aspect-ratio-for-height))
   }
 
-  .t-img-horizon {
-    width: var(--img-hor-width);
-    min-height: calc(var(--img-hor-height) * 0.6);
-    height: var(--img-hor-height);
-    max-height: calc(
-      (var(--vh, 1vh) * 100) - (var(--header-height)) - (var(--footer-height))
-    );
+  /*
+  * image vertical
+  */
+  .t-img-vertical-container-both-high {
+    width: calc(var(--max-img-height) * var(--img-aspect-ratio-for-width));
+    height: var(--max-img-height);
   }
+  .t-img-vertical-container-width_high-height_low {
+    min-width: calc(var(--img-min-long-side) * var(--img-aspect-ratio-for-width));
+    width: calc(var(--img-container-height) * var(--img-aspect-ratio-for-width));
+
+    min-height: var(--img-min-long-side);
+    height: var(--img-container-height);
+  }
+  .t-img-vertical-container-width_low-window_horizon {
+    min-width: calc(var(--img-min-long-side) * var(--img-aspect-ratio-for-width));
+    width: calc(var(--img-container-height) * var(--img-aspect-ratio-for-width));
+
+    min-height: var(--img-min-long-side);
+    height: var(--img-container-height)
+  }
+  .t-img-vertical-container-width_low-window_vertical {
+    width: var(--img-adjust-width);
+    height: calc(var(--img-adjust-width) * var(--img-aspect-ratio-for-height));
+  }
+
 
   .link {
     @apply text-green-600;

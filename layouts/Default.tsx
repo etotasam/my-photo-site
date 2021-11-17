@@ -12,10 +12,10 @@ type ChildElement = {
 
 const Layout: React.FC<ChildElement> = ({ children }) => {
   const isModalActive = useSelector((state: StoreState) => state.isModalActive);
-  // globals.cssの var(--vh を取得する為の関数
-  function setHeight() {
+
+  const setHeight = (): void => {
     const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
+    document.documentElement.style.setProperty("--window-vh", `${vh}px`);
   }
   useEffect(() => {
     setHeight();
@@ -33,9 +33,9 @@ const Layout: React.FC<ChildElement> = ({ children }) => {
       </Head>
       <HeadersContextProvider>
         <Header />
+        <main className={`t-main`}>{children}</main>
+        <Footer />
       </HeadersContextProvider>
-      <main className={`t-main-height`}>{children}</main>
-      <Footer />
     </>
   );
 };

@@ -109,7 +109,7 @@ const DisplayingPhoto: React.FC<Params> = ({
       return 0;
     });
     const imageIndex = imagesSortdInDesc.findIndex((el) => el.id === photo.id);
-    router.push(`/photo/${location}?num=${imageIndex + 1}`);
+    router.push(`/photo/${location}?image=${imageIndex + 1}`);
   }
 
   return (

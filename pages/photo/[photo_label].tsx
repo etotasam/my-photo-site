@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import ViewPhoto from "@/components/photo_label/ViewPhoto";
@@ -10,24 +10,28 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   const route = useRouter();
   const [viewImageIndex, setViewImageIndex] = useState<number>();
   const imagesLength = images.length;
-  const { photo_label, num } = route.query;
+  const { photo_label, image } = route.query;
 
   useEffect(() => {
-    if (!num) return;
-    if (Number(num) > imagesLength || Number(num) < 1 || isNaN(Number(num))) {
-      route.push(`/photo/${photo_label}?num=1`);
+    if (!image) return;
+    if (
+      Number(image) > imagesLength ||
+      Number(image) < 1 ||
+      isNaN(Number(image))
+    ) {
+      route.push(`/photo/${photo_label}?image=1`);
       return;
     }
-    const index = Number(num) - 1;
+    const index = Number(image) - 1;
     setViewImageIndex(index);
-  }, [num]);
+  }, [image]);
 
   useEffect(() => {
-    if (num) return;
+    if (image) return;
     setViewImageIndex(0);
   }, [photo_label]);
 
-  const sortImagesByIdInDesc = images.sort((a, b) => {
+  const sortImagesByIdInDesc: ImagesType[] = images.sort((a, b) => {
     const idA = a.id.split(`_`)[1];
     const idB = b.id.split(`_`)[1];
     if (Number(idA) > Number(idB)) return -1;
@@ -46,6 +50,7 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   const locationTitle =
     typeof photo_label === "string" && photo_label.toUpperCase();
 
+  const element = useRef(null);
   return (
     <>
       <Head>
@@ -55,7 +60,10 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
             : process.env.NEXT_PUBLIC_SITE_TITLE}
         </title>
       </Head>
-      <div className={`t-main-height flex justify-center items-center`}>
+      <div
+        ref={element}
+        className={`t-main-height flex justify-center items-center`}
+      >
         {sortImagesByIdInDesc.map(
           (imageRef, index) =>
             viewImageIndex === index && (
@@ -63,6 +71,7 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
                 key={imageRef.id}
                 imageRef={imageRef}
                 length={imagesLength}
+                element={element}
               />
             )
         )}
