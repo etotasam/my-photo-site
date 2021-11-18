@@ -4,7 +4,7 @@ export default function TestLayout({ children }) {
   return (
     <>
       <Header />
-      <main className={`t-main-height`}>{children}</main>
+      <main className={`t-main`}>{children}</main>
       <footer className={`t-footer-height bg-pink-300`}>テストフッター</footer>
     </>
   );

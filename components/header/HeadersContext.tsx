@@ -8,20 +8,27 @@ export const useHeadersContext = () => {
 
 const initialState = {
   isModalActive: false,
-};
+  headerHeight: 1,
+  footerHeight: 1,
+}
 
 export type InitialState = typeof initialState;
 
 type Action = {
   type: string;
+  payload?: any;
 };
 
-export function reducer(state: InitialState, action: Action) {
+export const reducer = (state: InitialState, action: Action) => {
   switch (action.type) {
     case "active":
       return { ...state, isModalActive: (state.isModalActive = true) };
     case "inactive":
       return { ...state, isModalActive: (state.isModalActive = false) };
+    case "headerHeight":
+      return {...state, headerHeight: action.payload}
+    case "footerHeight":
+      return {...state, footerHeight: action.payload}
     default:
       throw new Error("action-type input error");
   }

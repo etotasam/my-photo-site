@@ -17,10 +17,10 @@ const MainModal = ({ locations, error }: Params) => {
   }
 
   const { state, dispatch } = useHeadersContext();
-  function handleClick(
+  const handleClick = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     location: string
-  ) {
+  ) => {
     e.preventDefault();
     dispatch({ type: state.isModalActive ? `inactive` : `active` });
     router.push(`/photo/${location}`);
