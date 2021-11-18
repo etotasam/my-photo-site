@@ -57,12 +57,12 @@ const Home = ({
 
   return (
     <>
-      <div className={`sm:flex sm:justify-between relative`}>
+      <div className={`md:flex md:justify-between relative`}>
         <PhotoViewerContainer
           topImagesByRandom={topImagesByRandom}
           allImages={allImages}
         />
-        <section className={`flex sm:w-1/3 sm:justify-end`}>
+        <section className={`flex md:w-1/3 md:justify-end`}>
           <SiteDiscription />
         </section>
         {!isImgLoaded && <Loading />}

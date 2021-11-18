@@ -21,14 +21,14 @@ type Action = {
 
 export const reducer = (state: InitialState, action: Action) => {
   switch (action.type) {
-    case "active":
+    case "activeModal":
       return { ...state, isModalActive: (state.isModalActive = true) };
-    case "inactive":
+    case "inactiveModal":
       return { ...state, isModalActive: (state.isModalActive = false) };
-    case "headerHeight":
-      return {...state, headerHeight: action.payload}
-    case "footerHeight":
-      return {...state, footerHeight: action.payload}
+    case "setHeaderHeight":
+      return {...state, headerHeight: (state.headerHeight = action.payload)}
+    case "setFooterHeight":
+      return {...state, footerHeight: (state.footerHeight = action.payload)}
     default:
       throw new Error("action-type input error");
   }

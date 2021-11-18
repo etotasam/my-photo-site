@@ -22,7 +22,7 @@ const MainModal = ({ locations, error }: Params) => {
     location: string
   ) => {
     e.preventDefault();
-    dispatch({ type: state.isModalActive ? `inactive` : `active` });
+    dispatch({ type: state.isModalActive ? `inactiveModal` : `activeModal` });
     router.push(`/photo/${location}`);
   }
 
@@ -31,7 +31,7 @@ const MainModal = ({ locations, error }: Params) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.3 } }}
-      className={`t-modal-height bg-white w-full flex justify-center items-center z-50`}
+      className={`t-modal-height bg-white w-full flex justify-center items-center`}
     >
       {error ? (
         <div>

@@ -35,7 +35,7 @@ const TopPhotoViewer = ({ topImagesByRandom, allImages }: Params) => {
 
   return (
     <CurrentPhotoIndexContext.Provider value={contextValue}>
-      <div className={`sm:w-[60%]`}>
+      <div className={`md:w-[60%]`}>
         <div className={`relative pt-[100%]`}>
           <AnimatePresence>
             {topImagesByRandom.map(

@@ -51,7 +51,9 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
 
     let maxImgWidth: number;
     let maxImgHeight: number;
-    const maxImageLongSideNum = 750;
+    const maxImageLongSideNum = 850;
+    const minImageLongSideNum = 350;
+    document.documentElement.style.setProperty(`--min-img-long-side`, `${minImageLongSideNum}px`)
     if(isImageHorizontal) {
       const aspectRatio = imgHeight / imgWidth;
       const maxHeight = maxImageLongSideNum * aspectRatio
@@ -78,24 +80,23 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
     document.documentElement.style.setProperty(`--img-aspect-ratio-for-height`, `${aspectRatioForHeight}`)
     document.documentElement.style.setProperty(`--img-aspect-ratio-for-width`, `${aspectRatioForWidth}`)
 
-    if(isImageHorizontal) {
-      const isContainerWidthLarge = containerWidth > maxImgWidth
-      const isContainerHeightLarge = containerHeight > maxImgHeight
-      if(isContainerWidthLarge) {
-        isContainerHeightLarge ? setImageStyle(`t-img-horizon-container-both-high`) : setImageStyle(`t-img-horizon-container-width_high-height_low`);
-      }else {
-        isContainerHeightLarge ? setImageStyle(`t-img-horizon-container-width_low-height_high`) : isWindowHorizontal ? setImageStyle(`test-css`) : setImageStyle(`t-img-horizon-container-both-low`);
-      }
+    const isContainerWidthLarge = containerWidth > maxImgWidth
+    const isContainerHeightLarge = containerHeight > maxImgHeight
 
-    }else {
-      const isContainerWidthLarge = containerWidth > maxImgWidth
-      const isContainerHeightLarge = containerHeight > maxImgHeight
-      if(isContainerWidthLarge) {
-        isContainerHeightLarge ? setImageStyle(`t-img-vertical-container-both-high`) : setImageStyle(`t-img-vertical-container-width_high-height_low`);
+    const setCssClass = () => {
+      if(isImageHorizontal) {
+        if(isContainerWidthLarge && isContainerHeightLarge) return `t-img_conrainer_horizon-both-high`;
+        if(isContainerWidthLarge && !isContainerHeightLarge) return `t-img_container_horizon-width_high-height_low`;
+        if(!isContainerWidthLarge && isContainerHeightLarge) return `t-img_container_horizon-width_low-height_high`;
+        if(!isContainerWidthLarge && !isContainerHeightLarge) return isWindowHorizontal ? `t-img_container_horizon-both_low-window_horizon` : `t-img_container_horizon-both_low-window_vertical`;
       }else {
-        isWindowHorizontal ? setImageStyle(`t-img-vertical-container-width_low-window_horizon`) : setImageStyle(`t-img-vertical-container-width_low-window_vertical`)
+        if(isContainerWidthLarge && isContainerHeightLarge) return `t-img_container_vertical-both_high`;
+        if(isContainerWidthLarge && !isContainerHeightLarge) return `t-img_container_vertical-width_high-height_low`;
+        if(!isContainerWidthLarge && isWindowHorizontal) return `t-img_container_vertical-width_low-window_horizon`;
+        if(!isContainerWidthLarge && !isWindowHorizontal) return `t-img_container_vertical-width_low-window_vertical`;
       }
     }
+    setImageStyle(setCssClass())
   }
   useEffect(() => {
     adjustContainerToImage()

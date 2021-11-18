@@ -19,7 +19,7 @@ const Footer = () => {
   const { state: contextState, dispatch }: State = useHeadersContext();
   useEffect(() => {
     const height: number = element.current.clientHeight
-    dispatch({type: `footerHeight`, payload: (contextState.footerHeight = height)})
+    dispatch({type: `setFooterHeight`, payload: height})
   }, [element])
   return (
     <footer ref={element} className={`t-footer-height flex justify-center items-center`}>
