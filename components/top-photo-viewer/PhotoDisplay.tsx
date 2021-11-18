@@ -109,7 +109,7 @@ const DisplayingPhoto: React.FC<Params> = ({
       return 0;
     });
     const imageIndex = imagesSortdInDesc.findIndex((el) => el.id === photo.id);
-    router.push(`/photo/${location}?num=${imageIndex + 1}`);
+    router.push(`/photo/${location}?image=${imageIndex + 1}`);
   }
 
   return (
@@ -130,7 +130,7 @@ const DisplayingPhoto: React.FC<Params> = ({
           onClick={(e) => clickImage(e)}
         >
           <Image
-            // className={`pointer-events-none`}
+            // className={`max-w-[500px]`}
             src={photo.url}
             layout="fill"
             objectFit="cover"
