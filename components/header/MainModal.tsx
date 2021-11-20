@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useHeadersContext } from "./HeadersContext";
+import { useHeadersContext, InitialState } from "./HeadersContext";
+import Loading from "@/components/Loading"
 
 type Params = {
   locations: string[];
@@ -16,15 +17,22 @@ const MainModal = ({ locations, error }: Params) => {
     photo_label = router.query.photo_label;
   }
 
-  const { state, dispatch } = useHeadersContext();
+  const { state, dispatch }: {state: InitialState, dispatch: any} = useHeadersContext();
   const handleClick = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     location: string
   ) => {
     e.preventDefault();
-    dispatch({ type: state.isModalActive ? `inactiveModal` : `activeModal` });
+    dispatch({ type: `loading` });
     router.push(`/photo/${location}`);
   }
+
+  // hide <Loading> when close this Modal
+  useEffect(() => {
+    return () => {
+      dispatch({ type: `loaded` });
+    }
+  }, [])
 
   return (
     <motion.div
@@ -51,18 +59,20 @@ const MainModal = ({ locations, error }: Params) => {
                       : `text-gray-500`
                   }`}
                 >
-                  <Link href={`/photo/${location}`}>
-                    <a onClick={(e) => handleClick(e, location)}>
+                  {/* <Link href={`/photo/${location}`}> */}
+                    <a onClick={(e) => handleClick(e, location)} className={`cursor-pointer`}>
+                    {/* <a> */}
                       {`${location.charAt(0).toUpperCase()}${location.slice(
                         1
                       )}`}
                     </a>
-                  </Link>
+                  {/* </Link> */}
                 </li>
               ))}
           </ul>
         </div>
       )}
+    {state.isLoading && <Loading />}
     </motion.div>
   );
 };

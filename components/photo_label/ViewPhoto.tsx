@@ -21,6 +21,7 @@ type Params = {
 const ViewPhoto = ({ imageRef, length, element }: Params) => {
   const router = useRouter();
   const { photo_label, image } = router.query;
+
   function prevPhoto() {
     let prev: number;
     if (image) prev = Number(image) - 1;
@@ -32,23 +33,32 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
   // get values headerHeight and footerHeight by useContext
   const { state: contextState, dispatch }: State = useHeadersContext();
 
+  // for close Modal
+  useEffect(() => {
+    if(contextState.isModalActive === false) return;
+    dispatch({type: `inactiveModal`})
+  }, [])
+
   // check window aspect ratio
   const [imageStyle, setImageStyle] = useState<string>()
   const adjustContainerToImage = (): void => {
     const headerHeight = contextState.headerHeight;
     const footerHeight = contextState.footerHeight;
     const windowHeight = window.innerHeight;
+
     const containerWidth: number = element.current.clientWidth;
-    // const containerHeight = element.current.clientHeight;
+    document.documentElement.style.setProperty(`--img-container-width`, `${containerWidth}px`)
     const containerHeight: number = windowHeight - (headerHeight + footerHeight);
 
     const isWindowHorizontal: boolean = containerWidth > containerHeight;
 
+
+    // imageRefの縦位置、横位置のチェックと、各width heightの設定
     const imgWidth = imageRef.width;
     const imgHeight = imageRef.height;
-
+    document.documentElement.style.setProperty(`--img-width`, `${imgWidth}px`)
+    document.documentElement.style.setProperty(`--img-width`, `${imgHeight}px`)
     const isImageHorizontal = imgWidth > imgHeight;
-
     let maxImgWidth: number;
     let maxImgHeight: number;
     const maxImageLongSideNum = 850;
@@ -65,15 +75,10 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
       maxImgWidth = Math.min(imgWidth, maxWidth)
       maxImgHeight = Math.min(imgHeight, maxImageLongSideNum)
     }
-
-
-    document.documentElement.style.setProperty(`--img-container-width`, `${containerWidth}px`)
-    // document.documentElement.style.setProperty(`--img-container-height`, `${containerHeight}px`)
-    document.documentElement.style.setProperty(`--img-width`, `${imgWidth}px`)
-    document.documentElement.style.setProperty(`--img-width`, `${imgHeight}px`)
-
     document.documentElement.style.setProperty(`--max-img-width`, `${maxImgWidth}px`)
     document.documentElement.style.setProperty(`--max-img-height`, `${maxImgHeight}px`)
+
+
 
     const aspectRatioForHeight = imgHeight / imgWidth;
     const aspectRatioForWidth = imgWidth / imgHeight;
@@ -129,15 +134,15 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
     tapPositionX = info.point.x;
   }
 
-  const necessaryMoveX = 100;
+  const requiredMoveX = 100;
   function onTap(event: any, info: any) {
     unTapPositionX = info.point.x;
     const movedPositionX = unTapPositionX - tapPositionX;
 
-    if (movedPositionX < -necessaryMoveX) {
+    if (movedPositionX < -requiredMoveX) {
       nextPhoto();
       return;
-    } else if (necessaryMoveX < movedPositionX) {
+    } else if (requiredMoveX < movedPositionX) {
       prevPhoto();
       return;
     }
@@ -150,12 +155,13 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
   }
 
   // image transtion
-  const imageTranstion = (e: any) => {
-    const elWidth = e.target.clientWidth;
-    const elPosition = Math.floor(e.target.getBoundingClientRect().left);
+  const imageTranstion = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const el = e.target as HTMLElement
+    const elWidth = el.clientWidth;
+    const elLeftPosition = Math.floor(el.getBoundingClientRect().left);
     const centerPoint = elWidth / 2;
     const clickPoint = e.pageX;
-    if((clickPoint - elPosition) > centerPoint) {
+    if((clickPoint - elLeftPosition) > centerPoint) {
       nextPhoto();
     }else {
       prevPhoto();
@@ -175,7 +181,6 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
         onClick={(e) => imageTranstion(e)}
       >
         <NextImage
-          // onClick={(e) => click(e)}
           className={`cursor-pointer`}
           src={imageRef.url}
           width={imageRef.width}

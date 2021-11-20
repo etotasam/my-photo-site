@@ -14,11 +14,7 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
 
   useEffect(() => {
     if (!image) return;
-    if (
-      Number(image) > imagesLength ||
-      Number(image) < 1 ||
-      isNaN(Number(image))
-    ) {
+    if ( Number(image) > imagesLength || Number(image) < 1 || isNaN(Number(image)) ) {
       route.push(`/photo/${photo_label}?image=1`);
       return;
     }
@@ -32,10 +28,8 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   }, [photo_label]);
 
   const sortImagesByIdInDesc: ImagesType[] = images.sort((a, b) => {
-    const idA = a.id.split(`_`)[1];
-    const idB = b.id.split(`_`)[1];
-    if (Number(idA) > Number(idB)) return -1;
-    if (Number(idA) < Number(idB)) return 1;
+    if (a.id > b.id) return -1;
+    if (a.id < b.id) return 1;
     return 0;
   });
 

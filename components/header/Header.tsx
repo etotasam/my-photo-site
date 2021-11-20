@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { StoreState } from "@/store/index";
@@ -15,7 +15,7 @@ type State = {
   dispatch: React.Dispatch<any>;
 };
 
-const Header: React.FC = () => {
+const Header = () => {
   const router = useRouter();
   const { state, dispatch }: State = useHeadersContext();
   const [isMobile, setIsMobile] = useState<boolean>();
@@ -49,7 +49,7 @@ const Header: React.FC = () => {
   }
 
 
-  // get <header> height
+  // set <header> height to HeadersContext
   const element = useRef(null)
   useEffect(() => {
     const headerHeight: number = element.current.clientHeight;

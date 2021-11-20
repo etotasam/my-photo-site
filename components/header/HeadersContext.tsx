@@ -8,6 +8,7 @@ export const useHeadersContext = () => {
 
 const initialState = {
   isModalActive: false,
+  isLoading: false,
   headerHeight: 1,
   footerHeight: 1,
 }
@@ -25,6 +26,12 @@ export const reducer = (state: InitialState, action: Action) => {
       return { ...state, isModalActive: (state.isModalActive = true) };
     case "inactiveModal":
       return { ...state, isModalActive: (state.isModalActive = false) };
+
+    case "loading":
+      return {...state, isLoading: (state.isLoading = true)}
+    case "loaded":
+      return {...state, isLoading: (state.isLoading = false)}
+
     case "setHeaderHeight":
       return {...state, headerHeight: (state.headerHeight = action.payload)}
     case "setFooterHeight":

@@ -1,12 +1,10 @@
-import React, { FC, memo, createContext } from "react";
+import React, { memo, createContext } from "react";
 import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import PhotoDisplay from "@/components/top-photo-viewer/PhotoDisplay";
 import PhotoPagination from "./PhotoPagination";
 import { ImagesType } from "@/assets/type/types";
 
-// const PhotoImages = Photos.top_view_photos;
-// const photosLength = PhotoImages.length;
 export const CurrentPhotoIndexContext = createContext(null);
 
 type Params = {

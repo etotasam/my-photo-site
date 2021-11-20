@@ -48,3 +48,7 @@ yarn-error.log*
 /functions/firebase-debug.log
 
 /functions/serviceAccountKey.json
+
+
+# チェック用
+/pages/test.tsx

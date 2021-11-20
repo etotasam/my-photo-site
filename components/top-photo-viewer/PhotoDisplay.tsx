@@ -130,7 +130,6 @@ const DisplayingPhoto: React.FC<Params> = ({
           onClick={(e) => clickImage(e)}
         >
           <Image
-            // className={`pointer-events-none`}
             src={photo.url}
             layout="fill"
             objectFit="cover"
