@@ -124,6 +124,33 @@
   }
 
 
+  /*
+  * image vertical
+  */
+  .t-img-vertical-container-both-high {
+    width: calc(var(--max-img-height) * var(--img-aspect-ratio-for-width));
+    height: var(--max-img-height);
+  }
+  .t-img-vertical-container-width_high-height_low {
+    min-width: calc(var(--min-img-long-side) * var(--img-aspect-ratio-for-width));
+    width: calc(var(--img-container-height) * var(--img-aspect-ratio-for-width));
+
+    min-height: var(--min-img-long-side);
+    height: var(--img-container-height);
+  }
+  .t-img-vertical-container-width_low-window_horizon {
+    min-width: calc(var(--min-img-long-side) * var(--img-aspect-ratio-for-width));
+    width: calc(var(--img-container-height) * var(--img-aspect-ratio-for-width));
+
+    min-height: var(--min-img-long-side);
+    height: var(--img-container-height)
+  }
+  .t-img-vertical-container-width_low-window_vertical {
+    width: var(--img-adjust-width);
+    height: calc(var(--img-adjust-width) * var(--img-aspect-ratio-for-height));
+  }
+
+
   .link {
     @apply text-green-600;
   }

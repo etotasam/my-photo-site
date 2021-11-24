@@ -6,6 +6,7 @@ import axios from "axios";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { ImagesType } from "@/assets/type/types";
 
+
 const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   const route = useRouter();
   const [viewImageIndex, setViewImageIndex] = useState<number>();
@@ -54,10 +55,7 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
             : process.env.NEXT_PUBLIC_SITE_TITLE}
         </title>
       </Head>
-      <div
-        ref={element}
-        className={`t-main-height flex justify-center items-center`}
-      >
+      <div ref={element} className={`t-main-height flex justify-center items-center`}>
         {sortImagesByIdInDesc.map(
           (imageRef, index) =>
             viewImageIndex === index && (
