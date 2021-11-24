@@ -4,7 +4,7 @@ const SiteDiscription = () => {
   return (
     <>
       <div
-        className={`sm:t-text-vertical font-serif px-2 pt-5 font-thin text-gray-500`}
+        className={`md:t-text-vertical font-serif px-2 pt-5 font-thin text-gray-500`}
       >
         <h1 className={`text-xl font-bold mb-5 md:mb-0 md:ml-5`}>
           良く写真を撮っていた

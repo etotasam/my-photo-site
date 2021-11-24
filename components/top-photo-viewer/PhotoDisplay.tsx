@@ -130,7 +130,6 @@ const DisplayingPhoto: React.FC<Params> = ({
           onClick={(e) => clickImage(e)}
         >
           <Image
-            // className={`max-w-[500px]`}
             src={photo.url}
             layout="fill"
             objectFit="cover"
