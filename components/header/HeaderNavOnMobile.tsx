@@ -11,7 +11,7 @@ const Humburger = () => {
   const { state, dispatch }: State = useHeadersContext();
 
   function toggleModal() {
-    dispatch({ type: state.isModalActive ? `inactive` : `active` });
+    dispatch({ type: state.isModalActive ? `inactiveModal` : `activeModal` });
   }
 
   useEffect(() => {

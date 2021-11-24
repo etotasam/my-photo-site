@@ -13,10 +13,9 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   const imagesLength = images.length;
   const { photo_label, image } = route.query;
 
-
   useEffect(() => {
     if (!image) return;
-    if (Number(image) > imagesLength || Number(image) < 1 || isNaN(Number(image))) {
+    if ( Number(image) > imagesLength || Number(image) < 1 || isNaN(Number(image)) ) {
       route.push(`/photo/${photo_label}?image=1`);
       return;
     }
@@ -30,10 +29,8 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   }, [photo_label]);
 
   const sortImagesByIdInDesc: ImagesType[] = images.sort((a, b) => {
-    const idA = a.id.split(`_`)[1];
-    const idB = b.id.split(`_`)[1];
-    if (Number(idA) > Number(idB)) return -1;
-    if (Number(idA) < Number(idB)) return 1;
+    if (a.id > b.id) return -1;
+    if (a.id < b.id) return 1;
     return 0;
   });
 
@@ -48,7 +45,7 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   const locationTitle =
     typeof photo_label === "string" && photo_label.toUpperCase();
 
-  const element = useRef(null)
+  const element = useRef(null);
   return (
     <>
       <Head>

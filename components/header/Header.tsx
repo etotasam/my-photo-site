@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { StoreState } from "@/store/index";
@@ -15,7 +15,7 @@ type State = {
   dispatch: React.Dispatch<any>;
 };
 
-const Header: React.FC = () => {
+const Header = () => {
   const router = useRouter();
   const { state, dispatch }: State = useHeadersContext();
   const [isMobile, setIsMobile] = useState<boolean>();
@@ -32,7 +32,7 @@ const Header: React.FC = () => {
       viewPortwWidth = window.innerWidth;
       const isWidthMobile = viewPortwWidth < breakpoint;
       setIsMobile(isWidthMobile);
-      if (!isWidthMobile) return dispatch({ type: `inactive` });
+      if (!isWidthMobile) return dispatch({ type: `inactiveModal` });
     }
     setViewPortWidth();
     window.addEventListener("resize", setViewPortWidth);
@@ -43,17 +43,17 @@ const Header: React.FC = () => {
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
-    dispatch({ type: `inactive` });
+    dispatch({ type: `inactiveModal` });
     router.push(`/`);
     return;
   }
 
 
-  // get <header> height
+  // set <header> height to HeadersContext
   const element = useRef(null)
   useEffect(() => {
     const headerHeight: number = element.current.clientHeight;
-    dispatch({ type: `headerHeight`, payload: (state.headerHeight = headerHeight) });
+    dispatch({ type: `setHeaderHeight`, payload: headerHeight });
   }, [element])
 
   return (

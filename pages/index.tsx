@@ -32,28 +32,31 @@ const Home = ({
   locations,
   newsTitles,
 }: Params) => {
-  const [isImgLoaded, setIsImgLoaded] = useState(false);
+  const [isImgLoading, setIsImgLoading] = useState(true);
 
-  // imageのpre loading;
-  let imagesState = {};
+
+  // 意味があるかわからないけど images preload
+  const imagesPreload = () => {
+    const imagesLoadStateArr = topImagesByRandom.reduce((acc, next) => {
+      return {...acc, [next.id] : `loading`}
+  }, {})
+  topImagesByRandom.forEach(el => {
+    const img = new Image();
+    img.onload = () => {
+      imagesLoadStateArr[el.id] = `loaded`;
+      const isLoading = Object.values(imagesLoadStateArr).includes(`loading`);
+      setIsImgLoading(isLoading)
+    }
+    img.src = el.url;
+  })
+  }
+
   useEffect(() => {
-    topImagesByRandom.forEach((el) => {
-      const label = el.id.split(`_`)[0];
-      imagesState[label] = false;
-      const img = new Image();
-      img.onload = () => {
-        imagesState[label] = true;
-        const state = Object.keys(imagesState).reduce(
-          (acc: boolean, next: string) => {
-            return true === imagesState[next];
-          },
-          true
-        );
-        setIsImgLoaded(state);
-      };
-      img.src = el.url;
-    });
-  }, []);
+    imagesPreload()
+    window.addEventListener(`load`, (e) => {
+      console.log("window.load");
+    })
+  }, [])
 
   return (
     <>
@@ -65,7 +68,7 @@ const Home = ({
         <section className={`flex md:w-1/3 md:justify-end`}>
           <SiteDiscription />
         </section>
-        {!isImgLoaded && <Loading />}
+        {isImgLoading && <Loading />}
       </div>
       <section className={`mt-5`}>
         <News news={newsTitles} />
