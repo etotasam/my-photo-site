@@ -16,8 +16,8 @@ const PhotoPagination = ({ topImagesByRandom }: Params) => {
         {topImagesByRandom.map((photo, index) => (
           <li
             key={photo.id}
-            className={`rounded-[50%] border border-gray-400 w-2 h-2 mr-2 cursor-pointer duration-1000 ${
-              currentPhotoIndex === index && `bg-gray-400`
+            className={`rounded-[50%] border border-gray-400 hover:border-green-600 w-2 h-2 mr-2 cursor-pointer duration-1000 ${
+              currentPhotoIndex === index && `bg-gray-400 hover:bg-green-600`
             }`}
             onClick={() => setCurrentPhotoIndex(index)}
           ></li>
