@@ -88,33 +88,34 @@ export const getStaticProps: GetStaticProps = async () => {
   try {
     const { data: allImages }: { data: Record<string, ImagesType[]> } =
       await axios.get(`${apiUrl}/all_images`);
-    const topImagesByRandom = Object.keys(allImages)
-      .map((key) => {
-        const length = allImages[key].length;
-        if (!length) return;
-        const min = 0;
-        const max = length - 1;
-        const randam = Math.floor(Math.random() * (max + 1 - min)) + min;
-        return allImages[key][randam];
-      })
-      .filter((e) => e !== undefined);
 
-    const locations = Object.keys(allImages)
-      .map((key) => {
-        const length = allImages[key].length;
-        if (!length) return;
+    const topImagesByRandom = Object.values(allImages)
+      .map(imageInfo => {
+        const length = imageInfo.length;
+        if(!length) return
         const min = 0;
-        const max = length - 1;
-        let isSame: boolean;
-        let randomLocation: ImagesType;
-        do {
-          const randam = Math.floor(Math.random() * (max + 1 - min)) + min;
-          randomLocation = allImages[key][randam];
-          isSame = topImagesByRandom.some((e) => e.id === randomLocation.id);
-        } while (isSame);
-        return randomLocation;
+        const max = length -1;
+        const random = Math.floor(Math.random() * (max + 1 - min)) + min;
+        return imageInfo[random]
       })
-      .filter((e) => e !== undefined);
+      .filter(el => el !== undefined);
+
+      const locations = Object.values(allImages)
+        .map(ImageInfo => {
+          const length = ImageInfo.length;
+          if(!length) return;
+          const min = 0;
+          const max = length - 1;
+          let isImageSame: boolean;
+          let randomLocation: ImagesType;
+          do {
+            const random = Math.floor(Math.random() * (max + 1 - min)) + min;
+            randomLocation = ImageInfo[random];
+            isImageSame = topImagesByRandom.some(el => el.id === randomLocation.id)
+          } while (isImageSame);
+          return randomLocation;
+        })
+        .filter((e) => e !== undefined);
 
     return {
       props: {

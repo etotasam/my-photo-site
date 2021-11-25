@@ -8,7 +8,7 @@ const LoadingModal = (): JSX.Element => {
     <motion.div
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0, transition: { duration: 0.3 } }}
+      exit={{ opacity: 0, transition: { duration: 0.5 } }}
       className={`absolute top-0 left-0 w-full h-full bg-white flex justify-center items-center z-20`}
     >
       <div>

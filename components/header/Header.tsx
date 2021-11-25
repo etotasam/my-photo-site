@@ -18,28 +18,29 @@ type State = {
 const Header = () => {
   const router = useRouter();
   const { state, dispatch }: State = useHeadersContext();
-  const [isMobile, setIsMobile] = useState<boolean>();
-  const breakpoint = useSelector((state: StoreState) => state.breakpoint);
+  const switchPoint = useSelector((state: StoreState) => state.breakpoint);
 
   const apiUrl = process.env.API_URL;
   const fetcher = async (url: string) =>
     await axios.get(url).then((res) => res.data);
   const { data: locations, error } = useSWR(`${apiUrl}/locations`, fetcher);
 
-  let viewPortwWidth: number;
+
+  // viewportの幅からモバイルかどうかを判断
+  const [isMobile, setIsMobile] = useState<boolean>();
+  const setViewPortWidth = () => {
+    const viewPortwWidth = window.innerWidth;
+    const isWidthMobile = viewPortwWidth < switchPoint;
+    setIsMobile(isWidthMobile);
+    if (!isWidthMobile) return dispatch({ type: `inactiveModal` });
+  }
   useEffect(() => {
-    const setViewPortWidth = () => {
-      viewPortwWidth = window.innerWidth;
-      const isWidthMobile = viewPortwWidth < breakpoint;
-      setIsMobile(isWidthMobile);
-      if (!isWidthMobile) return dispatch({ type: `inactiveModal` });
-    }
     setViewPortWidth();
     window.addEventListener("resize", setViewPortWidth);
     return () => {
       window.removeEventListener("resize", setViewPortWidth);
     };
-  }, [isMobile]);
+  }, []);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
