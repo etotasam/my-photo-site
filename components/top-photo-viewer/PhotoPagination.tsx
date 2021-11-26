@@ -4,6 +4,7 @@ import { ImagesType } from "@/assets/type/types";
 
 type Params = {
   topImagesByRandom: ImagesType[];
+  // currentPhotoIndex: number
 };
 
 const PhotoPagination = ({ topImagesByRandom }: Params) => {

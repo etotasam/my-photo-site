@@ -53,9 +53,6 @@ const Home = ({
 
   useEffect(() => {
     imagesPreload()
-    window.addEventListener(`load`, (e) => {
-      console.log("window.load");
-    })
   }, [])
 
   return (
