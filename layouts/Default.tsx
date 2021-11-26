@@ -16,7 +16,7 @@ const Layout: React.FC<ChildElement> = ({ children }) => {
   const setHeight = (): void => {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--window-vh", `${vh}px`);
-  }
+  };
   useEffect(() => {
     setHeight();
     window.addEventListener(`resize`, setHeight);

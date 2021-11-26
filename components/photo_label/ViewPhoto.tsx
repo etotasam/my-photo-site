@@ -3,8 +3,9 @@ import NextImage from "next/image";
 import { useRouter } from "next/router";
 import { AnimatePresence, motion } from "framer-motion";
 import Loading from "../Loading";
-import { ImagesType } from "@/assets/type/types";
-import { useHeadersContext, InitialState } from "@/components/header/HeadersContext";
+import type { ImagesType } from "@/assets/type/types";
+import { useHeadersContext } from "@/components/header/HeadersContext";
+import type { InitialState } from "@/components/header/HeadersContext";
 
 type State = {
   state: InitialState;
@@ -32,12 +33,6 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
 
   // get values headerHeight and footerHeight by useContext
   const { state: contextState, dispatch }: State = useHeadersContext();
-
-  // for close Modal
-  useEffect(() => {
-    if(contextState.isModalActive === false) return;
-    dispatch({type: `inactiveModal`})
-  }, [])
 
   // check window aspect ratio
   const [imageStyle, setImageStyle] = useState<string>()
@@ -103,7 +98,15 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
     }
     setImageStyle(setCssClass())
   }
+
+
+  const toCloseModals = () => {
+    dispatch({type: `inactiveModal`})
+    dispatch({type: `loaded`})
+  }
+
   useEffect(() => {
+    toCloseModals()
     adjustContainerToImage()
     window.addEventListener(`resize`, adjustContainerToImage)
     return () => {

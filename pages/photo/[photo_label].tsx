@@ -6,7 +6,6 @@ import axios from "axios";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { ImagesType } from "@/assets/type/types";
 
-
 const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   const route = useRouter();
   const [viewImageIndex, setViewImageIndex] = useState<number>();
@@ -15,7 +14,11 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
 
   useEffect(() => {
     if (!image) return;
-    if ( Number(image) > imagesLength || Number(image) < 1 || isNaN(Number(image)) ) {
+    if (
+      Number(image) > imagesLength ||
+      Number(image) < 1 ||
+      isNaN(Number(image))
+    ) {
       route.push(`/photo/${photo_label}?image=1`);
       return;
     }
@@ -35,11 +38,15 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   });
 
   // imageのpre-loading
-  useEffect(() => {
+  const imagesPreload = () => {
     images.map((el) => {
       const img = new Image();
       img.src = el.url;
     });
+  };
+
+  useEffect(() => {
+    imagesPreload();
   }, []);
 
   const locationTitle =
@@ -55,7 +62,10 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
             : process.env.NEXT_PUBLIC_SITE_TITLE}
         </title>
       </Head>
-      <div ref={element} className={`t-main-height flex justify-center items-center`}>
+      <div
+        ref={element}
+        className={`t-main-height flex justify-center items-center`}
+      >
         {sortImagesByIdInDesc.map(
           (imageRef, index) =>
             viewImageIndex === index && (
