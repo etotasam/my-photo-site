@@ -57,6 +57,7 @@ const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
     router.push(`/photo/${location}?image=${imageIndex + 1}`);
   }
 
+
   const requiredMoveX = 100
   let touchStartPositionX: number
   const touchStart = (event: React.TouchEvent<HTMLImageElement>) => {
@@ -66,7 +67,7 @@ const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
   const touchEnd = (event: React.TouchEvent<HTMLImageElement>) => {
     const touchEndPositionX = event.changedTouches[0].pageX;
     const movePositionX = touchStartPositionX - touchEndPositionX;
-    if(Math.abs(movePositionX) < requiredMoveX) return startPhotoSlideInterval()
+    if(Math.abs(movePositionX) < requireDistanceForChangeImage) return startPhotoSlideInterval()
     if( movePositionX > 0) {
       nextPhoto()
     }else {

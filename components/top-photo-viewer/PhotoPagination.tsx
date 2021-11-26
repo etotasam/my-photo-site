@@ -3,7 +3,7 @@ import { CurrentPhotoIndexContext } from "./PhotoViewerContainer";
 import { ImagesType } from "@/assets/type/types";
 
 type Params = {
-  randomTopImages: ImagesType[];
+  topImagesByRandom: ImagesType[];
 };
 
 const PhotoPagination = ({ randomTopImages }: Params) => {
