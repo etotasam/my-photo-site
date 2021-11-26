@@ -25,9 +25,9 @@ const News = ({ news }: Props) => {
               <time className={`text-xs`}>
                 {moment(f.date).format(`YYYY/M/D`)}
               </time>
-              <div>
+              <div className={`pl-3 t-news_title-base hover:t-news_title pointer-events-none`}>
                 <Link href={`/news/${f.title}`}>
-                  <a>{f.title}</a>
+                  <a className={`pointer-events-auto`}>{f.title}</a>
                 </Link>
               </div>
             </li>

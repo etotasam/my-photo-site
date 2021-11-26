@@ -150,6 +150,34 @@
     height: calc(var(--img-adjust-width) * var(--img-aspect-ratio-for-height));
   }
 
+  .t-news_title {
+    position: relative;
+  }
+  .t-news_title-base {
+    position: relative;
+  }
+  .t-news_title-base::before {
+    content: "";
+    position: absolute;
+    top: 10%;
+    left: 0;
+    width: 3px;
+    height: 80%;
+    opacity: 0;
+    transition-duration: .5s;
+    @apply bg-green-600;
+  }
+  .t-news_title::before {
+    content: "";
+    position: absolute;
+    top: 10%;
+    left: 0;
+    width: 3px;
+    height: 80%;
+    opacity: 1;
+    transition-duration: .5s;
+    @apply bg-green-600;
+  }
 
   .link {
     @apply text-green-600;

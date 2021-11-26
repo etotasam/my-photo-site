@@ -4,6 +4,7 @@ import { ImagesType } from "@/assets/type/types";
 
 type Params = {
   topImagesByRandom: ImagesType[];
+  // currentPhotoIndex: number
 };
 
 const PhotoPagination = ({ topImagesByRandom }: Params) => {
@@ -17,7 +18,7 @@ const PhotoPagination = ({ topImagesByRandom }: Params) => {
           <li
             key={photo.id}
             className={`rounded-[50%] border border-gray-400 hover:border-green-600 w-2 h-2 mr-2 cursor-pointer duration-1000 ${
-              currentPhotoIndex === index && `bg-gray-400 hover:bg-green-600`
+              currentPhotoIndex === index && `border-green-600 bg-green-600`
             }`}
             onClick={() => setCurrentPhotoIndex(index)}
           ></li>
