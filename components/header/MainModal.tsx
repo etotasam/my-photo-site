@@ -44,8 +44,7 @@ const MainModal = ({ locations, error }: Params) => {
     >
       {error ? (
         <div>
-          <p>データ取得に失敗しました</p>
-          <p>一度更新してください</p>
+          <p>データ取得に失敗しました 一度更新してください</p>
         </div>
       ) : (
         <div className={`border border-gray-400 px-5 py-7 min-w-[200px]`}>
