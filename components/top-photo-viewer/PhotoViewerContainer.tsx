@@ -8,17 +8,14 @@ import NextImage from "next/image"
 export const CurrentPhotoIndexContext = createContext(null);
 
 type Params = {
-  topImagesByRandom: ImagesType[];
+  randomTopImages: ImagesType[];
   allImages: Record<string, ImagesType[]>;
 };
 
-const TopPhotoViewer = ({ topImagesByRandom, allImages }: Params) => {
-  const topImagesLength = topImagesByRandom.length;
+const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
+  const topImagesLength = randomTopImages.length;
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState<number>();
-  const contextValue = {
-    currentPhotoIndex,
-    setCurrentPhotoIndex,
-  };
+  const contextValue = {currentPhotoIndex, setCurrentPhotoIndex};
 
   const getInitialPhotoIndex = (): void => {
     const min = 0;
@@ -60,7 +57,7 @@ const TopPhotoViewer = ({ topImagesByRandom, allImages }: Params) => {
     router.push(`/photo/${location}?image=${imageIndex + 1}`);
   }
 
-  const requireDistanceForChangeImage = 150
+  const requiredMoveX = 100
   let touchStartPositionX: number
   const touchStart = (event: React.TouchEvent<HTMLImageElement>) => {
     touchStartPositionX = event.changedTouches[0].pageX;
@@ -69,13 +66,12 @@ const TopPhotoViewer = ({ topImagesByRandom, allImages }: Params) => {
   const touchEnd = (event: React.TouchEvent<HTMLImageElement>) => {
     const touchEndPositionX = event.changedTouches[0].pageX;
     const movePositionX = touchStartPositionX - touchEndPositionX;
-    if(Math.abs(movePositionX) < requireDistanceForChangeImage) return startPhotoSlideInterval()
+    if(Math.abs(movePositionX) < requiredMoveX) return startPhotoSlideInterval()
     if( movePositionX > 0) {
       nextPhoto()
     }else {
       prevPhoto()
     }
-    touchStartPositionX = 0;
   }
 
   // 写真のスライドをsetIntervalでセット
@@ -100,14 +96,13 @@ const TopPhotoViewer = ({ topImagesByRandom, allImages }: Params) => {
     <CurrentPhotoIndexContext.Provider value={contextValue}>
       <div className={`md:w-[60%] max-w-[700px]`}>
         <div className={`relative pt-[100%]`} style={{ touchAction: "none" }}>
-          {/* <AnimatePresence> */}
-            {topImagesByRandom.map(
+            {randomTopImages.map(
               (photo, index) =>
               <NextImage
                 onTouchStart={e => touchStart(e)}
                 onTouchEnd={e => touchEnd(e)}
                 onClick={() => clickImage(photo)}
-                className={`duration-1000 ${currentPhotoIndex === index ? `opacity-100 z-10` : `opacity-0 z-0`}`}
+                className={`cursor-pointer duration-1000 ${currentPhotoIndex === index ? `opacity-100 z-10` : `opacity-0 z-0`}`}
                 key={index}
                 src={photo.url}
                 layout="fill"
@@ -115,9 +110,8 @@ const TopPhotoViewer = ({ topImagesByRandom, allImages }: Params) => {
                 alt={``}
               />
             )}
-          {/* </AnimatePresence> */}
         </div>
-        <PhotoPagination topImagesByRandom={topImagesByRandom} />
+        <PhotoPagination randomTopImages={randomTopImages} />
       </div>
     </CurrentPhotoIndexContext.Provider>
   );

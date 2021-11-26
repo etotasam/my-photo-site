@@ -23,6 +23,7 @@ const MainModal = ({ locations, error }: Params) => {
     location: string
   ) => {
     e.preventDefault();
+    if(photo_label === location) return
     dispatch({ type: `loading` });
     router.push(`/photo/${location}`);
   }
@@ -43,30 +44,20 @@ const MainModal = ({ locations, error }: Params) => {
     >
       {error ? (
         <div>
-          <p>データ取得に失敗しました</p>
-          <p>一度更新してください</p>
+          <p>データ取得に失敗しました 一度更新してください</p>
         </div>
       ) : (
         <div className={`border border-gray-400 px-5 py-7 min-w-[200px]`}>
           <ul>
             {locations &&
-              locations.map((location) => (
+              locations.map(location => (
                 <li
                   key={location}
-                  className={`text-center pb-2 last-of-type:pb-0 ${
-                    photo_label === location
-                      ? `text-green-600`
-                      : `text-gray-500`
-                  }`}
+                  className={`text-center pb-2 last-of-type:pb-0`}
                 >
-                  {/* <Link href={`/photo/${location}`}> */}
-                    <a onClick={(e) => handleClick(e, location)} className={`cursor-pointer`}>
-                    {/* <a> */}
-                      {`${location.charAt(0).toUpperCase()}${location.slice(
-                        1
-                      )}`}
+                    <a onClick={(e) => handleClick(e, location)} className={`${photo_label === location ? `text-green-600` : `text-gray-500 cursor-pointer`}`}>
+                      {`${ location.charAt(0).toUpperCase()}${location.slice(1) }`}
                     </a>
-                  {/* </Link> */}
                 </li>
               ))}
           </ul>

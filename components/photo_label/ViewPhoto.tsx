@@ -132,20 +132,19 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
 
   // tap reaction
   let tapPositionX: number;
-  let unTapPositionX: number;
   function onTapStart(event: any, info: any) {
     tapPositionX = info.point.x;
   }
 
   const requiredMoveX = 100;
   function onTap(event: any, info: any) {
-    unTapPositionX = info.point.x;
+    const unTapPositionX = info.point.x;
     const movedPositionX = unTapPositionX - tapPositionX;
-
-    if (movedPositionX < -requiredMoveX) {
+    if(Math.abs(movedPositionX) < requiredMoveX) return
+    if (movedPositionX < 0) {
       nextPhoto();
       return;
-    } else if (requiredMoveX < movedPositionX) {
+    } else {
       prevPhoto();
       return;
     }
