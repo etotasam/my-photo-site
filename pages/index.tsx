@@ -16,7 +16,7 @@ import { ImagesType } from "@/assets/type/types";
 
 type Params = {
   allImages: Record<string, ImagesType[]>;
-  topImagesByRandom: ImagesType[];
+  randomTopImages: ImagesType[];
   locations: ImagesType[];
   newsTitles: NewsTitles[];
 };
@@ -28,7 +28,7 @@ type NewsTitles = {
 
 const Home = ({
   allImages,
-  topImagesByRandom,
+  randomTopImages,
   locations,
   newsTitles,
 }: Params) => {
@@ -37,10 +37,10 @@ const Home = ({
 
   // 意味があるかわからないけど images preload
   const imagesPreload = () => {
-    const imagesLoadStateArr = topImagesByRandom.reduce((acc, next) => {
+    const imagesLoadStateArr = randomTopImages.reduce((acc, next) => {
       return {...acc, [next.id] : `loading`}
   }, {})
-  topImagesByRandom.forEach(el => {
+  randomTopImages.forEach(el => {
     const img = new Image();
     img.onload = () => {
       imagesLoadStateArr[el.id] = `loaded`;
@@ -53,16 +53,13 @@ const Home = ({
 
   useEffect(() => {
     imagesPreload()
-    window.addEventListener(`load`, (e) => {
-      console.log("window.load");
-    })
   }, [])
 
   return (
     <>
       <div className={`md:flex md:justify-between relative`}>
         <PhotoViewerContainer
-          topImagesByRandom={topImagesByRandom}
+          randomTopImages={randomTopImages}
           allImages={allImages}
         />
         <section className={`flex md:w-1/3 md:justify-end`}>
@@ -89,7 +86,7 @@ export const getStaticProps: GetStaticProps = async () => {
     const { data: allImages }: { data: Record<string, ImagesType[]> } =
       await axios.get(`${apiUrl}/all_images`);
 
-    const topImagesByRandom = Object.values(allImages)
+    const randomTopImages = Object.values(allImages)
       .map(imageInfo => {
         const length = imageInfo.length;
         if(!length) return
@@ -111,7 +108,7 @@ export const getStaticProps: GetStaticProps = async () => {
           do {
             const random = Math.floor(Math.random() * (max + 1 - min)) + min;
             randomLocation = ImageInfo[random];
-            isImageSame = topImagesByRandom.some(el => el.id === randomLocation.id)
+            isImageSame = randomTopImages.some(el => el.id === randomLocation.id)
           } while (isImageSame);
           return randomLocation;
         })
@@ -122,7 +119,7 @@ export const getStaticProps: GetStaticProps = async () => {
         allImages,
         locations,
         newsTitles: getPostsTitles(),
-        topImagesByRandom,
+        randomTopImages,
       },
     };
   } catch (error) {
