@@ -94,8 +94,9 @@ const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
 
   return (
     <CurrentPhotoIndexContext.Provider value={contextValue}>
-      <div className={`md:w-[60%] max-w-[700px]`}>
-        <div className={`relative pt-[100%]`} style={{ touchAction: "none" }}>
+      <div className={`md:w-[65%] max-w-[770px] flex md:flex-col`}>
+      {/* <PhotoPagination randomTopImages={randomTopImages} /> */}
+        <div className={`relative pt-[90%] w-[90%] md:pt-[95%] md:w-[95%]`} >
             {randomTopImages.map(
               (photo, index) =>
               <NextImage

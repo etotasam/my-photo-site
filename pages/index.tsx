@@ -13,7 +13,6 @@ import * as fs from "fs";
 import * as path from "path";
 import { ImagesType } from "@/assets/type/types";
 
-
 type Params = {
   allImages: Record<string, ImagesType[]>;
   randomTopImages: ImagesType[];
@@ -26,43 +25,34 @@ type NewsTitles = {
   date: string;
 };
 
-const Home = ({
-  allImages,
-  randomTopImages,
-  locations,
-  newsTitles,
-}: Params) => {
+const Home = ({ allImages, randomTopImages, locations, newsTitles }: Params) => {
   const [isImgLoading, setIsImgLoading] = useState(true);
-
 
   // 意味があるかわからないけど images preload
   const imagesPreload = () => {
     const imagesLoadStateArr = randomTopImages.reduce((acc, next) => {
-      return {...acc, [next.id] : `loading`}
-  }, {})
-  randomTopImages.forEach(el => {
-    const img = new Image();
-    img.onload = () => {
-      imagesLoadStateArr[el.id] = `loaded`;
-      const isLoading = Object.values(imagesLoadStateArr).includes(`loading`);
-      setIsImgLoading(isLoading)
-    }
-    img.src = el.url;
-  })
-  }
+      return { ...acc, [next.id]: `loading` };
+    }, {});
+    randomTopImages.forEach((el) => {
+      const img = new Image();
+      img.onload = () => {
+        imagesLoadStateArr[el.id] = `loaded`;
+        const isLoading = Object.values(imagesLoadStateArr).includes(`loading`);
+        setIsImgLoading(isLoading);
+      };
+      img.src = el.url;
+    });
+  };
 
   useEffect(() => {
-    imagesPreload()
-  }, [])
+    imagesPreload();
+  }, []);
 
   return (
     <>
       <div className={`md:flex md:justify-between relative`}>
-        <PhotoViewerContainer
-          randomTopImages={randomTopImages}
-          allImages={allImages}
-        />
-        <section className={`flex md:w-1/3 md:justify-end`}>
+        <PhotoViewerContainer randomTopImages={randomTopImages} allImages={allImages} />
+        <section className={`flex md:justify-end`}>
           <SiteDiscription />
         </section>
         {isImgLoading && <Loading />}
@@ -83,36 +73,35 @@ const db = getFirestore();
 export const getStaticProps: GetStaticProps = async () => {
   const apiUrl = process.env.API_URL;
   try {
-    const { data: allImages }: { data: Record<string, ImagesType[]> } =
-      await axios.get(`${apiUrl}/all_images`);
+    const { data: allImages }: { data: Record<string, ImagesType[]> } = await axios.get(`${apiUrl}/all_images`);
 
     const randomTopImages = Object.values(allImages)
-      .map(imageInfo => {
+      .map((imageInfo) => {
         const length = imageInfo.length;
-        if(!length) return
+        if (!length) return;
         const min = 0;
-        const max = length -1;
+        const max = length - 1;
         const random = Math.floor(Math.random() * (max + 1 - min)) + min;
-        return imageInfo[random]
+        return imageInfo[random];
       })
-      .filter(el => el !== undefined);
+      .filter((el) => el !== undefined);
 
-      const locations = Object.values(allImages)
-        .map(ImageInfo => {
-          const length = ImageInfo.length;
-          if(!length) return;
-          const min = 0;
-          const max = length - 1;
-          let isImageSame: boolean;
-          let randomLocation: ImagesType;
-          do {
-            const random = Math.floor(Math.random() * (max + 1 - min)) + min;
-            randomLocation = ImageInfo[random];
-            isImageSame = randomTopImages.some(el => el.id === randomLocation.id)
-          } while (isImageSame);
-          return randomLocation;
-        })
-        .filter((e) => e !== undefined);
+    const locations = Object.values(allImages)
+      .map((ImageInfo) => {
+        const length = ImageInfo.length;
+        if (!length) return;
+        const min = 0;
+        const max = length - 1;
+        let isImageSame: boolean;
+        let randomLocation: ImagesType;
+        do {
+          const random = Math.floor(Math.random() * (max + 1 - min)) + min;
+          randomLocation = ImageInfo[random];
+          isImageSame = randomTopImages.some((el) => el.id === randomLocation.id);
+        } while (isImageSame);
+        return randomLocation;
+      })
+      .filter((e) => e !== undefined);
 
     return {
       props: {
@@ -132,11 +121,7 @@ const getPostsTitles = () => {
   const dirPath = path.join(process.cwd(), `posts`);
   return fs
     .readdirSync(dirPath, { withFileTypes: true })
-    .filter(
-      (dirEnt) =>
-        !dirEnt.isDirectory() &&
-        dirEnt.name.slice(dirEnt.name.lastIndexOf(`.`)).match(/\.mdx?/)
-    )
+    .filter((dirEnt) => !dirEnt.isDirectory() && dirEnt.name.slice(dirEnt.name.lastIndexOf(`.`)).match(/\.mdx?/))
     .map((dirEnt) => {
       const filePath = path.join(dirPath, dirEnt.name);
       return fs.readFileSync(filePath, `utf-8`);

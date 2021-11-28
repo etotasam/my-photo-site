@@ -45,6 +45,7 @@ const Header = () => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     dispatch({ type: `inactiveModal` });
+    if(router.pathname === "/") return
     router.push(`/`);
     return;
   }
