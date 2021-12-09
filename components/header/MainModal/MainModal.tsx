@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useModalStateContext, useModalDispatchContext } from "@/context/modalStateContext";
 import { useLoadStateContext, useLoadDispatchContext } from "../../../context/loadStateContext";
 import Loading from "@/components/Loading";
 
@@ -18,15 +16,13 @@ export const MainModal = ({ locations, error }: Params) => {
     photo_label = router.query.photo_label;
   }
 
-  // const { isModalActive }: InitialState = useModalStateContext();
-  // const { modalOpenDispathcer, modalCloseDispatcher } = useModalDispatchContext();
   const { isLoading } = useLoadStateContext();
   const { startLoadDispatcher, loadedDispatcher } = useLoadDispatchContext();
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, location: string) => {
     e.preventDefault();
     if (photo_label === location) return;
     startLoadDispatcher();
-    router.push(`/${location}`);
+    router.push(`/photo/${location}`);
   };
 
   // hide <Loading> when close this Modal

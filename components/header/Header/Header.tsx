@@ -10,6 +10,7 @@ import { HeaderNavOnPC } from "../HeaderNavOnPC";
 import { MainModal } from "../MainModal";
 import { ModalState, useModalStateContext, useModalDispatchContext } from "@/context/modalStateContext";
 import { useHeihgtStateContext } from "@/context/heightStateContext";
+import { useWindowResize } from "@/hooks/getWindowHeight";
 
 export const Header = () => {
   const router = useRouter();
@@ -23,20 +24,11 @@ export const Header = () => {
   const { data: locations, error } = useSWR(`${apiUrl}/locations`, fetcher);
 
   // viewportの幅からモバイルかどうかを判断
-  const [isMobile, setIsMobile] = useState<boolean>();
-  const setViewPortWidth = () => {
-    const viewPortwWidth = window.innerWidth;
-    const isWidthMobile = viewPortwWidth < breakpointWidth;
-    setIsMobile(isWidthMobile);
-    if (!isWidthMobile) return modalCloseDispatcher();
-  };
+  const { width: windowWidth } = useWindowResize();
+  const isMobile = windowWidth < breakpointWidth;
   useEffect(() => {
-    setViewPortWidth();
-    window.addEventListener("resize", setViewPortWidth);
-    return () => {
-      window.removeEventListener("resize", setViewPortWidth);
-    };
-  }, []);
+    if (isModalActive) return modalCloseDispatcher();
+  }, [isMobile]);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();

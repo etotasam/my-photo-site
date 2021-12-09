@@ -19,13 +19,8 @@ const Title = ({ date, content, title }: Props) => {
         <title>{`News ${title}`}</title>
       </Head>
       <div className={`font-serif`}>
-        <p className={`text-gray-400 pt-5`}>
-          {moment(date).format(`YYYY年M月D日`)}
-        </p>
-        <div
-          className={`py-5`}
-          dangerouslySetInnerHTML={{ __html: marked(content) }}
-        />
+        <p className={`text-gray-400 pt-5`}>{moment(date).format(`YYYY年M月D日`)}</p>
+        <div className={`py-5`} dangerouslySetInnerHTML={{ __html: marked(content) }} />
       </div>
     </>
   );
@@ -57,11 +52,7 @@ const getPostsAll = () => {
   const postsDirPath = path.join(process.cwd(), `posts`);
   return fs
     .readdirSync(postsDirPath, { withFileTypes: true })
-    .filter(
-      (dirEnt) =>
-        !dirEnt.isDirectory() &&
-        dirEnt.name.slice(dirEnt.name.lastIndexOf(`.`)).match(/\.mdx?/)
-    )
+    .filter((dirEnt) => !dirEnt.isDirectory() && dirEnt.name.slice(dirEnt.name.lastIndexOf(`.`)).match(/\.mdx?/))
     .map((dirEnt) => {
       const filePath = path.join(postsDirPath, dirEnt.name);
       return fs.readFileSync(filePath);

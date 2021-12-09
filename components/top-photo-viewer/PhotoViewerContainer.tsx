@@ -1,11 +1,9 @@
-import React, { memo, createContext } from "react";
+import React, { memo } from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import PhotoPagination from "./PhotoPagination";
 import { ImagesType } from "@/@types/types";
 import NextImage from "next/image";
-
-export const CurrentPhotoIndexContext = createContext(null);
 
 type Params = {
   randomTopImages: ImagesType[];
@@ -15,7 +13,6 @@ type Params = {
 const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
   const topImagesLength = randomTopImages.length;
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState<number>();
-  const contextValue = { currentPhotoIndex, setCurrentPhotoIndex };
 
   const getInitialPhotoIndex = (): void => {
     const min = 0;
@@ -59,11 +56,11 @@ const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
 
   const requiredMoveX = 100;
   let touchStartPositionX: number;
-  const touchStart = (event: React.TouchEvent<HTMLImageElement>) => {
+  const tapOn = (event: React.TouchEvent<HTMLImageElement>) => {
     touchStartPositionX = event.changedTouches[0].pageX;
     clearTimeout(photoSlideInterval);
   };
-  const touchEnd = (event: React.TouchEvent<HTMLImageElement>) => {
+  const tapOff = (event: React.TouchEvent<HTMLImageElement>) => {
     const touchEndPositionX = event.changedTouches[0].pageX;
     const movePositionX = touchStartPositionX - touchEndPositionX;
     if (Math.abs(movePositionX) < requiredMoveX) return startPhotoSlideInterval();
@@ -93,29 +90,30 @@ const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
   }, []);
 
   return (
-    <CurrentPhotoIndexContext.Provider value={contextValue}>
-      <div className={`md:w-[65%] max-w-[770px] flex md:flex-col`}>
-        {/* <PhotoPagination randomTopImages={randomTopImages} /> */}
-        <div className={`relative pt-[90%] w-[90%] md:pt-[95%] md:w-[95%]`}>
-          {randomTopImages.map((photo, index) => (
-            <NextImage
-              onTouchStart={(e) => touchStart(e)}
-              onTouchEnd={(e) => touchEnd(e)}
-              onClick={() => clickImage(photo)}
-              className={`cursor-pointer duration-1000 ${
-                currentPhotoIndex === index ? `opacity-100 z-10` : `opacity-0 z-0`
-              }`}
-              key={index}
-              src={photo.url}
-              layout="fill"
-              objectFit="cover"
-              alt={``}
-            />
-          ))}
-        </div>
-        <PhotoPagination randomTopImages={randomTopImages} />
+    <div className={`md:w-[65%] max-w-[700px] flex md:flex-col`}>
+      <div className={`relative pt-[90%] w-[90%] md:pt-[95%] md:w-[95%]`}>
+        {randomTopImages.map((photo, index) => (
+          <NextImage
+            onTouchStart={tapOn}
+            onTouchEnd={tapOff}
+            onClick={() => clickImage(photo)}
+            className={`cursor-pointer duration-1000 ${
+              currentPhotoIndex === index ? `opacity-100 z-10` : `opacity-0 z-0`
+            }`}
+            key={index}
+            src={photo.url}
+            layout="fill"
+            objectFit="cover"
+            alt={``}
+          />
+        ))}
       </div>
-    </CurrentPhotoIndexContext.Provider>
+      <PhotoPagination
+        randomTopImages={randomTopImages}
+        currentPhotoIndex={currentPhotoIndex}
+        setCurrentPhotoIndex={(num: number) => setCurrentPhotoIndex(num)}
+      />
+    </div>
   );
 };
 

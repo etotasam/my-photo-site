@@ -31,84 +31,95 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
   const { state: heightState, dispatch: heightDispatch } = useHeihgtStateContext();
   const { startLoadDispatcher, loadedDispatcher } = useLoadDispatchContext();
 
-  // check window aspect ratio
-  const [imageStyle, setImageStyle] = useState<string>();
-  const adjustContainerToImage = (): void => {
+  const imageSize = () => {
     const headerHeight = heightState.headerHeight;
     const footerHeight = heightState.footerHeight;
+    const windowWidth = window.innerWidth * 0.9;
     const windowHeight = window.innerHeight;
+    const elementHeight = windowHeight - (headerHeight + footerHeight);
 
-    const containerWidth: number = element.current.clientWidth;
-    document.documentElement.style.setProperty(`--img-container-width`, `${containerWidth}px`);
-    const containerHeight: number = windowHeight - (headerHeight + footerHeight);
+    const isVerticalEl = elementHeight > windowWidth;
+    const isVerticalImg = imageRef.height > imageRef.width;
 
-    const isWindowHorizontal: boolean = containerWidth > containerHeight;
-
-    // imageRefの縦位置、横位置のチェックと、各width heightの設定
-    const imgWidth = imageRef.width;
-    const imgHeight = imageRef.height;
-    document.documentElement.style.setProperty(`--img-width`, `${imgWidth}px`);
-    document.documentElement.style.setProperty(`--img-width`, `${imgHeight}px`);
-    const isImageHorizontal = imgWidth > imgHeight;
-    let maxImgWidth: number;
-    let maxImgHeight: number;
-    const maxImageLongSideNum = 850;
-    const minImageLongSideNum = 350;
-    document.documentElement.style.setProperty(`--min-img-long-side`, `${minImageLongSideNum}px`);
-    if (isImageHorizontal) {
-      const aspectRatio = imgHeight / imgWidth;
-      const maxHeight = maxImageLongSideNum * aspectRatio;
-      maxImgWidth = Math.min(imgWidth, maxImageLongSideNum);
-      maxImgHeight = Math.min(imgHeight, maxHeight);
-    } else {
-      const aspectRatio = imgWidth / imgHeight;
-      const maxWidth = maxImageLongSideNum * aspectRatio;
-      maxImgWidth = Math.min(imgWidth, maxWidth);
-      maxImgHeight = Math.min(imgHeight, maxImageLongSideNum);
-    }
-    document.documentElement.style.setProperty(`--max-img-width`, `${maxImgWidth}px`);
-    document.documentElement.style.setProperty(`--max-img-height`, `${maxImgHeight}px`);
-
-    const aspectRatioForHeight = imgHeight / imgWidth;
-    const aspectRatioForWidth = imgWidth / imgHeight;
-    document.documentElement.style.setProperty(`--img-aspect-ratio-for-height`, `${aspectRatioForHeight}`);
-    document.documentElement.style.setProperty(`--img-aspect-ratio-for-width`, `${aspectRatioForWidth}`);
-
-    const isContainerWidthLarge = containerWidth > maxImgWidth;
-    const isContainerHeightLarge = containerHeight > maxImgHeight;
-
-    const setCssClass = () => {
-      if (isImageHorizontal) {
-        if (isContainerWidthLarge && isContainerHeightLarge) return `t-img_conrainer_horizon-both-high`;
-        if (isContainerWidthLarge && !isContainerHeightLarge) return `t-img_container_horizon-width_high-height_low`;
-        if (!isContainerWidthLarge && isContainerHeightLarge) return `t-img_container_horizon-width_low-height_high`;
-        if (!isContainerWidthLarge && !isContainerHeightLarge)
-          return isWindowHorizontal
-            ? `t-img_container_horizon-both_low-window_horizon`
-            : `t-img_container_horizon-both_low-window_vertical`;
+    let width: number;
+    let height: number;
+    let minWidth: number;
+    let minHeight: number;
+    let maxWidth: number;
+    let maxHeight: number;
+    const minLongSide = 350;
+    const maxLongSide = Math.min(1000, Math.max(imageRef.width, imageRef.height));
+    if (isVerticalEl) {
+      if (isVerticalImg) {
+        const ratio = imageRef.width / imageRef.height;
+        width = windowWidth * ratio;
+        height = windowWidth;
+        minWidth = minLongSide * ratio;
+        minHeight = minLongSide;
+        maxWidth = maxLongSide * ratio;
+        maxHeight = maxLongSide;
       } else {
-        if (isContainerWidthLarge && isContainerHeightLarge) return `t-img_container_vertical-both_high`;
-        if (isContainerWidthLarge && !isContainerHeightLarge) return `t-img_container_vertical-width_high-height_low`;
-        if (!isContainerWidthLarge && isWindowHorizontal) return `t-img_container_vertical-width_low-window_horizon`;
-        if (!isContainerWidthLarge && !isWindowHorizontal) return `t-img_container_vertical-width_low-window_vertical`;
+        const ratio = imageRef.height / imageRef.width;
+        width = windowWidth;
+        height = windowWidth * ratio;
+        minWidth = minLongSide;
+        minHeight = minLongSide * ratio;
+        maxWidth = maxLongSide;
+        maxHeight = maxLongSide * ratio;
       }
-    };
-    setImageStyle(setCssClass());
+    } else {
+      if (isVerticalImg) {
+        const ratio = imageRef.width / imageRef.height;
+        width = elementHeight * ratio;
+        height = elementHeight;
+        minWidth = minLongSide * ratio;
+        minHeight = minLongSide;
+        maxWidth = maxLongSide * ratio;
+        maxHeight = maxLongSide;
+      } else {
+        const ratio = imageRef.height / imageRef.width;
+        width = elementHeight;
+        height = elementHeight * ratio;
+        minWidth = minLongSide;
+        minHeight = minLongSide * ratio;
+        maxWidth = maxLongSide;
+        maxHeight = maxLongSide * ratio;
+      }
+    }
+    return { width, height, minWidth, minHeight, maxWidth, maxHeight };
   };
+
+  type Size = {
+    width: number;
+    height: number;
+    minWidth: number;
+    minHeight: number;
+    maxWidth: number;
+    maxHeight: number;
+  };
+
+  const [size, setSize] = useState<Size>({
+    width: void 0,
+    height: void 0,
+    minWidth: void 0,
+    minHeight: void 0,
+    maxWidth: void 0,
+    maxHeight: void 0,
+  });
+  useEffect(() => {
+    toCloseModals();
+    const getSize = () => {
+      setSize(imageSize());
+    };
+    getSize();
+    window.addEventListener(`resize`, getSize);
+    return () => window.removeEventListener(`resize`, getSize);
+  }, []);
 
   const toCloseModals = () => {
     modalCloseDispatcher();
     loadedDispatcher();
   };
-
-  useEffect(() => {
-    toCloseModals();
-    adjustContainerToImage();
-    window.addEventListener(`resize`, adjustContainerToImage);
-    return () => {
-      window.removeEventListener(`resize`, adjustContainerToImage);
-    };
-  }, []);
 
   // photo transition
   function nextPhoto() {
@@ -125,26 +136,6 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
     if (!imageRef) return;
     setIsPhotoVertical(imageRef.width < imageRef.height);
   }, [imageRef]);
-
-  // tap reaction
-  let tapPositionX: number;
-  function onTapStart(event: any, info: any) {
-    tapPositionX = info.point.x;
-  }
-
-  const requiredMoveX = 100;
-  function onTap(event: any, info: any) {
-    const unTapPositionX = info.point.x;
-    const movedPositionX = unTapPositionX - tapPositionX;
-    if (Math.abs(movedPositionX) < requiredMoveX) return;
-    if (movedPositionX < 0) {
-      nextPhoto();
-      return;
-    } else {
-      prevPhoto();
-      return;
-    }
-  }
 
   // image loading check
   const [isImageLoading, setImageLoad] = useState(true);
@@ -166,16 +157,40 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
     }
   };
 
+  let tapOnPositon: number;
+  const tapOn = (e: React.TouchEvent<HTMLImageElement>) => {
+    tapOnPositon = e.changedTouches[0].pageX;
+  };
+
+  const requireNum = 100;
+  const tapOff = (e: React.TouchEvent<HTMLImageElement>) => {
+    const tapOffPosition = e.changedTouches[0].pageX;
+    const movedNum = tapOffPosition - tapOnPositon;
+    if (Math.abs(movedNum) < requireNum) return;
+    if (movedNum > 0) {
+      nextPhoto();
+    } else {
+      prevPhoto();
+    }
+  };
+
   return (
     <>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        onTapStart={onTapStart}
-        onTap={onTap}
+        onTouchStart={tapOn}
+        onTouchEnd={tapOff}
         transition={{ duration: 0.5 }}
-        className={`relative leading-3 ${imageStyle}`}
-        style={{ touchAction: "none" }}
+        className={`relative leading-3`}
+        style={{
+          width: size.width,
+          height: size.height,
+          minWidth: size.minWidth,
+          minHeight: size.minHeight,
+          maxWidth: size.maxWidth,
+          maxHeight: size.maxHeight,
+        }}
         onClick={(e) => imageTranstion(e)}
       >
         <NextImage
