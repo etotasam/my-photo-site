@@ -8,15 +8,15 @@ import axios from "axios";
 import { HeaderNavOnMobile } from "../HeaderNavOnMobile";
 import { HeaderNavOnPC } from "../HeaderNavOnPC";
 import { MainModal } from "../MainModal";
-import { InitialState, useModalStateContext, useModalDispatchContext } from "@/context/modalStateContext";
+import { ModalState, useModalStateContext, useModalDispatchContext } from "@/context/modalStateContext";
 import { useHeihgtStateContext } from "@/context/heightStateContext";
 
 export const Header = () => {
   const router = useRouter();
-  const { isModalActive }: InitialState = useModalStateContext();
+  const { isModalActive }: ModalState = useModalStateContext();
   const { modalOpenDispathcer, modalCloseDispatcher } = useModalDispatchContext();
   const { state: heightState, dispatch } = useHeihgtStateContext();
-  const switchPoint = useSelector((state: StoreState) => state.breakpoint);
+  const { breakpointWidth } = useSelector((state: StoreState) => state);
 
   const apiUrl = process.env.API_URL;
   const fetcher = async (url: string) => await axios.get(url).then((res) => res.data);
@@ -26,7 +26,7 @@ export const Header = () => {
   const [isMobile, setIsMobile] = useState<boolean>();
   const setViewPortWidth = () => {
     const viewPortwWidth = window.innerWidth;
-    const isWidthMobile = viewPortwWidth < switchPoint;
+    const isWidthMobile = viewPortwWidth < breakpointWidth;
     setIsMobile(isWidthMobile);
     if (!isWidthMobile) return modalCloseDispatcher();
   };

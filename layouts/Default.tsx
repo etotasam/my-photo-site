@@ -13,7 +13,7 @@ type ChildElement = {
 };
 
 const Layout: React.FC<ChildElement> = ({ children }) => {
-  const isModalActive = useSelector((state: StoreState) => state.isModalActive);
+  // const isModalActive = useSelector((state: StoreState) => state.isModalActive);
 
   const setHeight = (): void => {
     const vh = window.innerHeight * 0.01;
@@ -31,7 +31,7 @@ const Layout: React.FC<ChildElement> = ({ children }) => {
     <>
       <Head>
         <title>{process.env.NEXT_PUBLIC_SITE_TITLE}</title>
-        {isModalActive && <style>{`body {overflow-y: hidden}`}</style>}
+        {/* {isModalActive && <style>{`body {overflow-y: hidden}`}</style>} */}
       </Head>
       <HeightProvider>
         <LoadStateProvider>
