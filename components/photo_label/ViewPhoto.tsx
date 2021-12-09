@@ -3,14 +3,10 @@ import NextImage from "next/image";
 import { useRouter } from "next/router";
 import { AnimatePresence, motion } from "framer-motion";
 import Loading from "../Loading";
-import type { ImagesType } from "@/assets/type/types";
-import { useHeadersContext } from "@/components/header/HeadersContext";
-import type { InitialState } from "@/components/header/HeadersContext";
-
-type State = {
-  state: InitialState;
-  dispatch: React.Dispatch<any>;
-};
+import type { ImagesType } from "@/@types/types";
+import { useModalStateContext, useModalDispatchContext } from "@/context/modalStateContext";
+import { useHeihgtStateContext } from "@/context/heightStateContext";
+import { useLoadDispatchContext } from "@/context/loadStateContext";
 
 type Params = {
   imageRef: ImagesType;
@@ -31,13 +27,15 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
   }
 
   // get values headerHeight and footerHeight by useContext
-  const { state: contextState, dispatch }: State = useHeadersContext();
+  const { modalOpenDispathcer, modalCloseDispatcher } = useModalDispatchContext();
+  const { state: heightState, dispatch: heightDispatch } = useHeihgtStateContext();
+  const { startLoadDispatcher, loadedDispatcher } = useLoadDispatchContext();
 
   // check window aspect ratio
   const [imageStyle, setImageStyle] = useState<string>();
   const adjustContainerToImage = (): void => {
-    const headerHeight = contextState.headerHeight;
-    const footerHeight = contextState.footerHeight;
+    const headerHeight = heightState.headerHeight;
+    const footerHeight = heightState.footerHeight;
     const windowHeight = window.innerHeight;
 
     const containerWidth: number = element.current.clientWidth;
@@ -84,7 +82,10 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
         if (isContainerWidthLarge && isContainerHeightLarge) return `t-img_conrainer_horizon-both-high`;
         if (isContainerWidthLarge && !isContainerHeightLarge) return `t-img_container_horizon-width_high-height_low`;
         if (!isContainerWidthLarge && isContainerHeightLarge) return `t-img_container_horizon-width_low-height_high`;
-        if (!isContainerWidthLarge && !isContainerHeightLarge) return isWindowHorizontal ? `t-img_container_horizon-both_low-window_horizon` : `t-img_container_horizon-both_low-window_vertical`;
+        if (!isContainerWidthLarge && !isContainerHeightLarge)
+          return isWindowHorizontal
+            ? `t-img_container_horizon-both_low-window_horizon`
+            : `t-img_container_horizon-both_low-window_vertical`;
       } else {
         if (isContainerWidthLarge && isContainerHeightLarge) return `t-img_container_vertical-both_high`;
         if (isContainerWidthLarge && !isContainerHeightLarge) return `t-img_container_vertical-width_high-height_low`;
@@ -96,8 +97,8 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
   };
 
   const toCloseModals = () => {
-    dispatch({ type: `inactiveModal` });
-    dispatch({ type: `loaded` });
+    modalCloseDispatcher();
+    loadedDispatcher();
   };
 
   useEffect(() => {

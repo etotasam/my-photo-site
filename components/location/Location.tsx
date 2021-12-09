@@ -1,6 +1,6 @@
 import React, { memo, useState, useEffect, useRef } from "react";
 import Photo from "./Photo";
-import { ImagesType } from "@/assets/type/types";
+import { ImagesType } from "@/@types/types";
 
 type props = {
   locations: ImagesType[];
@@ -21,8 +21,7 @@ const Location = ({ locations }: props) => {
       const scrollPositionY = window.scrollY;
       const windowBottomY = scrollPositionY + window.innerHeight;
       if (element.current === null) return;
-      const breakpoint =
-        element.current.getBoundingClientRect().top + scrollPositionY;
+      const breakpoint = element.current.getBoundingClientRect().top + scrollPositionY;
       if (breakpoint < windowBottomY) {
         setHasBreak(true);
       }
@@ -42,19 +41,12 @@ const Location = ({ locations }: props) => {
   return (
     <>
       <div className={`flex justify-center items-center`}>
-        <h1 className={`t-under-border text-green-600 mt-5 mx-auto`}>
-          Location
-        </h1>
+        <h1 className={`t-under-border text-green-600 mt-5 mx-auto`}>Location</h1>
       </div>
       <ul ref={element} className={`mt-10 mx-auto`}>
         {locations &&
           locations.map((location, index) => (
-            <Photo
-              index={index}
-              key={location.id}
-              location={location}
-              hasBreak={hasBreak}
-            />
+            <Photo index={index} key={location.id} location={location} hasBreak={hasBreak} />
           ))}
       </ul>
     </>

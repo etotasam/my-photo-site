@@ -11,7 +11,7 @@ import moment from "moment";
 import Loading from "@/components/Loading";
 import * as fs from "fs";
 import * as path from "path";
-import { ImagesType } from "@/assets/type/types";
+import { ImagesType } from "@/@types/types";
 
 type Params = {
   allImages: Record<string, ImagesType[]>;
