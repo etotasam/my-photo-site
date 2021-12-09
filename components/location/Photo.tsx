@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import NextImage from "next/image";
-import { ImagesType } from "@/assets/type/types";
+import { ImagesType } from "@/@types/types";
 
 type Props = {
   location: ImagesType;

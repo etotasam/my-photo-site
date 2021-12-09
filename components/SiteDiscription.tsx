@@ -11,7 +11,7 @@ const SiteDiscription = () => {
         </h1>
         <p className={`t-font-clamp-sm leading-7 md:leading-9 tracking-widest`}>
           ただ写真を掲載しているwebサイトです <br />
-          写真が好きで血迷って4×5カメラを買った事もあります <br />
+          血迷って4×5カメラを買った事もあります <br />
           良く旅行に行ったのでその時の写真が多いです <br />
           写真を眺めてると撮りたくなります <br />
           自分の写真を眺めてると特に撮りたくなります <br />

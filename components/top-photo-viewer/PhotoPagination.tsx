@@ -1,24 +1,33 @@
-import React, { useContext } from "react";
-import { CurrentPhotoIndexContext } from "./PhotoViewerContainer";
-import { ImagesType } from "@/assets/type/types";
+import React from "react";
+import { ImagesType } from "@/@types/types";
 
 type Params = {
   randomTopImages: ImagesType[];
+  currentPhotoIndex: number;
+  setCurrentPhotoIndex: (num: number) => void;
 };
 
-const PhotoPagination = ({ randomTopImages }: Params) => {
-  const { currentPhotoIndex, setCurrentPhotoIndex } = useContext(CurrentPhotoIndexContext);
+const PhotoPagination = ({ randomTopImages, currentPhotoIndex, setCurrentPhotoIndex }: Params) => {
   return (
     <>
-      <ul className={`flex list-none mt-1 p-1`}>
+      <ul className={`w-[10%] md:w-full min-h-[30px] list-none flex flex-col md:flex-row items-center`}>
         {randomTopImages.map((photo, index) => (
           <li
             key={photo.id}
-            className={`rounded-[50%] border border-gray-400 hover:border-green-600 w-2 h-2 mr-2 cursor-pointer duration-1000 ${
-              currentPhotoIndex === index && `border-green-600 bg-green-600`
-            }`}
+            className={`group flex justify-center items-center w-[10px] h-[10px] cursor-pointer ${
+              index !== 0 && `mt-4`
+            } md:mt-0 ${index !== 0 && `md:ml-2`}`}
             onClick={() => setCurrentPhotoIndex(index)}
-          ></li>
+          >
+            <span
+              className={`block rounded-[50%] duration-500
+              ${
+                currentPhotoIndex === index
+                  ? `bg-green-600 w-2 h-2`
+                  : `bg-gray-400 w-1 h-1 group-hover:w-2 group-hover:h-2`
+              }`}
+            ></span>
+          </li>
         ))}
       </ul>
     </>

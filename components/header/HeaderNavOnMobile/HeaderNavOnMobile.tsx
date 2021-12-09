@@ -1,22 +1,20 @@
 import React, { useEffect } from "react";
-import { useHeadersContext, InitialState } from "./HeadersContext";
+import { useModalStateContext, useModalDispatchContext, ModalState } from "@/context/modalStateContext";
 import { motion, useAnimation } from "framer-motion";
 
-type State = {
-  state: InitialState;
-  dispatch: React.Dispatch<any>;
-};
-
 const Humburger = () => {
-  const { state, dispatch }: State = useHeadersContext();
+  const { isModalActive }: ModalState = useModalStateContext();
+  const { modalOpenDispathcer, modalCloseDispatcher } = useModalDispatchContext();
 
   function toggleModal() {
-    dispatch({ type: state.isModalActive ? `inactiveModal` : `activeModal` });
+    if (isModalActive) return modalCloseDispatcher();
+    modalOpenDispathcer();
+    // dispatch({ type: isModalActive ? `inactiveModal` : `activeModal` });
   }
 
   useEffect(() => {
     startAnimate();
-  }, [state.isModalActive]);
+  }, [isModalActive]);
 
   useEffect(() => {
     return () => {};
@@ -24,25 +22,20 @@ const Humburger = () => {
 
   const controls = useAnimation();
   const startAnimate = () => {
-    if (state.isModalActive) {
-      controls.start(
-        (i) => i === 0 && { rotate: 45, y: "9.5px", width: "100%" }
-      );
+    if (isModalActive) {
+      controls.start((i) => i === 0 && { rotate: 45, y: "9.5px", width: "100%" });
       controls.start((i) => i === 1 && { opacity: 0, width: "0%" });
       controls.start((i) => i === 2 && { rotate: -45, y: "-9.5px" });
     }
-    if (!state.isModalActive) {
+    if (!isModalActive) {
       controls.start((i) => i === 0 && { rotate: 0, y: "0px", width: "50%" });
       controls.start((i) => i === 1 && { opacity: 1, width: "75%" });
       controls.start((i) => i === 2 && { rotate: 0, y: "0px" });
     }
-  }
+  };
   return (
     <>
-      <div
-        onClick={toggleModal}
-        className={`relative w-[25px] h-[20px] cursor-pointer`}
-      >
+      <div onClick={toggleModal} className={`relative w-[25px] h-[20px] cursor-pointer`}>
         <motion.span
           className={`absolute top-0 left-0 inline-block w-1/2 h-[1px] bg-gray-700`}
           custom={0}
@@ -66,6 +59,4 @@ const Humburger = () => {
   );
 };
 
-const HeaderNavOnMobile = () => <Humburger />;
-
-export default HeaderNavOnMobile;
+export const HeaderNavOnMobile = () => <Humburger />;
