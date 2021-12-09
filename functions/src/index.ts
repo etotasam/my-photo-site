@@ -42,7 +42,7 @@ export const addImageUrl = functions.region(`asia-northeast1`).storage.object().
     const firebaseUrl = `https://firebasestorage.googleapis.com/v0/b/${obj.bucket}/o/${topCollection}%2F${photoLabel}%2F${fileName}?alt=media`
 
     // 画像のwidth heightを取得
-    const {data: res} = await axios.get(firebaseUrl, { responseType: 'arraybuffer' })
+    const { data: res } = await axios.get(firebaseUrl, { responseType: 'arraybuffer' })
     const img = imageSize(res as string)
 
     // const res = await fetch(firebaseUrl, { responseType: 'arraybuffer' })

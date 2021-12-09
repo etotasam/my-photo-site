@@ -1,17 +1,19 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { StoreState } from "@/store/index"; //useSelectorのstateの型
-import Header from "@/components/header/Header";
+import { Header } from "@/components/header/Header";
 import Footer from "@/components/Footer";
 import Head from "next/head";
-import { HeadersContextProvider } from "@/components/header/HeadersContext";
+import { ModalStateProvider } from "@/context/modalStateContext";
+import { LoadStateProvider } from "@/context/loadStateContext";
+import { HeightProvider } from "@/context/heightStateContext";
 
 type ChildElement = {
   children: JSX.Element | JSX.Element[];
 };
 
 const Layout: React.FC<ChildElement> = ({ children }) => {
-  const isModalActive = useSelector((state: StoreState) => state.isModalActive);
+  // const isModalActive = useSelector((state: StoreState) => state.isModalActive);
 
   const setHeight = (): void => {
     const vh = window.innerHeight * 0.01;
@@ -29,13 +31,17 @@ const Layout: React.FC<ChildElement> = ({ children }) => {
     <>
       <Head>
         <title>{process.env.NEXT_PUBLIC_SITE_TITLE}</title>
-        {isModalActive && <style>{`body {overflow-y: hidden}`}</style>}
+        {/* {isModalActive && <style>{`body {overflow-y: hidden}`}</style>} */}
       </Head>
-      <HeadersContextProvider>
-        <Header />
-        <main className={`t-main`}>{children}</main>
+      <HeightProvider>
+        <LoadStateProvider>
+          <ModalStateProvider>
+            <Header />
+            <main className={`t-main`}>{children}</main>
+          </ModalStateProvider>
+        </LoadStateProvider>
         <Footer />
-      </HeadersContextProvider>
+      </HeightProvider>
     </>
   );
 };
