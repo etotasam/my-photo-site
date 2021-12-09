@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
-import { CurrentPhotoIndexContext } from "./PhotoViewerContainer";
+import React from "react";
 import { ImagesType } from "@/@types/types";
 
 type Params = {
   randomTopImages: ImagesType[];
+  currentPhotoIndex: number;
+  setCurrentPhotoIndex: (num: number) => void;
 };
 
-const PhotoPagination = ({ randomTopImages }: Params) => {
-  const { currentPhotoIndex, setCurrentPhotoIndex } = useContext(CurrentPhotoIndexContext);
+const PhotoPagination = ({ randomTopImages, currentPhotoIndex, setCurrentPhotoIndex }: Params) => {
   return (
     <>
       <ul className={`w-[10%] md:w-full min-h-[30px] list-none flex flex-col md:flex-row items-center`}>

@@ -23,8 +23,7 @@ export const HeaderNavOnPC = ({ locations, error }: Params) => {
         <p>データ取得に失敗しました。一度更新してください</p>
       ) : (
         <ul className={`flex`}>
-          {location &&
-            locations &&
+          {locations &&
             locations.map((el: string) => (
               <li key={el} className={`pr-3 text-gray-900 font-thin`}>
                 <motion.a

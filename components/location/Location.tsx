@@ -11,10 +11,15 @@ type props = {
 const Location = ({ locations }: props) => {
   const element = useRef(null);
   const [elTopPotion, setElTopPotion] = useState<number>();
+  const [hasBreak, setHasBreak] = useState<boolean>(false);
   const { height } = useWindowResize();
   const scrollPoition = useScrollPosition();
   const breakpoint = height + scrollPoition;
-  const hasBreak = breakpoint > elTopPotion;
+  const breakState = breakpoint > elTopPotion;
+  if (breakState && !hasBreak) {
+    setHasBreak(true);
+  }
+
   useEffect(() => {
     const elTopPotion = element.current.getBoundingClientRect().top;
     setElTopPotion(elTopPotion);
