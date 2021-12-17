@@ -182,12 +182,6 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
     };
   }, []);
 
-  if (isImageLoading)
-    return (
-      <AnimatePresence>
-        <Loading />
-      </AnimatePresence>
-    );
   return (
     <>
       <motion.div
@@ -216,8 +210,10 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
           priority={true}
           layout={`fill`}
           objectFit={`contain`}
+          onLoad={photoLoaded}
         />
       </motion.div>
+      <AnimatePresence>{isImageLoading && <Loading />}</AnimatePresence>
     </>
   );
 };
