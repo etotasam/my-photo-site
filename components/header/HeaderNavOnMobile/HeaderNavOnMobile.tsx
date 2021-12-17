@@ -9,7 +9,6 @@ const Humburger = () => {
   function toggleModal() {
     if (isModalActive) return modalCloseDispatcher();
     modalOpenDispathcer();
-    // dispatch({ type: isModalActive ? `inactiveModal` : `activeModal` });
   }
 
   useEffect(() => {
@@ -35,7 +34,7 @@ const Humburger = () => {
   };
   return (
     <>
-      <div onClick={toggleModal} className={`relative w-[25px] h-[20px] cursor-pointer`}>
+      <div data-testid={`humburger`} onClick={toggleModal} className={`relative w-[25px] h-[20px] cursor-pointer`}>
         <motion.span
           className={`absolute top-0 left-0 inline-block w-1/2 h-[1px] bg-gray-700`}
           custom={0}

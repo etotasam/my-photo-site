@@ -3,8 +3,6 @@ import dynamic from "next/dynamic";
 import Default from "@/layouts/Default";
 import CSRLayout from "../layouts/CSRLayout";
 import Plain from "@/layouts/Plain";
-import { Provider } from "react-redux";
-import store from "@/store/index";
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
@@ -28,31 +26,25 @@ function MyApp({ Component, pageProps }) {
     case "csr": {
       return (
         <NoSSR>
-          <Provider store={store}>
-            <CSRLayout>
-              <Component {...pageProps} />
-            </CSRLayout>
-          </Provider>
+          <CSRLayout>
+            <Component {...pageProps} />
+          </CSRLayout>
         </NoSSR>
       );
     }
     case "plain": {
       return (
-        <Provider store={store}>
-          <Plain>
-            <Component {...pageProps} />
-          </Plain>
-        </Provider>
+        <Plain>
+          <Component {...pageProps} />
+        </Plain>
       );
     }
     default: {
       return (
         <>
-          <Provider store={store}>
-            <Default>
-              <Component {...pageProps} />
-            </Default>
-          </Provider>
+          <Default>
+            <Component {...pageProps} />
+          </Default>
         </>
       );
     }

@@ -18,13 +18,8 @@ const News = ({ news }: Props) => {
       <ul className={`mt-5`}>
         {news &&
           news.map((f, index) => (
-            <li
-              key={index}
-              className={`flex flex-col font-thin text-sm mb-2 last-of-type:mb-0`}
-            >
-              <time className={`text-xs`}>
-                {moment(f.date).format(`YYYY/M/D`)}
-              </time>
+            <li key={index} className={`flex flex-col font-thin text-sm mb-2 last-of-type:mb-0`}>
+              <time className={`text-xs`}>{moment(f.date).format(`YYYY/M/D`)}</time>
               <div className={`pl-3 t-news_title-base hover:t-news_title pointer-events-none`}>
                 <Link href={`/news/${f.title}`}>
                   <a className={`pointer-events-auto`}>{f.title}</a>

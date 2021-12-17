@@ -56,11 +56,11 @@ const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
 
   const requiredMoveX = 100;
   let touchStartPositionX: number;
-  const touchStart = (event: React.TouchEvent<HTMLImageElement>) => {
+  const tapOn = (event: React.TouchEvent<HTMLImageElement>) => {
     touchStartPositionX = event.changedTouches[0].pageX;
     clearTimeout(photoSlideInterval);
   };
-  const touchEnd = (event: React.TouchEvent<HTMLImageElement>) => {
+  const tapOff = (event: React.TouchEvent<HTMLImageElement>) => {
     const touchEndPositionX = event.changedTouches[0].pageX;
     const movePositionX = touchStartPositionX - touchEndPositionX;
     if (Math.abs(movePositionX) < requiredMoveX) return startPhotoSlideInterval();
@@ -90,12 +90,12 @@ const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
   }, []);
 
   return (
-    <div className={`md:w-[65%] max-w-[770px] flex md:flex-col`}>
+    <div className={`md:w-[65%] max-w-[700px] flex md:flex-col`}>
       <div className={`relative pt-[90%] w-[90%] md:pt-[95%] md:w-[95%]`}>
         {randomTopImages.map((photo, index) => (
           <NextImage
-            onTouchStart={touchStart}
-            onTouchEnd={touchEnd}
+            onTouchStart={tapOn}
+            onTouchEnd={tapOff}
             onClick={() => clickImage(photo)}
             className={`cursor-pointer duration-1000 ${
               currentPhotoIndex === index ? `opacity-100 z-10` : `opacity-0 z-0`

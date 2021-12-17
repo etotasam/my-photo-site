@@ -9,7 +9,7 @@ type props = {
 };
 
 const Location = ({ locations }: props) => {
-  const element = useRef(null);
+  const element = useRef(void 0);
   const [elTopPotion, setElTopPotion] = useState<number>();
   const [hasBreak, setHasBreak] = useState<boolean>(false);
   const { height } = useWindowResize();
