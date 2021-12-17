@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeaderNavOnPC test 1 1`] = `
+<DocumentFragment>
+  <ul
+    class="flex"
+    data-testid="pc"
+  >
+    <li
+      class="pr-3 text-gray-900 font-thin"
+    >
+      <a
+        class="inline-block cursor-pointer text-green-600"
+      >
+        Egypt
+      </a>
+    </li>
+    <li
+      class="pr-3 text-gray-900 font-thin"
+    >
+      <a
+        class="inline-block cursor-pointer false"
+      >
+        Landscape
+      </a>
+    </li>
+  </ul>
+</DocumentFragment>
+`;

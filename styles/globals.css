@@ -19,18 +19,9 @@
   :root {
     --header-height: 45px;
     --footer-height: 50px;
-
     --window-vh: 1vh;
-    --min-img-long-side: 1px;
-    --max-img-width: 1px;
-    --max-img-height: 1px;
-    --img-container-width: 1px;
-    --img-aspect-ratio-for-height: 1;
-    --img-aspect-ratio-for-width: 1;
-
     --inner-main-div-height: calc((var(--window-vh) * 100) - (var(--header-height)) - (var(--footer-height)));
     --img-container-height: calc((var(--window-vh) * 100) - (var(--header-height)) - (var(--footer-height)));
-    --img-adjust-width: calc(var(--img-container-width) * (3 / 4))
   }
 
   .t-header-height {
@@ -62,94 +53,6 @@
     text-orientation: upright;
   }
 
-
-  /*
-  * image horizontal
-  */
-  .t-img_conrainer_horizon-both-high {
-    width: var(--max-img-width);
-    height: calc(var(--max-img-width) * var(--img-aspect-ratio-for-height));
-  }
-  .t-img_container_horizon-width_high-height_low {
-    min-width: var(--min-img-long-side);
-    width: calc(var(--img-container-height) * var(--img-aspect-ratio-for-width));
-
-    min-height: calc(var(--min-img-long-side) * var(--img-aspect-ratio-for-height));
-    height: var(--img-container-height);
-  }
-  .t-img_container_horizon-width_low-height_high {
-    width: var(--img-container-width);
-
-    height: calc(var(--img-container-width) * var(--img-aspect-ratio-for-height));
-  }
-  .t-img_container_horizon-both_low-window_horizon {
-    min-width: var(--min-img-long-side);
-    width: calc(var(--img-container-height) * var(--img-aspect-ratio-for-width));
-
-    min-height: calc(var(--min-img-long-side) * var(--img-aspect-ratio-for-height));
-    height: var(--img-container-height);
-    max-height: calc(var(--img-container-width) * var(--img-aspect-ratio-for-height));
-  }
-  .t-img_container_horizon-both_low-window_vertical {
-    width: var(--img-container-width);
-    min-width: var(--min-img-long-side);
-    height: calc(var(--img-container-width) * var(--img-aspect-ratio-for-height));
-    min-height: calc(var(--min-img-long-side) * var(--img-aspect-ratio-for-height))
-  }
-
-  /*
-  * image vertical
-  */
-  .t-img_container_vertical-both_high {
-    width: calc(var(--max-img-height) * var(--img-aspect-ratio-for-width));
-    height: var(--max-img-height);
-  }
-  .t-img_container_vertical-width_high-height_low {
-    min-width: calc(var(--min-img-long-side) * var(--img-aspect-ratio-for-width));
-    width: calc(var(--img-container-height) * var(--img-aspect-ratio-for-width));
-
-    min-height: var(--min-img-long-side);
-    height: var(--img-container-height);
-  }
-  .t-img_container_vertical-width_low-window_horizon {
-    min-width: calc(var(--min-img-long-side) * var(--img-aspect-ratio-for-width));
-    width: calc(var(--img-container-height) * var(--img-aspect-ratio-for-width));
-
-    min-height: var(--min-img-long-side);
-    height: var(--img-container-height)
-  }
-  .t-img_container_vertical-width_low-window_vertical {
-    width: var(--img-adjust-width);
-    height: calc(var(--img-adjust-width) * var(--img-aspect-ratio-for-height));
-  }
-
-
-  /*
-  * image vertical
-  */
-  .t-img-vertical-container-both-high {
-    width: calc(var(--max-img-height) * var(--img-aspect-ratio-for-width));
-    height: var(--max-img-height);
-  }
-  .t-img-vertical-container-width_high-height_low {
-    min-width: calc(var(--min-img-long-side) * var(--img-aspect-ratio-for-width));
-    width: calc(var(--img-container-height) * var(--img-aspect-ratio-for-width));
-
-    min-height: var(--min-img-long-side);
-    height: var(--img-container-height);
-  }
-  .t-img-vertical-container-width_low-window_horizon {
-    min-width: calc(var(--min-img-long-side) * var(--img-aspect-ratio-for-width));
-    width: calc(var(--img-container-height) * var(--img-aspect-ratio-for-width));
-
-    min-height: var(--min-img-long-side);
-    height: var(--img-container-height)
-  }
-  .t-img-vertical-container-width_low-window_vertical {
-    width: var(--img-adjust-width);
-    height: calc(var(--img-adjust-width) * var(--img-aspect-ratio-for-height));
-  }
-
   .t-news_title {
     position: relative;
   }
@@ -164,7 +67,7 @@
     width: 3px;
     height: 60%;
     opacity: 0;
-    transition-duration: .5s;
+    transition-duration: 0.5s;
     @apply bg-green-600;
   }
   .t-news_title::before {
@@ -175,7 +78,7 @@
     width: 3px;
     height: 60%;
     opacity: 1;
-    transition-duration: .5s;
+    transition-duration: 0.5s;
     @apply bg-green-600;
   }
 
