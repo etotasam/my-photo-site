@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { StoreState } from "@/store/index"; //useSelectorのstateの型
 import { Header } from "@/components/header/Header";
 import Footer from "@/components/Footer";
 import Head from "next/head";
