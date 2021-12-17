@@ -1,23 +1,26 @@
 import React from "react";
 import { MainModal } from "./MainModal";
-import { render, screen } from "@testing-library/react";
-import { useRouter } from "next/router";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { cleanup } from "@testing-library/react-hooks";
 
-jest.mock(`next/router`, () => ({
-  useRouter() {
-    return {
-      query: {},
-    };
-  },
-}));
+const nextRouer = jest.spyOn(require("next/router"), `useRouter`);
+const push = jest.fn();
+const query = { photo_label: "egypt" };
+nextRouer.mockImplementation(() => {
+  return { push, query };
+});
 
 const props = {
   locations: ["jordan", "egypt"],
   error: { message: "エラーです", name: "エラー" },
 };
 
+afterEach(() => {
+  cleanup();
+});
+
 describe(`MainModal`, () => {
-  it(`propsでの error の受け取りの有無`, () => {
+  it(`propsで受け取るerrorの有無での表示検証 `, () => {
     const { rerender, queryByText } = render(<MainModal {...props} />);
     expect(queryByText(/データ取得/)).toBeInTheDocument();
     expect(queryByText(/Jordan/)).toBeNull();
@@ -26,5 +29,12 @@ describe(`MainModal`, () => {
     expect(queryByText(/データ取得/)).toBeNull();
     expect(queryByText(/Jordan/)).toBeInTheDocument();
     expect(queryByText(/Egypt/)).toBeInTheDocument();
+  });
+
+  it(`router.pushのURLの検証`, async () => {
+    const { queryByText } = render(<MainModal locations={props.locations} />);
+    expect(queryByText(/Jordan/)).toBeInTheDocument();
+    fireEvent.click(queryByText(/Jordan/));
+    expect(push).toHaveBeenCalledWith(`/photo/jordan`);
   });
 });
