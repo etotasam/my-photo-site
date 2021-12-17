@@ -2,9 +2,6 @@ import React, { useContext, createContext, useReducer } from "react";
 
 const initialState = {
   isModalActive: false,
-  isLoading: false,
-  headerHeight: 1,
-  footerHeight: 1,
 };
 
 export type ModalState = typeof initialState;

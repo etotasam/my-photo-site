@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 type Params = {
   locations: string[];
-  error: Error;
+  error?: Error;
 };
 
 export const HeaderNavOnPC = ({ locations, error }: Params) => {
@@ -22,7 +22,7 @@ export const HeaderNavOnPC = ({ locations, error }: Params) => {
       {error ? (
         <p>データ取得に失敗しました。一度更新してください</p>
       ) : (
-        <ul className={`flex`}>
+        <ul data-testid={`pc`} className={`flex`}>
           {locations &&
             locations.map((el: string) => (
               <li key={el} className={`pr-3 text-gray-900 font-thin`}>

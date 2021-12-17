@@ -1,7 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import { StoreState } from "@/store/index";
 import { AnimatePresence } from "framer-motion";
 import useSWR from "swr";
 import axios from "axios";
@@ -9,16 +7,16 @@ import { HeaderNavOnMobile } from "../HeaderNavOnMobile";
 import { HeaderNavOnPC } from "../HeaderNavOnPC";
 import { MainModal } from "../MainModal";
 import { ModalState, useModalStateContext, useModalDispatchContext } from "@/context/modalStateContext";
-import { useHeihgtStateContext } from "@/context/heightStateContext";
+import { useHeihgtDispatchContext } from "@/context/heightStateContext";
 import { useWindowResize } from "@/hooks/getWindowHeight";
 
 export const Header = () => {
   const router = useRouter();
   const { isModalActive }: ModalState = useModalStateContext();
   const { modalOpenDispathcer, modalCloseDispatcher } = useModalDispatchContext();
-  const { state: heightState, dispatch } = useHeihgtStateContext();
-  const { breakpointWidth } = useSelector((state: StoreState) => state);
+  const { setHeaderHeightDispatcher } = useHeihgtDispatchContext();
 
+  const breakpointWidth = 768;
   const apiUrl = process.env.API_URL;
   const fetcher = async (url: string) => await axios.get(url).then((res) => res.data);
   const { data: locations, error } = useSWR(`${apiUrl}/locations`, fetcher);
@@ -42,7 +40,7 @@ export const Header = () => {
   const element = useRef(null);
   useEffect(() => {
     const headerHeight: number = element.current.clientHeight;
-    dispatch({ type: `setHeaderHeight`, payload: headerHeight });
+    setHeaderHeightDispatcher(headerHeight);
   }, [element]);
 
   return (

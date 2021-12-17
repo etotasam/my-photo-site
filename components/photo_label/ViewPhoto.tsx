@@ -27,13 +27,11 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
   }
 
   // get values headerHeight and footerHeight by useContext
-  const { modalOpenDispathcer, modalCloseDispatcher } = useModalDispatchContext();
-  const { state: heightState, dispatch: heightDispatch } = useHeihgtStateContext();
-  const { startLoadDispatcher, loadedDispatcher } = useLoadDispatchContext();
+  const { modalCloseDispatcher } = useModalDispatchContext();
+  const { headerHeight, footerHeight } = useHeihgtStateContext();
+  const { loadedDispatcher } = useLoadDispatchContext();
 
   const imageSize = () => {
-    const headerHeight = heightState.headerHeight;
-    const footerHeight = heightState.footerHeight;
     const windowWidth = window.innerWidth * 0.9;
     const windowHeight = window.innerHeight;
     const elementHeight = windowHeight - (headerHeight + footerHeight);
@@ -174,6 +172,16 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
     }
   };
 
+  // wait image loading
+  useEffect(() => {
+    const img = new Image();
+    img.src = imageRef.url;
+    img.onload = () => {
+      photoLoaded();
+    };
+  }, []);
+
+  if (isImageLoading) return <Loading />;
   return (
     <>
       <motion.div
@@ -202,9 +210,7 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
           priority={true}
           layout={`fill`}
           objectFit={`contain`}
-          onLoad={photoLoaded}
         />
-        <AnimatePresence>{isImageLoading && <Loading />}</AnimatePresence>
       </motion.div>
     </>
   );

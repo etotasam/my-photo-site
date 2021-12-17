@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header windowのwidthのサイズで表示されるコンポーネントが変わる 1`] = `
+<DocumentFragment>
+  <header
+    class="t-header-height bg-white fixed flex justify-center top-0 left-0 w-full z-50 duration-300 bg-opacity-90"
+  >
+    <div
+      class="flex relative items-center w-[90%] max-w-[1024px] mx-auto"
+    >
+      <ul
+        class="flex"
+        data-testid="pc"
+      />
+      <div
+        class="absolute right-0"
+      >
+        <a
+          class="n-title-font text-green-600 text-xl tracking-wider font-extralight"
+          href="/"
+        />
+      </div>
+    </div>
+  </header>
+</DocumentFragment>
+`;
