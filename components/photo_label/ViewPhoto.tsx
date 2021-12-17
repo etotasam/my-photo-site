@@ -174,6 +174,7 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
 
   // wait image loading
   useEffect(() => {
+    setImageLoad(true);
     const img = new Image();
     img.src = imageRef.url;
     img.onload = () => {
@@ -181,7 +182,12 @@ const ViewPhoto = ({ imageRef, length, element }: Params) => {
     };
   }, []);
 
-  if (isImageLoading) return <Loading />;
+  if (isImageLoading)
+    return (
+      <AnimatePresence>
+        <Loading />
+      </AnimatePresence>
+    );
   return (
     <>
       <motion.div
