@@ -1,6 +1,6 @@
 import React from "react";
-import { HeaderNavOnPC } from "./HeaderNavOnPC";
-import { render } from "@testing-library/react";
+import { HeaderNavOnPC } from ".";
+import { render, screen } from "@testing-library/react";
 // import { useRouter } from "next/router";
 import { cleanup } from "@testing-library/react-hooks";
 
