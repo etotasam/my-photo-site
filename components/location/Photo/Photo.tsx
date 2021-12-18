@@ -10,12 +10,12 @@ type Props = {
   hasBreak: boolean;
 };
 
-const ImagePhoto = ({ location, index, hasBreak }: Props) => {
+export const Photo = ({ location, index, hasBreak }: Props) => {
   const label = location.id.split(`_`)[0];
   return (
     <>
       {hasBreak ? (
-        <li key={location.id} className={`w-1/2 md:w-1/5 mb-5 inline-block`}>
+        <li data-testid={`breaked`} key={location.id} className={`w-1/2 md:w-1/5 mb-5 inline-block`}>
           <Link href={`/photo/${label}`}>
             <motion.a
               initial={{ opacity: 0, y: 20 }}
@@ -40,6 +40,7 @@ const ImagePhoto = ({ location, index, hasBreak }: Props) => {
             </motion.a>
           </Link>
           <motion.h2
+            data-testid={`h2`}
             animate={{ opacity: [0, 1], x: [-5, 0] }}
             transition={{ duration: 0.5, delay: index / 2 }}
             className={`font-extralight`}
@@ -48,10 +49,8 @@ const ImagePhoto = ({ location, index, hasBreak }: Props) => {
           </motion.h2>
         </li>
       ) : (
-        <li className={`w-1/2 md:w-1/5 mb-5 inline-block`}></li>
+        <li data-testid={`non-break`} className={`w-1/2 md:w-1/5 mb-5 inline-block`}></li>
       )}
     </>
   );
 };
-
-export default ImagePhoto;

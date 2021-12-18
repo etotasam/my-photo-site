@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PhotoViewerContainer from "@/components/top-photo-viewer/PhotoViewerContainer";
 import SiteDiscription from "@/components/SiteDiscription";
-import Location from "@/components/location/Location";
+import { Location } from "@/components/location/Location/Location";
 import News from "@/components/News";
 import { GetStaticProps } from "next";
 import { getFirestore } from "firebase/firestore";
@@ -12,6 +12,7 @@ import Loading from "@/components/Loading";
 import * as fs from "fs";
 import * as path from "path";
 import { ImagesType } from "@/@types/types";
+import { fetchAllImagesApi } from "@/api/imagesApi";
 
 type Params = {
   allImages: Record<string, ImagesType[]>;
@@ -71,9 +72,8 @@ const Home = ({ allImages, randomTopImages, locations, newsTitles }: Params) => 
 const db = getFirestore();
 
 export const getStaticProps: GetStaticProps = async () => {
-  const apiUrl = process.env.API_URL;
   try {
-    const { data: allImages }: { data: Record<string, ImagesType[]> } = await axios.get(`${apiUrl}/all_images`);
+    const allImages = await fetchAllImagesApi();
 
     const randomTopImages = Object.values(allImages)
       .map((imageInfo) => {
