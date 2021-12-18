@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeaderNavOnMobile isModalActive の値によって実行される関数が切り替わる 1`] = `
+<DocumentFragment>
+  <div
+    class="relative w-[25px] h-[20px] cursor-pointer"
+    data-testid="humburger"
+  >
+    <span
+      class="absolute top-0 left-0 inline-block w-1/2 h-[1px] bg-gray-700"
+    />
+    <span
+      class="absolute top-[45%] left-0 inline-block w-3/4 h-[1px] bg-gray-700"
+    />
+    <span
+      class="absolute bottom-0 left-0 inline-block w-full h-[1px] bg-gray-700"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`HeaderNavOnMobile isModalActive の値によって実行される関数が切り替わる 2`] = `
+<DocumentFragment>
+  <div
+    class="relative w-[25px] h-[20px] cursor-pointer"
+    data-testid="humburger"
+  >
+    <span
+      class="absolute top-0 left-0 inline-block w-1/2 h-[1px] bg-gray-700"
+      style="width: 0%; transform: none;"
+    />
+    <span
+      class="absolute top-[45%] left-0 inline-block w-3/4 h-[1px] bg-gray-700"
+      style="opacity: 0; width: 0%;"
+    />
+    <span
+      class="absolute bottom-0 left-0 inline-block w-full h-[1px] bg-gray-700"
+      style="transform: none;"
+    />
+  </div>
+</DocumentFragment>
+`;
