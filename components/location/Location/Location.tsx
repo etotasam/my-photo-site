@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect, useRef } from "react";
-import Photo from "./Photo";
+import { Photo } from "../Photo";
 import { ImagesType } from "@/@types/types";
 import { useWindowResize } from "@/hooks/getWindowHeight";
 import { useScrollPosition } from "@/hooks/getScrollPosition";
@@ -8,7 +8,7 @@ type props = {
   locations: ImagesType[];
 };
 
-const Location = ({ locations }: props) => {
+export const Location = memo(({ locations }: props) => {
   const element = useRef(void 0);
   const [elTopPotion, setElTopPotion] = useState<number>();
   const [hasBreak, setHasBreak] = useState<boolean>(false);
@@ -38,6 +38,4 @@ const Location = ({ locations }: props) => {
       </ul>
     </>
   );
-};
-
-export default memo(Location);
+});
