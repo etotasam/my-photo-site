@@ -1,5 +1,5 @@
 import React from "react";
-import { MainModal } from "./MainModal";
+import { MainModal } from ".";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { cleanup } from "@testing-library/react-hooks";
 
@@ -21,14 +21,16 @@ afterEach(() => {
 
 describe(`MainModal`, () => {
   it(`propsで受け取るerrorの有無での表示検証 `, () => {
-    const { rerender, queryByText } = render(<MainModal {...props} />);
+    const { rerender, queryByText, asFragment } = render(<MainModal {...props} />);
     expect(queryByText(/データ取得/)).toBeInTheDocument();
     expect(queryByText(/Jordan/)).toBeNull();
     expect(queryByText(/Egypt/)).toBeNull();
+    expect(asFragment()).toMatchSnapshot();
     rerender(<MainModal locations={props.locations} />);
     expect(queryByText(/データ取得/)).toBeNull();
     expect(queryByText(/Jordan/)).toBeInTheDocument();
     expect(queryByText(/Egypt/)).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it(`router.pushのURLの検証`, async () => {
