@@ -47,6 +47,7 @@ const Home = ({ allImages, randomTopImages, locations, newsTitles }: Params) => 
 
   useEffect(() => {
     imagesPreload();
+    return () => imagesPreload();
   }, []);
 
   return (

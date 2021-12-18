@@ -63,7 +63,7 @@ export const ViewPhoto = ({ imageRef, length }: Params) => {
   };
 
   useEffect(() => {
-    imageLoad();
+    // imageLoad();
     closeModal();
   }, []);
 
@@ -98,13 +98,13 @@ export const ViewPhoto = ({ imageRef, length }: Params) => {
     }
   };
 
-  if (isImageLoading) {
-    return (
-      <AnimatePresence>
-        <Loading />
-      </AnimatePresence>
-    );
-  }
+  // if (isImageLoading) {
+  //   return (
+  //     <AnimatePresence>
+  //       <Loading />
+  //     </AnimatePresence>
+  //   );
+  // }
   return (
     <AnimatePresence>
       <motion.div
@@ -133,8 +133,14 @@ export const ViewPhoto = ({ imageRef, length }: Params) => {
           priority={true}
           layout={`fill`}
           objectFit={`contain`}
+          onLoad={closeLoadingModal}
         />
       </motion.div>
+      {isImageLoading && (
+        <AnimatePresence>
+          <Loading />
+        </AnimatePresence>
+      )}
     </AnimatePresence>
   );
 };
