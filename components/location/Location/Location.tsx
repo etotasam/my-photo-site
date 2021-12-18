@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect, useRef } from "react";
-import Photo from "./Photo";
+import { Photo } from "../Photo";
 import { ImagesType } from "@/@types/types";
 import { useWindowResize } from "@/hooks/getWindowHeight";
 import { useScrollPosition } from "@/hooks/getScrollPosition";
