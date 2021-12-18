@@ -6,6 +6,7 @@ import imageSize from 'image-size';
 import axios from 'axios';
 
 const db = admin.firestore()
+// @ts-ignore
 const app = express()
 // @ts-ignore
 app.use(`/`, router)

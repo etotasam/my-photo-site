@@ -1,10 +1,11 @@
 import React, { memo, useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import ViewPhoto from "@/components/photo_label/ViewPhoto";
+import { ViewPhoto } from "@/components/photo_label/ViewPhoto";
 import axios from "axios";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { ImagesType } from "@/@types/types";
+import { fetchLocationsApi, fetchImagesByLocationApi } from "@/api/imagesApi";
 
 const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   const route = useRouter();
@@ -60,20 +61,15 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
       <div ref={element} className={`t-main-height flex justify-center items-center`}>
         {sortImagesByIdInDesc.map(
           (imageRef, index) =>
-            viewImageIndex === index && (
-              <ViewPhoto key={imageRef.id} imageRef={imageRef} length={imagesLength} element={element} />
-            )
+            viewImageIndex === index && <ViewPhoto key={imageRef.id} imageRef={imageRef} length={imagesLength} />
         )}
       </div>
     </>
   );
 };
 
-const apiUrl = process.env.API_URL;
-
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data: locations }: { data: string[] } = await axios.get(`${apiUrl}/locations`);
-
+  const locations = await fetchLocationsApi();
   const params = locations.map((doc) => {
     return { params: { photo_label: doc } };
   });
@@ -84,7 +80,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params: { photo_label } }) => {
-  const { data: images }: { data: ImagesType[] } = await axios.get(`${apiUrl}/images/${photo_label}`);
+  const images = await fetchImagesByLocationApi(photo_label as string);
 
   return {
     props: {

@@ -1,5 +1,5 @@
 import React from "react";
-import { HeaderNavOnMobile } from "./HeaderNavOnMobile";
+import { HeaderNavOnMobile } from ".";
 import { render, screen, cleanup } from "@testing-library/react";
 import { useModalStateContext, useModalDispatchContext, ModalStateProvider } from "../../../context/modalStateContext";
 import * as modalContext from "../../../context/modalStateContext";
@@ -30,7 +30,7 @@ afterEach(() => {
 
 describe(`HeaderNavOnMobile`, () => {
   it(`isModalActive の値によって実行される関数が切り替わる`, async () => {
-    const { rerender } = render(
+    const { asFragment, rerender } = render(
       <ModalStateProvider>
         <HeaderNavOnMobile />
       </ModalStateProvider>
@@ -38,6 +38,7 @@ describe(`HeaderNavOnMobile`, () => {
     expect(screen.queryByTestId(`humburger`)).toBeInTheDocument();
     userEvent.click(screen.queryByTestId(`humburger`));
     expect(modalOpenDispatchSpy).toBeCalledTimes(1);
+    expect(asFragment()).toMatchSnapshot();
     useModalStateSpy.mockImplementation(() => ({ isModalActive: true }));
     rerender(
       <ModalStateProvider>
@@ -46,5 +47,6 @@ describe(`HeaderNavOnMobile`, () => {
     );
     userEvent.click(await screen.findByTestId(`humburger`));
     expect(modalCloseDispatchSpy).toBeCalledTimes(1);
+    expect(asFragment()).toMatchSnapshot();
   });
 });
