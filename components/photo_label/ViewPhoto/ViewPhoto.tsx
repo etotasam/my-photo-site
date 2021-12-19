@@ -105,6 +105,7 @@ export const ViewPhoto = ({ imageRef, length }: Params) => {
   //     </AnimatePresence>
   //   );
   // }
+
   return (
     <AnimatePresence>
       <motion.div
