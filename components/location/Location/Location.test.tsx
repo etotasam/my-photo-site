@@ -1,5 +1,5 @@
 import React from "react";
-import { Location } from ".";
+import Location from "./Location";
 import { render } from "@testing-library/react";
 import { cleanup } from "@testing-library/react-hooks";
 
