@@ -8,7 +8,7 @@ import { HeaderNavOnPC } from "../HeaderNavOnPC";
 import { MainModal } from "../MainModal";
 import { ModalState, useModalStateContext, useModalDispatchContext } from "@/context/modalStateContext";
 import { useHeihgtDispatchContext } from "@/context/heightStateContext";
-import { useWindowResize } from "@/hooks/getWindowHeight";
+import { useWindowResize } from "@/hooks";
 
 export const Header = () => {
   const router = useRouter();

@@ -61,7 +61,7 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
       <div ref={element} className={`t-main-height flex justify-center items-center`}>
         {sortImagesByIdInDesc.map(
           (imageRef, index) =>
-            viewImageIndex === index && <ViewPhoto key={imageRef.id} imageRef={imageRef} length={imagesLength} />
+            viewImageIndex === index && <ViewPhoto key={imageRef.id} imageRef={imageRef} imagesLength={imagesLength} />
         )}
       </div>
     </>

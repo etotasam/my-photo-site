@@ -7,14 +7,14 @@ import type { ImagesType } from "@/@types/types";
 import { useModalStateContext, useModalDispatchContext } from "@/context/modalStateContext";
 import { useHeihgtStateContext } from "@/context/heightStateContext";
 import { useLoadDispatchContext } from "@/context/loadStateContext";
-import { useViewPhotoSize } from "@/hooks/useViewPhotoSize";
+import { useViewPhotoSize } from "@/hooks";
 
 type Params = {
   imageRef: ImagesType;
-  length: number;
+  imagesLength: number;
 };
 
-export const ViewPhoto = ({ imageRef, length }: Params) => {
+export const ViewPhoto = ({ imageRef, imagesLength: lastImage }: Params) => {
   const router = useRouter();
   const { photo_label, image } = router.query;
   const { headerHeight, footerHeight } = useHeihgtStateContext();
@@ -23,8 +23,8 @@ export const ViewPhoto = ({ imageRef, length }: Params) => {
   function prevPhoto() {
     let prev: number;
     if (image) prev = Number(image) - 1;
-    if (!image) prev = length;
-    if (prev < 1) return router.push(`/photo/${photo_label}?image=${length}`);
+    if (!image) prev = lastImage;
+    if (prev < 1) return router.push(`/photo/${photo_label}?image=${lastImage}`);
     router.push(`/photo/${photo_label}?image=${prev}`);
   }
 
@@ -33,7 +33,7 @@ export const ViewPhoto = ({ imageRef, length }: Params) => {
     let next: number;
     if (image) next = Number(image) + 1;
     if (!image) next = 2;
-    if (next > length) return router.push(`/photo/${photo_label}?image=1`);
+    if (next > lastImage) return router.push(`/photo/${photo_label}?image=1`);
     router.push(`/photo/${photo_label}?image=${next}`);
   }
 
@@ -106,8 +106,9 @@ export const ViewPhoto = ({ imageRef, length }: Params) => {
   //   );
   // }
   return (
-    <AnimatePresence>
+    <>
       <motion.div
+        data-testid={`imageWrap`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         onTouchStart={tapOn}
@@ -127,8 +128,8 @@ export const ViewPhoto = ({ imageRef, length }: Params) => {
         <NextImage
           className={`cursor-pointer`}
           src={imageRef.url}
-          width={imageRef.width}
-          height={imageRef.height}
+          // width={imageRef.width}
+          // height={imageRef.height}
           alt={``}
           priority={true}
           layout={`fill`}
@@ -141,6 +142,6 @@ export const ViewPhoto = ({ imageRef, length }: Params) => {
           <Loading />
         </AnimatePresence>
       )}
-    </AnimatePresence>
+    </>
   );
 };

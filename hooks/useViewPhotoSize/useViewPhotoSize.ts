@@ -74,7 +74,14 @@ export const useViewPhotoSize = (imageRef: ImagesType, footerHeight: number, hea
         maxHeight = maxLongSide * ratio;
       }
     }
-    setSize({ width, height, minWidth, minHeight, maxWidth, maxHeight })
+    setSize({
+      width: Math.floor(width),
+      height: Math.floor(height),
+      minWidth: Math.floor(minWidth),
+      minHeight: Math.floor(minHeight),
+      maxWidth: Math.floor(maxWidth),
+      maxHeight: Math.floor(maxHeight)
+    })
   }
 
   useEffect(() => {

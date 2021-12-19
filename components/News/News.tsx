@@ -9,7 +9,7 @@ type Props = {
   }[];
 };
 
-const News = ({ news }: Props) => {
+export const News = ({ news }: Props) => {
   return (
     <>
       <div className={`flex justify-center`}>
@@ -31,5 +31,3 @@ const News = ({ news }: Props) => {
     </>
   );
 };
-
-export default News;

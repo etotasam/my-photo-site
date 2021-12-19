@@ -1,8 +1,7 @@
 import React, { memo, useState, useEffect, useRef } from "react";
 import { Photo } from "../Photo";
 import { ImagesType } from "@/@types/types";
-import { useWindowResize } from "@/hooks/getWindowHeight";
-import { useScrollPosition } from "@/hooks/getScrollPosition";
+import { useScrollPosition, useWindowResize } from "@/hooks";
 
 type props = {
   locations: ImagesType[];

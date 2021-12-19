@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PhotoViewerContainer from "@/components/top-photo-viewer/PhotoViewerContainer";
 import SiteDiscription from "@/components/SiteDiscription";
 import Location from "@/components/location/Location/Location";
-import News from "@/components/News";
+import { News } from "@/components/News";
 import { GetStaticProps } from "next";
 import { getFirestore } from "firebase/firestore";
 import axios from "axios";
