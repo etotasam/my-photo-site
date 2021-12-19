@@ -16,7 +16,7 @@ export const Photo = ({ location, index, hasBreak }: Props) => {
     <>
       {hasBreak ? (
         <li data-testid={`breaked`} key={location.id} className={`w-1/2 md:w-1/5 mb-5 inline-block`}>
-          <Link href={`/photo/${label}`}>
+          <Link href={`/photo/${label}?image=1`}>
             <motion.a
               initial={{ opacity: 0, y: 20 }}
               animate={{

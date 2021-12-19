@@ -14,7 +14,7 @@ export const HeaderNavOnPC = ({ locations, error }: Params) => {
   const toLink = (location: string, e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault;
     if (location === label) return;
-    router.push(`/photo/${location}`);
+    router.push(`/photo/${location}?image=1`);
   };
 
   return (
