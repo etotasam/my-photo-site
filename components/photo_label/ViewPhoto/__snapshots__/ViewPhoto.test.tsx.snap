@@ -5,7 +5,7 @@ exports[`ViewPhoto 横長イメージの表示サイズの検証 1`] = `
   <div
     class="relative leading-3"
     data-testid="imageWrap"
-    style="opacity: 0; width: 798px; height: 1198px; min-width: 233px; min-height: 350px; max-width: 666px; max-height: 1000px;"
+    style="width: 798px; height: 1198px; min-width: 233px; min-height: 350px; max-width: 666px; max-height: 1000px; opacity: 0;"
   >
     <div
       style="display: block; overflow: hidden; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; margin: 0px;"
@@ -98,7 +98,7 @@ exports[`ViewPhoto 横長イメージの表示サイズの検証 2`] = `
   <div
     class="relative leading-3"
     data-testid="imageWrap"
-    style="opacity: 0; width: 420px; height: 630px; min-width: 233px; min-height: 350px; max-width: 666px; max-height: 1000px;"
+    style="width: 420px; height: 630px; min-width: 233px; min-height: 350px; max-width: 666px; max-height: 1000px; opacity: 0;"
   >
     <div
       style="display: block; overflow: hidden; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; margin: 0px;"
@@ -191,7 +191,7 @@ exports[`ViewPhoto 縦長イメージの表示サイズの検証 1`] = `
   <div
     class="relative leading-3"
     data-testid="imageWrap"
-    style="opacity: 0; width: 1198px; height: 798px; min-width: 350px; min-height: 233px; max-width: 1000px; max-height: 666px;"
+    style="width: 1198px; height: 798px; min-width: 350px; min-height: 233px; max-width: 1000px; max-height: 666px; opacity: 0;"
   >
     <div
       style="display: block; overflow: hidden; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; margin: 0px;"
@@ -284,7 +284,7 @@ exports[`ViewPhoto 縦長イメージの表示サイズの検証 2`] = `
   <div
     class="relative leading-3"
     data-testid="imageWrap"
-    style="opacity: 0; width: 630px; height: 420px; min-width: 350px; min-height: 233px; max-width: 1000px; max-height: 666px;"
+    style="width: 630px; height: 420px; min-width: 350px; min-height: 233px; max-width: 1000px; max-height: 666px; opacity: 0;"
   >
     <div
       style="display: block; overflow: hidden; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; margin: 0px;"

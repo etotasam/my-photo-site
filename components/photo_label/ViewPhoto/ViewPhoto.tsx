@@ -18,13 +18,13 @@ export const ViewPhoto = ({ imageRef, imagesLength: lastImage }: Params) => {
   const router = useRouter();
   const { photo_label, image } = router.query;
   const { headerHeight, footerHeight } = useHeihgtStateContext();
-  const size = useViewPhotoSize(imageRef, footerHeight, headerHeight);
+  const size = useViewPhotoSize(imageRef, headerHeight, footerHeight);
 
   function prevPhoto() {
-    let prev: number;
+    let prev: number | undefined;
     if (image) prev = Number(image) - 1;
     if (!image) prev = lastImage;
-    if (prev < 1) return router.push(`/photo/${photo_label}?image=${lastImage}`);
+    if (prev! < 1) return router.push(`/photo/${photo_label}?image=${lastImage}`);
     router.push(`/photo/${photo_label}?image=${prev}`);
   }
 
@@ -33,8 +33,8 @@ export const ViewPhoto = ({ imageRef, imagesLength: lastImage }: Params) => {
     let next: number;
     if (image) next = Number(image) + 1;
     if (!image) next = 2;
-    if (next > lastImage) return router.push(`/photo/${photo_label}?image=1`);
-    router.push(`/photo/${photo_label}?image=${next}`);
+    if (next! > lastImage) return router.push(`/photo/${photo_label}?image=1`);
+    router.push(`/photo/${photo_label}?image=${next!}`);
   }
 
   // image loading check
@@ -45,14 +45,7 @@ export const ViewPhoto = ({ imageRef, imagesLength: lastImage }: Params) => {
   function openLoadingModal() {
     setIsImageLoading(true);
   }
-  function imageLoad() {
-    openLoadingModal();
-    const img = new Image();
-    img.src = imageRef.url;
-    img.onload = () => {
-      closeLoadingModal();
-    };
-  }
+
   // get values headerHeight and footerHeight by useContext
   const { modalCloseDispatcher } = useModalDispatchContext();
   const { loadedDispatcher } = useLoadDispatchContext();
@@ -98,13 +91,6 @@ export const ViewPhoto = ({ imageRef, imagesLength: lastImage }: Params) => {
     }
   };
 
-  // if (isImageLoading) {
-  //   return (
-  //     <AnimatePresence>
-  //       <Loading />
-  //     </AnimatePresence>
-  //   );
-  // }
   return (
     <>
       <motion.div
@@ -115,14 +101,7 @@ export const ViewPhoto = ({ imageRef, imagesLength: lastImage }: Params) => {
         onTouchEnd={tapOff}
         transition={{ duration: 0.5 }}
         className={`relative leading-3`}
-        style={{
-          width: size.width,
-          height: size.height,
-          minWidth: size.minWidth,
-          minHeight: size.minHeight,
-          maxWidth: size.maxWidth,
-          maxHeight: size.maxHeight,
-        }}
+        style={{ ...size }}
         onClick={(e) => imageTranstion(e)}
       >
         <NextImage

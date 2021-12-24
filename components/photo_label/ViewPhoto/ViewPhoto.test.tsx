@@ -2,6 +2,7 @@ import React from "react";
 import { ViewPhoto } from ".";
 import { fireEvent, render, screen, act } from "@testing-library/react";
 import { cleanup } from "@testing-library/react-hooks";
+import renderer from "react-test-renderer";
 
 type ImagesType = {
   documentId: string;
@@ -49,7 +50,7 @@ describe(`ViewPhoto`, () => {
   it(`横長イメージの表示サイズの検証`, () => {
     image.width = 800;
     image.height = 1200;
-    const { asFragment, getByTestId } = render(<ViewPhoto {...props} />);
+    const { asFragment } = render(<ViewPhoto {...props} />);
     act(() => resizeWidth(1800, 1200));
     expect(asFragment()).toMatchSnapshot();
     act(() => resizeWidth(700, 1000));

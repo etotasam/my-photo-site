@@ -98,7 +98,7 @@ export const getStaticProps: GetStaticProps = async () => {
         do {
           const random = Math.floor(Math.random() * (max + 1 - min)) + min;
           randomLocation = ImageInfo[random];
-          isImageSame = randomTopImages.some((el) => el.id === randomLocation.id);
+          isImageSame = randomTopImages.some((el) => el!.id === randomLocation.id);
         } while (isImageSame);
         return randomLocation;
       })
@@ -114,6 +114,14 @@ export const getStaticProps: GetStaticProps = async () => {
     };
   } catch (error) {
     console.log(error);
+    return {
+      props: {
+        allImages: [],
+        locations: [],
+        newsTitles: getPostsTitles(),
+        randomTopImages: [],
+      },
+    };
   }
 };
 
@@ -134,16 +142,16 @@ const getPostsTitles = () => {
     })
     .filter((el) => el !== undefined)
     .sort((a, b) => {
-      const NumA = moment(a.data.date);
-      const NumB = moment(b.data.date);
+      const NumA = moment(a!.data.date);
+      const NumB = moment(b!.data.date);
       if (NumA > NumB) return -1;
       if (NumA < NumB) return 1;
       return 0;
     })
     .map((f) => {
       return {
-        title: f.data.title,
-        date: moment(f.data.date).toJSON(),
+        title: f!.data.title,
+        date: moment(f!.data.date).toJSON(),
       };
     })
     .slice(0, 5);

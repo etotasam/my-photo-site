@@ -12,7 +12,7 @@ type Params = {
 
 const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
   const topImagesLength = randomTopImages.length;
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState<number>();
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState<number>(0);
 
   const getInitialPhotoIndex = (): void => {
     const min = 0;

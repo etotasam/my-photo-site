@@ -8,20 +8,21 @@ type props = {
 };
 
 const Location = ({ locations }: props) => {
-  const element = useRef(void 0);
-  const [elTopPotion, setElTopPotion] = useState<number>();
+  const [refTopPotion, setRefTopPotion] = useState<number>(0);
   const [hasBreak, setHasBreak] = useState<boolean>(false);
   const { height } = useWindowResize();
   const scrollPoition = useScrollPosition();
   const breakpoint = height + scrollPoition;
-  const breakState = breakpoint > elTopPotion;
+  const breakState = breakpoint > refTopPotion;
   if (breakState && !hasBreak) {
     setHasBreak(true);
   }
 
+  const ref = useRef<HTMLUListElement>(null);
   useEffect(() => {
-    const elTopPotion = element.current.getBoundingClientRect().top;
-    setElTopPotion(elTopPotion);
+    if (!ref.current) return;
+    const refTopPotion = ref.current.getBoundingClientRect().top;
+    setRefTopPotion(refTopPotion);
   }, []);
 
   return (
@@ -29,7 +30,7 @@ const Location = ({ locations }: props) => {
       <div className={`flex justify-center items-center`}>
         <h1 className={`t-under-border text-green-600 mt-5 mx-auto`}>Location</h1>
       </div>
-      <ul ref={element} className={`mt-10 mx-auto`}>
+      <ul ref={ref} className={`mt-10 mx-auto`}>
         {locations &&
           locations.map((location, index) => (
             <Photo index={index} key={location.id} location={location} hasBreak={hasBreak} />

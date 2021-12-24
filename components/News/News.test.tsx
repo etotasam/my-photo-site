@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { News } from ".";
 
-const props: Props = {
+const dummy: Props = {
   news: [
     {
       title: "タイトル1",
@@ -26,9 +26,9 @@ type Props = {
 
 describe(`News`, () => {
   it(`propsで受けたnews一覧がリストで表示されているか`, () => {
-    const { getAllByRole } = render(<News {...props} />);
+    const { getAllByRole } = render(<News {...dummy} />);
     const renderLists = getAllByRole(`listitem`).map((list) => list.textContent);
-    const PropsLists = props.news.map((el) => `${el.date.replaceAll(`-`, `/`)}${el.title}`);
-    expect(renderLists).toEqual(PropsLists);
+    const dummyLists = dummy.news.map((el) => `${el.date.replaceAll(`-`, `/`)}${el.title}`);
+    expect(renderLists).toEqual(dummyLists);
   });
 });

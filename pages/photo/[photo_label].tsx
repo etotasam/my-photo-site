@@ -2,7 +2,6 @@ import React, { memo, useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { ViewPhoto } from "@/components/photo_label/ViewPhoto";
-import axios from "axios";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { ImagesType } from "@/@types/types";
 import { fetchLocationsApi, fetchImagesByLocationApi } from "@/api/imagesApi";
@@ -79,7 +78,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params: { photo_label } }) => {
+export const getStaticProps: GetStaticProps = async ({
+  params: { photo_label },
+}: {
+  params: { photo_label: string };
+}) => {
   const images = await fetchImagesByLocationApi(photo_label as string);
 
   return {

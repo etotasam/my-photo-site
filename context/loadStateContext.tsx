@@ -13,8 +13,8 @@ type Action = {
 
 const loadStateContext = createContext(initialState);
 const loadDispatchContext = createContext({
-  startLoadDispatcher: () => void 0,
-  loadedDispatcher: () => void 0,
+  startLoadDispatcher: () => {},
+  loadedDispatcher: () => {},
 });
 
 export const useLoadStateContext = () => useContext(loadStateContext);

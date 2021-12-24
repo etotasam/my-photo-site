@@ -37,15 +37,16 @@ export const Header = () => {
   };
 
   // set <header> height to HeadersContext
-  const element = useRef(null);
+  const ref = useRef<HTMLElement>(null);
   useEffect(() => {
-    const headerHeight: number = element.current.clientHeight;
+    if (!ref.current) return;
+    const headerHeight: number = ref.current.clientHeight;
     setHeaderHeightDispatcher(headerHeight);
-  }, [element]);
+  }, [ref]);
 
   return (
     <header
-      ref={element}
+      ref={ref}
       className={`t-header-height bg-white fixed flex justify-center top-0 left-0 w-full z-50 duration-300 ${
         isModalActive ? `bg-opacity-100` : `bg-opacity-90`
       }`}
