@@ -28,8 +28,8 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   }, [photo_label]);
 
   const sortImagesByIdInDesc: ImagesType[] = images.sort((a, b) => {
-    if (a.id > b.id) return -1;
-    if (a.id < b.id) return 1;
+    if (Number(a.id.split(`_`).pop()) > Number(b.id.split(`_`).pop())) return -1;
+    if (Number(a.id.split(`_`).pop()) < Number(b.id.split(`_`).pop())) return 1;
     return 0;
   });
 

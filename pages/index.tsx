@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
 import PhotoViewerContainer from "@/components/top-photo-viewer/PhotoViewerContainer";
 import SiteDiscription from "@/components/SiteDiscription";
 import Location from "@/components/location/Location/Location";
 import { News } from "@/components/News";
 import { GetStaticProps } from "next";
 import { getFirestore } from "firebase/firestore";
-import axios from "axios";
 import matter from "gray-matter";
 import moment from "moment";
-import Loading from "@/components/Loading";
 import * as fs from "fs";
 import * as path from "path";
 import { ImagesType } from "@/@types/types";
@@ -27,29 +24,6 @@ type NewsTitles = {
 };
 
 const Home = ({ allImages, randomTopImages, locations, newsTitles }: Params) => {
-  const [isImgLoading, setIsImgLoading] = useState(true);
-
-  // 意味があるかわからないけど images preload
-  const imagesPreload = () => {
-    const imagesLoadStateArr = randomTopImages.reduce((acc, next) => {
-      return { ...acc, [next.id]: `loading` };
-    }, {});
-    randomTopImages.forEach((el) => {
-      const img = new Image();
-      img.onload = () => {
-        imagesLoadStateArr[el.id] = `loaded`;
-        const isLoading = Object.values(imagesLoadStateArr).includes(`loading`);
-        setIsImgLoading(isLoading);
-      };
-      img.src = el.url;
-    });
-  };
-
-  useEffect(() => {
-    imagesPreload();
-    return () => imagesPreload();
-  }, []);
-
   return (
     <>
       <div className={`md:flex md:justify-between relative`}>
@@ -57,7 +31,6 @@ const Home = ({ allImages, randomTopImages, locations, newsTitles }: Params) => 
         <section className={`flex md:justify-end`}>
           <SiteDiscription />
         </section>
-        {isImgLoading && <Loading />}
       </div>
       <section className={`mt-5`}>
         <News news={newsTitles} />

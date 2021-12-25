@@ -1,7 +1,7 @@
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
-const LoadingModal = (): JSX.Element => {
+export const Loading = (): JSX.Element => {
   const loading = Array.from("Loading...");
 
   return (
@@ -35,5 +35,3 @@ const LoadingModal = (): JSX.Element => {
     </motion.div>
   );
 };
-
-export default LoadingModal;

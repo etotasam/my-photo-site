@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import NextImage from "next/image";
 import { useRouter } from "next/router";
 import { AnimatePresence, motion } from "framer-motion";
-import Loading from "../../Loading";
+import { Loading } from "@/components/Loading";
 import type { ImagesType } from "@/@types/types";
-import { useModalStateContext, useModalDispatchContext } from "@/context/modalStateContext";
+import { useModalDispatchContext } from "@/context/modalStateContext";
 import { useHeihgtStateContext } from "@/context/heightStateContext";
 import { useLoadDispatchContext } from "@/context/loadStateContext";
 import { useViewPhotoSize } from "@/hooks";
@@ -41,9 +41,6 @@ export const ViewPhoto = ({ imageRef, imagesLength: lastImage }: Params) => {
   const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
   function closeLoadingModal() {
     setIsImageLoading(false);
-  }
-  function openLoadingModal() {
-    setIsImageLoading(true);
   }
 
   // get values headerHeight and footerHeight by useContext
@@ -107,8 +104,6 @@ export const ViewPhoto = ({ imageRef, imagesLength: lastImage }: Params) => {
         <NextImage
           className={`cursor-pointer`}
           src={imageRef.url}
-          // width={imageRef.width}
-          // height={imageRef.height}
           alt={``}
           priority={true}
           layout={`fill`}
@@ -116,11 +111,7 @@ export const ViewPhoto = ({ imageRef, imagesLength: lastImage }: Params) => {
           onLoad={closeLoadingModal}
         />
       </motion.div>
-      {isImageLoading && (
-        <AnimatePresence>
-          <Loading />
-        </AnimatePresence>
-      )}
+      <AnimatePresence>{isImageLoading && <Loading />}</AnimatePresence>
     </>
   );
 };

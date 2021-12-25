@@ -1,10 +1,10 @@
 import * as functions from "firebase-functions";
-import { Storage } from "@google-cloud/storage"
+import * as admin from "firebase-admin"
 import * as sharp from "sharp"
 import * as path from "path"
 import * as os from "os"
+import { Storage } from "@google-cloud/storage"
 import imageSize from 'image-size';
-import * as admin from "firebase-admin"
 
 const db = admin.firestore()
 const FieldValue = admin.firestore.FieldValue
@@ -55,6 +55,12 @@ export const addImageUrl = functions.region(`asia-northeast1`).storage.object().
     await file.download({ destination: tempFile })
     const img = imageSize(tempFile as string)
 
+    // 画像の長辺が500以下の場合は削除
+    if (Math.max(img.width!, img.height!) < 500) {
+      await file.delete().catch(() => functions.logger.log(`画像削除失敗`))
+      functions.logger.log(`${fileName}はサイズが小さすぎるので削除しました`)
+      return
+    }
 
     let registerFilename = fileName
     const maxLongSide = 1050

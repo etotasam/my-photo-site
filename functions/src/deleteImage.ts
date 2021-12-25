@@ -18,10 +18,14 @@ export const deleteImageUrl = functions.region(`asia-northeast1`).storage.object
     if (object.contentType?.match(/application\/x-www-form-urlencoded/)) {
       await db.collection(topCollection).doc(photoLabel).delete()
     }
+
+    const imageDataSrc = db.collection(topCollection).doc(photoLabel).collection(`photos`).doc(`${photoLabel}_${fileNameWithoutExt}`);
+    const imageData = await imageDataSrc.get();
+    if (!imageData.exists) return
     // imagesコレクション内でimageオブジェクトが削除された場合
     if (object.contentType?.match(/image\//)) {
-      await db.collection(topCollection).doc(photoLabel).collection(`photos`).doc(`${photoLabel}_${fileNameWithoutExt}`).delete();
-      functions.logger.log(`${fileName}を削除しました`)
+      await imageDataSrc.delete();
+      functions.logger.log(`firestoreから${fileNameWithoutExt}を削除しました`)
     }
 
   } catch (error) {
