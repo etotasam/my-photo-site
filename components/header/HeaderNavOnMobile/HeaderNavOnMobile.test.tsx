@@ -36,7 +36,7 @@ describe(`HeaderNavOnMobile`, () => {
       </ModalStateProvider>
     );
     expect(screen.queryByTestId(`humburger`)).toBeInTheDocument();
-    userEvent.click(screen.queryByTestId(`humburger`));
+    userEvent.click(screen.getByTestId(`humburger`));
     expect(modalOpenDispatchSpy).toBeCalledTimes(1);
     expect(asFragment()).toMatchSnapshot();
     useModalStateSpy.mockImplementation(() => ({ isModalActive: true }));

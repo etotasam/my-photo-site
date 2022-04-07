@@ -28,7 +28,7 @@ const Title = ({ date, content, title }: Props) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = getPostsAll().map((post) => {
-    return { params: { title: post.title } };
+    return { params: { title: post!.title as string } };
   });
 
   return {
@@ -37,12 +37,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params: { title } }) => {
-  const posts = getPostsAll().find((p) => p.title === title);
+export const getStaticProps: GetStaticProps = async ({ params: { title } }: { params: { title: string } }) => {
+  const posts = getPostsAll().find((p) => p!.title === title);
   return {
     props: {
-      date: posts.date,
-      content: posts.content,
+      date: posts!.date,
+      content: posts!.content,
       title,
     },
   };

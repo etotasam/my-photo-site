@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch"
+    "test": "jest",
+    "watch": "jest -o --watch"
   },
   "dependencies": {
     "@babel/core": "^7.16.5",
@@ -34,7 +35,6 @@
     "react-test-renderer": "^17.0.2",
     "react-transition-group": "^4.4.2",
     "redux": "^4.1.1",
-    "sharp": "^0.29.1",
     "swr": "^1.0.1"
   },
   "devDependencies": {

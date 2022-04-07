@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import PhotoPagination from "./PhotoPagination";
 import { ImagesType } from "@/@types/types";
 import NextImage from "next/image";
+import { Loading } from "@/components/Loading";
+import { AnimatePresence } from "framer-motion";
 
 type Params = {
   randomTopImages: ImagesType[];
@@ -12,14 +14,7 @@ type Params = {
 
 const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
   const topImagesLength = randomTopImages.length;
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState<number>();
-
-  const getInitialPhotoIndex = (): void => {
-    const min = 0;
-    const max = topImagesLength - 1;
-    const randamIndex = Math.floor(Math.random() * (max + 1 - min)) + min;
-    setCurrentPhotoIndex(randamIndex);
-  };
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState<number | null>(null);
 
   const nextPhoto = () => {
     setCurrentPhotoIndex((state: number) => {
@@ -41,13 +36,11 @@ const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
 
   const router = useRouter();
   const clickImage = (photo: ImagesType) => {
-    const chunkId = photo.id.split(`_`);
-    const location = chunkId[0];
-    const idNumber = chunkId[1];
+    const location = photo.id.split(`_`)[0];
     const images = allImages[location];
     const imagesSortedInDesc = images.sort((a, b) => {
-      if (a.id > b.id) return -1;
-      if (a.id < b.id) return 1;
+      if (Number(a.id.split(`_`).pop()) > Number(b.id.split(`_`).pop())) return -1;
+      if (Number(a.id.split(`_`).pop()) < Number(b.id.split(`_`).pop())) return 1;
       return 0;
     });
     const imageIndex = imagesSortedInDesc.findIndex((el) => el.id === photo.id);
@@ -71,6 +64,13 @@ const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
     }
   };
 
+  const imagesLangth = randomTopImages.length;
+  const [imageLoaded, setImageLoaded] = useState(0);
+  const imageOnLoad = () => {
+    if (imagesLangth <= imageLoaded) return;
+    setImageLoaded((v) => v + 1);
+  };
+
   // 写真のスライドをsetIntervalでセット
   let photoSlideInterval: NodeJS.Timer;
   const slideTime = 5000;
@@ -78,15 +78,18 @@ const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
     photoSlideInterval = setInterval(nextPhoto, slideTime);
   }
 
+  const getInitialPhotoIndex = (): void => {
+    const min = 0;
+    const max = topImagesLength - 1;
+    const randamIndex = Math.floor(Math.random() * (max + 1 - min)) + min;
+    setCurrentPhotoIndex(randamIndex);
+  };
   useEffect(() => {
+    getInitialPhotoIndex();
     startPhotoSlideInterval();
     return () => {
       clearTimeout(photoSlideInterval);
     };
-  }, [currentPhotoIndex]);
-
-  useEffect(() => {
-    getInitialPhotoIndex();
   }, []);
 
   return (
@@ -97,6 +100,7 @@ const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
             onTouchStart={tapOn}
             onTouchEnd={tapOff}
             onClick={() => clickImage(photo)}
+            onLoad={imageOnLoad}
             className={`cursor-pointer duration-1000 ${
               currentPhotoIndex === index ? `opacity-100 z-10` : `opacity-0 z-0`
             }`}
@@ -107,6 +111,7 @@ const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
             alt={``}
           />
         ))}
+        <AnimatePresence>{(imagesLangth > imageLoaded || currentPhotoIndex === null) && <Loading />}</AnimatePresence>
       </div>
       <PhotoPagination
         randomTopImages={randomTopImages}

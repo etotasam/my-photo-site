@@ -2,8 +2,8 @@ import { useState, useEffect, DependencyList } from "react"
 
 export const useWindowResize = () => {
   const [size, setSize] = useState<{ width: number, height: number }>({
-    width: void 0,
-    height: void 0
+    width: 0,
+    height: 0
   })
 
   useEffect(() => {

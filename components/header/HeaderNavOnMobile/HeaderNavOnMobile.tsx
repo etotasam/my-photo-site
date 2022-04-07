@@ -19,17 +19,17 @@ const Humburger = () => {
     return () => {};
   });
 
-  const controls = useAnimation();
+  const controls: any = useAnimation();
   const startAnimate = () => {
     if (isModalActive) {
-      controls.start((i) => i === 0 && { rotate: 45, y: "9.5px", width: "100%" });
-      controls.start((i) => i === 1 && { opacity: 0, width: "0%" });
-      controls.start((i) => i === 2 && { rotate: -45, y: "-9.5px" });
+      controls.start((i: number) => i === 0 && { rotate: 45, y: "9.5px", width: "100%" });
+      controls.start((i: number) => i === 1 && { opacity: 0, width: "0%" });
+      controls.start((i: number) => i === 2 && { rotate: -45, y: "-9.5px" });
     }
     if (!isModalActive) {
-      controls.start((i) => i === 0 && { rotate: 0, y: "0px", width: "50%" });
-      controls.start((i) => i === 1 && { opacity: 1, width: "75%" });
-      controls.start((i) => i === 2 && { rotate: 0, y: "0px" });
+      controls.start((i: number) => i === 0 && { rotate: 0, y: "0px", width: "50%" });
+      controls.start((i: number) => i === 1 && { opacity: 1, width: "75%" });
+      controls.start((i: number) => i === 2 && { rotate: 0, y: "0px" });
     }
   };
   return (

@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
 import PhotoViewerContainer from "@/components/top-photo-viewer/PhotoViewerContainer";
 import SiteDiscription from "@/components/SiteDiscription";
 import Location from "@/components/location/Location/Location";
-import News from "@/components/News";
+import { News } from "@/components/News";
 import { GetStaticProps } from "next";
 import { getFirestore } from "firebase/firestore";
-import axios from "axios";
 import matter from "gray-matter";
 import moment from "moment";
-import Loading from "@/components/Loading";
 import * as fs from "fs";
 import * as path from "path";
 import { ImagesType } from "@/@types/types";
@@ -27,29 +24,6 @@ type NewsTitles = {
 };
 
 const Home = ({ allImages, randomTopImages, locations, newsTitles }: Params) => {
-  const [isImgLoading, setIsImgLoading] = useState(true);
-
-  // 意味があるかわからないけど images preload
-  const imagesPreload = () => {
-    const imagesLoadStateArr = randomTopImages.reduce((acc, next) => {
-      return { ...acc, [next.id]: `loading` };
-    }, {});
-    randomTopImages.forEach((el) => {
-      const img = new Image();
-      img.onload = () => {
-        imagesLoadStateArr[el.id] = `loaded`;
-        const isLoading = Object.values(imagesLoadStateArr).includes(`loading`);
-        setIsImgLoading(isLoading);
-      };
-      img.src = el.url;
-    });
-  };
-
-  useEffect(() => {
-    imagesPreload();
-    return () => imagesPreload();
-  }, []);
-
   return (
     <>
       <div className={`md:flex md:justify-between relative`}>
@@ -57,7 +31,6 @@ const Home = ({ allImages, randomTopImages, locations, newsTitles }: Params) => 
         <section className={`flex md:justify-end`}>
           <SiteDiscription />
         </section>
-        {isImgLoading && <Loading />}
       </div>
       <section className={`mt-5`}>
         <News news={newsTitles} />
@@ -98,7 +71,7 @@ export const getStaticProps: GetStaticProps = async () => {
         do {
           const random = Math.floor(Math.random() * (max + 1 - min)) + min;
           randomLocation = ImageInfo[random];
-          isImageSame = randomTopImages.some((el) => el.id === randomLocation.id);
+          isImageSame = randomTopImages.some((el) => el!.id === randomLocation.id);
         } while (isImageSame);
         return randomLocation;
       })
@@ -114,6 +87,14 @@ export const getStaticProps: GetStaticProps = async () => {
     };
   } catch (error) {
     console.log(error);
+    return {
+      props: {
+        allImages: [],
+        locations: [],
+        newsTitles: getPostsTitles(),
+        randomTopImages: [],
+      },
+    };
   }
 };
 
@@ -134,16 +115,16 @@ const getPostsTitles = () => {
     })
     .filter((el) => el !== undefined)
     .sort((a, b) => {
-      const NumA = moment(a.data.date);
-      const NumB = moment(b.data.date);
+      const NumA = moment(a!.data.date);
+      const NumB = moment(b!.data.date);
       if (NumA > NumB) return -1;
       if (NumA < NumB) return 1;
       return 0;
     })
     .map((f) => {
       return {
-        title: f.data.title,
-        date: moment(f.data.date).toJSON(),
+        title: f!.data.title,
+        date: moment(f!.data.date).toJSON(),
       };
     })
     .slice(0, 5);

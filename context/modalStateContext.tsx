@@ -8,8 +8,8 @@ export type ModalState = typeof initialState;
 
 const modalStateContext = createContext<ModalState>(initialState);
 const modalDispatchContext = createContext({
-  modalOpenDispathcer: () => void 0,
-  modalCloseDispatcher: () => void 0,
+  modalOpenDispathcer: () => {},
+  modalCloseDispatcher: () => {},
 });
 
 export const useModalStateContext = () => useContext(modalStateContext);

@@ -3,7 +3,7 @@ import { ImagesType } from "@/@types/types";
 
 type Params = {
   randomTopImages: ImagesType[];
-  currentPhotoIndex: number;
+  currentPhotoIndex: number | null;
   setCurrentPhotoIndex: (num: number) => void;
 };
 
