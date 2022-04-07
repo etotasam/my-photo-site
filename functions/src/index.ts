@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
-import * as express from "express"
+// @ts-ignore
+import express from "express"
 import * as router from "./routers/route"
 
 import * as addImageUrl from "./addImage"
