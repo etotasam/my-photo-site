@@ -11,22 +11,23 @@ type Size = {
   maxHeight: number;
 };
 
-export const useViewPhotoSize = (imageRef: ImagesType, footerHeight: number, headerHeight: number) => {
+export const useViewPhotoSize = (imageRef: ImagesType, headerHeight: number, footerHeight: number) => {
   const [size, setSize] = useState<Size>({
-    width: void 0,
-    height: void 0,
-    minWidth: void 0,
-    minHeight: void 0,
-    maxWidth: void 0,
-    maxHeight: void 0,
+    width: 0,
+    height: 0,
+    minWidth: 0,
+    minHeight: 0,
+    maxWidth: 0,
+    maxHeight: 0,
   });
 
   function getSize() {
-    const windowWidth = window.innerWidth * 0.9;
+    const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
     const elementHeight = windowHeight - (headerHeight + footerHeight);
+    const elementWidth = windowWidth * 0.9
 
-    const isVerticalEl = elementHeight > windowWidth;
+    const isVerticalEl = elementHeight > elementWidth;
     const isVerticalImg = imageRef.height > imageRef.width;
 
     let width: number;
@@ -40,16 +41,16 @@ export const useViewPhotoSize = (imageRef: ImagesType, footerHeight: number, hea
     if (isVerticalEl) {
       if (isVerticalImg) {
         const ratio = imageRef.width / imageRef.height;
-        width = windowWidth * ratio;
-        height = windowWidth;
+        width = elementWidth * ratio;
+        height = elementWidth;
         minWidth = minLongSide * ratio;
         minHeight = minLongSide;
         maxWidth = maxLongSide * ratio;
         maxHeight = maxLongSide;
       } else {
         const ratio = imageRef.height / imageRef.width;
-        width = windowWidth;
-        height = windowWidth * ratio;
+        width = elementWidth;
+        height = elementWidth * ratio;
         minWidth = minLongSide;
         minHeight = minLongSide * ratio;
         maxWidth = maxLongSide;
@@ -74,7 +75,14 @@ export const useViewPhotoSize = (imageRef: ImagesType, footerHeight: number, hea
         maxHeight = maxLongSide * ratio;
       }
     }
-    setSize({ width, height, minWidth, minHeight, maxWidth, maxHeight })
+    setSize({
+      width: Math.floor(width),
+      height: Math.floor(height),
+      minWidth: Math.floor(minWidth),
+      minHeight: Math.floor(minHeight),
+      maxWidth: Math.floor(maxWidth),
+      maxHeight: Math.floor(maxHeight)
+    })
   }
 
   useEffect(() => {
