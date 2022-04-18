@@ -43,7 +43,7 @@ const Home = ({ allImages, randomTopImages, locations, newsTitles }: Params) => 
 };
 
 // firestore
-const db = getFirestore();
+// const db = getFirestore();
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
