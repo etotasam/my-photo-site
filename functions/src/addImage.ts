@@ -1,8 +1,8 @@
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin"
-import * as sharp from "sharp"
-import * as path from "path"
-import * as os from "os"
+import functions = require("firebase-functions")
+import admin = require("firebase-admin")
+import sharp = require("sharp")
+import path = require("path")
+import os = require("os")
 import { Storage } from "@google-cloud/storage"
 import imageSize from 'image-size';
 

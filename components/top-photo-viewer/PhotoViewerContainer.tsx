@@ -18,17 +18,23 @@ type Params = {
 const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
   const { currentPhotoIndex, setCurrentPhotoIndex, tapOn, tapOff } = usePhotoSlide({ topImages: randomTopImages });
 
+  //? トップ画面のスライド写真をランダムに選択
+  React.useEffect(() => {
+    const random = Math.trunc(Math.random() * randomTopImages.length);
+    setCurrentPhotoIndex(random);
+  }, []);
+
   const router = useRouter();
   const clickImage = React.useCallback((photo: ImagesType) => {
-    const location = photo.id.split(`_`)[0];
-    const images = allImages[location];
-    const imagesSortedInDesc = images.sort((a, b) => {
+    const locationName = photo.id.split(`_`)[0];
+    const locationsImages = allImages[locationName];
+    const imagesSortedInDescById = locationsImages.sort((a, b) => {
       if (Number(a.id.split(`_`).pop()) > Number(b.id.split(`_`).pop())) return -1;
       if (Number(a.id.split(`_`).pop()) < Number(b.id.split(`_`).pop())) return 1;
       return 0;
     });
-    const imageIndex = imagesSortedInDesc.findIndex((el) => el.id === photo.id);
-    router.push(`/photo/${location}?image=${imageIndex + 1}`);
+    const imageIndex = imagesSortedInDescById.findIndex((el) => el.id === photo.id);
+    router.push(`/photo/${locationName}?image=${imageIndex + 1}`);
   }, []);
 
   const imagesLangth = randomTopImages.length;
