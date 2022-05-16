@@ -49,6 +49,7 @@ export const getStaticProps: GetStaticProps = async () => {
   try {
     const allImages = await fetchAllImagesApi();
 
+    //? トップ画面に表示させる写真を各locationからランダムに1枚ずつセレクト
     const randomTopImages = Object.values(allImages)
       .map((imageInfo) => {
         const length = imageInfo.length;
@@ -60,6 +61,7 @@ export const getStaticProps: GetStaticProps = async () => {
       })
       .filter((el) => el !== undefined);
 
+    //? Locationエリアのリンクに表示させる写真を選択(トップ画面のカルーセル？に表示される写真と同じにならない様にする)
     const locations = Object.values(allImages)
       .map((ImageInfo) => {
         const length = ImageInfo.length;
@@ -98,7 +100,7 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 };
 
-//posts/内の.mdファイルを取得してdateでsortしてorigのデータは弾くrestructureして
+//? posts/内の.mdファイルを取得してdateでsortしてorigのデータは弾くrestructureして
 const getPostsTitles = () => {
   const dirPath = path.join(process.cwd(), `posts`);
   return fs
