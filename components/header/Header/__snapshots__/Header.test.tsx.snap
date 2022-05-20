@@ -16,7 +16,7 @@ exports[`Header windowのwidthのサイズで表示されるコンポーネン�
         class="absolute right-0"
       >
         <a
-          class="n-title-font text-green-600 text-xl tracking-wider font-extralight"
+          class="text-green-600 text-xl tracking-wider font-extralight"
           href="/"
         />
       </div>
