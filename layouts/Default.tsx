@@ -36,9 +36,9 @@ const Layout: React.FC<ChildElement> = ({ children }) => {
           <ModalStateProvider>
             <Header />
             <main className={`t-main`}>{children}</main>
+            <Footer />
           </ModalStateProvider>
         </LoadStateProvider>
-        <Footer />
       </HeightProvider>
     </>
   );
