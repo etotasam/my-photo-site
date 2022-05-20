@@ -13,7 +13,7 @@ import { fetchAllImagesApi } from "@/api/imagesApi";
 
 type Params = {
   allImages: Record<string, ImagesType[]>;
-  randomTopImages: ImagesType[];
+  topImages: ImagesType[];
   locations: ImagesType[];
   newsTitles: NewsTitles[];
 };
@@ -23,11 +23,11 @@ type NewsTitles = {
   date: string;
 };
 
-const Home = ({ allImages, randomTopImages, locations, newsTitles }: Params) => {
+const Home = ({ allImages, topImages, locations, newsTitles }: Params) => {
   return (
     <>
       <div className={`md:flex md:justify-between relative`}>
-        <PhotoViewerContainer randomTopImages={randomTopImages} allImages={allImages} />
+        <PhotoViewerContainer topImages={topImages} allImages={allImages} />
         <section className={`flex md:justify-end`}>
           <SiteDiscription />
         </section>
@@ -50,14 +50,26 @@ export const getStaticProps: GetStaticProps = async () => {
     const allImages = await fetchAllImagesApi();
 
     //? トップ画面に表示させる写真を各locationからランダムに1枚ずつセレクト
-    const randomTopImages = Object.values(allImages)
-      .map((imageInfo) => {
-        const length = imageInfo.length;
+    // const randomTopImages = Object.values(allImages)
+    //   .map((imageInfo) => {
+    //     const length = imageInfo.length;
+    //     if (!length) return;
+    //     const min = 0;
+    //     const max = length - 1;
+    //     const random = Math.floor(Math.random() * (max + 1 - min)) + min;
+    //     return imageInfo[random];
+    //   })
+    //   .filter((el) => el !== undefined);
+
+    //? 最新の写真をトップ画面に表示させる。その為のarrayを作成
+    const recentImagesOnLocation = Object.values(allImages)
+      .map((images) => {
+        const length = images.length;
         if (!length) return;
-        const min = 0;
-        const max = length - 1;
-        const random = Math.floor(Math.random() * (max + 1 - min)) + min;
-        return imageInfo[random];
+        const recentImage = images.sort((first, second) => first.createAt._seconds - second.createAt._seconds)[
+          length - 1
+        ];
+        return recentImage;
       })
       .filter((el) => el !== undefined);
 
@@ -73,7 +85,7 @@ export const getStaticProps: GetStaticProps = async () => {
         do {
           const random = Math.floor(Math.random() * (max + 1 - min)) + min;
           randomLocation = ImageInfo[random];
-          isImageSame = randomTopImages.some((el) => el!.id === randomLocation.id);
+          isImageSame = recentImagesOnLocation.some((el) => el!.id === randomLocation.id);
         } while (isImageSame);
         return randomLocation;
       })
@@ -84,7 +96,7 @@ export const getStaticProps: GetStaticProps = async () => {
         allImages,
         locations,
         newsTitles: getPostsTitles(),
-        randomTopImages,
+        topImages: recentImagesOnLocation,
       },
     };
   } catch (error) {
@@ -94,7 +106,7 @@ export const getStaticProps: GetStaticProps = async () => {
         allImages: [],
         locations: [],
         newsTitles: getPostsTitles(),
-        randomTopImages: [],
+        topImages: [],
       },
     };
   }

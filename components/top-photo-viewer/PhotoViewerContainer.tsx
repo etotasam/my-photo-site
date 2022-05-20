@@ -11,16 +11,16 @@ import { AnimatePresence } from "framer-motion";
 import { usePhotoSlide } from "@/hooks/usePhotoSlide";
 
 type Params = {
-  randomTopImages: ImagesType[];
+  topImages: ImagesType[];
   allImages: Record<string, ImagesType[]>;
 };
 
-const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
-  const { currentPhotoIndex, setCurrentPhotoIndex, tapOn, tapOff } = usePhotoSlide({ topImages: randomTopImages });
+const TopPhotoViewer = ({ topImages, allImages }: Params) => {
+  const { currentPhotoIndex, setCurrentPhotoIndex, tapOn, tapOff } = usePhotoSlide({ topImages });
 
   //? トップ画面のスライド写真をランダムに選択
   React.useEffect(() => {
-    const random = Math.trunc(Math.random() * randomTopImages.length);
+    const random = Math.trunc(Math.random() * topImages.length);
     setCurrentPhotoIndex(random);
   }, []);
 
@@ -37,7 +37,7 @@ const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
     router.push(`/photo/${locationName}?image=${imageIndex + 1}`);
   }, []);
 
-  const imagesLangth = randomTopImages.length;
+  const imagesLangth = topImages.length;
   const [imageLoaded, setImageLoaded] = useState(0);
   const imageOnLoad = () => {
     if (imagesLangth <= imageLoaded) return;
@@ -47,7 +47,7 @@ const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
   return (
     <div className={`md:w-[65%] max-w-[700px] flex md:flex-col`}>
       <div className={`relative pt-[90%] w-[90%] md:pt-[95%] md:w-[95%]`}>
-        {randomTopImages.map((photo, index) => (
+        {topImages.map((photo, index) => (
           <NextImage
             onTouchStart={tapOn}
             onTouchEnd={tapOff}
@@ -66,7 +66,7 @@ const TopPhotoViewer = ({ randomTopImages, allImages }: Params) => {
         <AnimatePresence>{(imagesLangth > imageLoaded || currentPhotoIndex === null) && <Loading />}</AnimatePresence>
       </div>
       <PhotoPagination
-        randomTopImages={randomTopImages}
+        topImages={topImages}
         currentPhotoIndex={currentPhotoIndex}
         setCurrentPhotoIndex={(num: number) => setCurrentPhotoIndex(num)}
       />
