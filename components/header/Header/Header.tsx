@@ -62,7 +62,7 @@ export const Header = () => {
         <div className={`absolute right-0`}>
           <a
             href={`/`}
-            className={`n-title-font text-green-600 text-xl tracking-wider font-extralight`}
+            className={`text-green-600 text-xl tracking-wider font-extralight`}
             onClick={(e) => handleClick(e)}
           >
             {process.env.NEXT_PUBLIC_SITE_TITLE}

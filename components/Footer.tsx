@@ -10,7 +10,7 @@ const Footer = () => {
     setFooterHeightDispatcher(height);
   }, [ref]);
   return (
-    <footer ref={ref} className={`t-footer-height flex justify-center items-center`}>
+    <footer ref={ref} className={`t-footer-height text-gray-600 font-light flex justify-center items-center`}>
       <div>{`©${process.env.NEXT_PUBLIC_SITE_TITLE}`}</div>
     </footer>
   );

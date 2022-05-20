@@ -2,16 +2,16 @@ import React from "react";
 import { ImagesType } from "@/@types/types";
 
 type Params = {
-  randomTopImages: ImagesType[];
+  topImages: ImagesType[];
   currentPhotoIndex: number | null;
   setCurrentPhotoIndex: (num: number) => void;
 };
 
-const PhotoPagination = ({ randomTopImages, currentPhotoIndex, setCurrentPhotoIndex }: Params) => {
+const PhotoPagination = ({ topImages, currentPhotoIndex, setCurrentPhotoIndex }: Params) => {
   return (
     <>
       <ul className={`w-[10%] md:w-full min-h-[30px] list-none flex flex-col md:flex-row items-center`}>
-        {randomTopImages.map((photo, index) => (
+        {topImages.map((photo, index) => (
           <li
             key={photo.id}
             className={`group flex justify-center items-center w-[10px] h-[10px] cursor-pointer ${
