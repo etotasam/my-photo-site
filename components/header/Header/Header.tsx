@@ -47,12 +47,14 @@ export const Header = () => {
   return (
     <header
       ref={ref}
-      className={`t-header-height bg-white fixed flex justify-center top-0 left-0 w-full z-50 duration-300 ${
+      className={`t-header-height bg-white/90 fixed flex justify-center top-0 left-0 w-full md:w-[99vw] z-50 duration-300 ${
         isModalActive ? `bg-opacity-100` : `bg-opacity-90`
       }`}
     >
       <div className={`flex relative items-center w-[90%] max-w-[1024px] mx-auto`}>
-        {isMobile ? (
+        {windowWidth === 0 ? (
+          ``
+        ) : isMobile ? (
           <HeaderNavOnMobile />
         ) : (
           isMobile !== undefined && <HeaderNavOnPC locations={locations} error={error} />
