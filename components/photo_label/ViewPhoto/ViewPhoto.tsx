@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import NextImage from "next/image";
 import { useRouter } from "next/router";
 import { AnimatePresence, motion } from "framer-motion";
-import { Loading } from "@/components/Loading";
 import type { ImagesType } from "@/@types/types";
 import { useModalDispatchContext } from "@/context/modalStateContext";
 import { useHeihgtStateContext } from "@/context/heightStateContext";
 import { useLoadDispatchContext } from "@/context/loadStateContext";
 import { useViewPhotoSize } from "@/hooks";
+//! component
+import { Loading } from "@/components/Loading";
+import { LoadingBound } from "@/components/LoadingBound";
 
 type Params = {
   imageRef: ImagesType;

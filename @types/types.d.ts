@@ -1,14 +1,14 @@
 export type ImagesType = {
   documentId: string;
   width: number;
-  createAt: CreateAt;
+  createAt: CreateAtType | Date;
   height: number;
   url: string;
   filename: string;
   id: string;
 };
 
-type CreateAt = {
+export type CreateAtType = {
   _seconds: number,
   _nanoseconds: number
 }
