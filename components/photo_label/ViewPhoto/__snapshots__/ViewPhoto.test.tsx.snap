@@ -25,70 +25,68 @@ exports[`ViewPhoto 横長イメージの表示サイズの検証 1`] = `
   </div>
   <div
     class="absolute top-0 left-0 w-full h-full bg-white flex justify-center items-center z-20"
-    style="opacity: 1;"
+    style="opacity: 0;"
   >
-    <div>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        L
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        o
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        a
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        d
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        i
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        n
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        g
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        .
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        .
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        .
-      </p>
-    </div>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      L
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      o
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      a
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      d
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      i
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      n
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      g
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      .
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      .
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      .
+    </span>
   </div>
 </DocumentFragment>
 `;
@@ -118,70 +116,68 @@ exports[`ViewPhoto 横長イメージの表示サイズの検証 2`] = `
   </div>
   <div
     class="absolute top-0 left-0 w-full h-full bg-white flex justify-center items-center z-20"
-    style="opacity: 1;"
+    style="opacity: 0;"
   >
-    <div>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        L
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        o
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        a
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        d
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        i
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        n
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        g
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        .
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        .
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        .
-      </p>
-    </div>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      L
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      o
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      a
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      d
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      i
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      n
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      g
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      .
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      .
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      .
+    </span>
   </div>
 </DocumentFragment>
 `;
@@ -211,70 +207,68 @@ exports[`ViewPhoto 縦長イメージの表示サイズの検証 1`] = `
   </div>
   <div
     class="absolute top-0 left-0 w-full h-full bg-white flex justify-center items-center z-20"
-    style="opacity: 1;"
+    style="opacity: 0;"
   >
-    <div>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        L
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        o
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        a
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        d
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        i
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        n
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        g
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        .
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        .
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        .
-      </p>
-    </div>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      L
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      o
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      a
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      d
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      i
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      n
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      g
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      .
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      .
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      .
+    </span>
   </div>
 </DocumentFragment>
 `;
@@ -304,70 +298,68 @@ exports[`ViewPhoto 縦長イメージの表示サイズの検証 2`] = `
   </div>
   <div
     class="absolute top-0 left-0 w-full h-full bg-white flex justify-center items-center z-20"
-    style="opacity: 1;"
+    style="opacity: 0;"
   >
-    <div>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        L
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        o
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        a
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        d
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        i
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        n
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        g
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        .
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        .
-      </p>
-      <p
-        class="inline text-green-600 text-md tracking-widest font-extralight"
-        style="opacity: 0;"
-      >
-        .
-      </p>
-    </div>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      L
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      o
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      a
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      d
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      i
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      n
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      g
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      .
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      .
+    </span>
+    <span
+      class="text-green-600 text-md tracking-widest font-extralight select-none"
+      style="opacity: 0;"
+    >
+      .
+    </span>
   </div>
 </DocumentFragment>
 `;

@@ -1,8 +1,8 @@
-import express = require("express")
+import * as express from "express"
 // import * as express from "express"
 // import * as admin from "firebase-admin"
-import admin = require("firebase-admin")
-const serviceAccount = require("../../serviceAccountKey.json");
+import * as admin from "firebase-admin"
+const serviceAccount = require("../../serviceAccountKey.json")
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 })

@@ -4,7 +4,7 @@ import Head from "next/head";
 import { ViewPhoto } from "@/components/photo_label/ViewPhoto";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { ImagesType } from "@/@types/types";
-import { fetchLocationsApi, fetchImagesByLocationApi } from "@/api/imagesApi";
+import { fetchLocationsApi, fetchImagesByLocationApi, fetchAllImagesApi } from "@/api/imagesApi";
 
 const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   const route = useRouter();
@@ -28,12 +28,10 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   }, [photo_label]);
 
   const sortImagesByIdInDesc: ImagesType[] = images.sort((a, b) => {
-    if (Number(a.id.split(`_`).pop()) > Number(b.id.split(`_`).pop())) return -1;
-    if (Number(a.id.split(`_`).pop()) < Number(b.id.split(`_`).pop())) return 1;
-    return 0;
+    return Number(b.id.split(`_`).pop()) - Number(a.id.split(`_`).pop());
   });
 
-  // imageのpre-loading
+  //? imageのpre-loading
   const imagesPreload = () => {
     images.map((el) => {
       const img = new Image();
@@ -67,11 +65,20 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   );
 };
 
+type ParamsType = {
+  params: {
+    photo_label: string;
+  };
+};
 export const getStaticPaths: GetStaticPaths = async () => {
-  const locations = await fetchLocationsApi();
-  const params = locations.map((doc) => {
-    return { params: { photo_label: doc } };
-  });
+  const images = await fetchAllImagesApi();
+  const params = Object.keys(images)
+    .map((key) => {
+      if (images[key].length) {
+        return { params: { photo_label: key } };
+      }
+    })
+    .filter((obj): obj is ParamsType => obj !== undefined);
   return {
     paths: [...params],
     fallback: false,

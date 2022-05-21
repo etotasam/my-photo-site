@@ -5,18 +5,18 @@ import NextImage from "next/image";
 import { ImagesType } from "@/@types/types";
 
 type Props = {
-  location: ImagesType;
+  locationImage: ImagesType;
   index: number;
   hasBreak: boolean;
 };
 
-export const Photo = ({ location, index, hasBreak }: Props) => {
-  const label = location.id.split(`_`)[0];
+export const Photo = ({ locationImage, index, hasBreak }: Props) => {
+  const label = locationImage.id.split(`_`)[0];
   return (
     <>
       {hasBreak ? (
-        <li data-testid={`breaked`} key={location.id} className={`w-1/2 md:w-1/5 mb-5 inline-block`}>
-          <Link href={`/photo/${label}?image=1`}>
+        <li data-testid={`breaked`} key={locationImage.id} className={`w-1/2 md:w-1/5 mb-5 inline-block`}>
+          <Link href={`/photo/${label}?image=1`} passHref>
             <motion.a
               initial={{ opacity: 0, y: 20 }}
               animate={{
@@ -34,7 +34,7 @@ export const Photo = ({ location, index, hasBreak }: Props) => {
                 className={`pointer-events-none`}
                 layout="fill"
                 objectFit="cover"
-                src={location.url}
+                src={locationImage.url}
                 alt={``}
               />
             </motion.a>
