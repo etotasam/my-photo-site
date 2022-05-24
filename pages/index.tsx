@@ -1,21 +1,28 @@
-import PhotoViewerContainer from "@/components/top-photo-viewer/PhotoViewerContainer";
-import SiteDiscription from "@/components/SiteDiscription";
-import Location from "@/components/location/Location/Location";
-import { News } from "@/components/News";
 import { GetStaticProps } from "next";
 import { getFirestore } from "firebase/firestore";
 import matter from "gray-matter";
-import moment from "moment";
 import * as fs from "fs";
 import * as path from "path";
-import { ImagesType } from "@/@types/types";
 import { fetchAllImagesApi } from "@/api/imagesApi";
+import dayjs from "dayjs";
+//! types
+import { CreateAtType, ImagesType } from "@/@types/types";
+//! context
+import { useLocationNamesDispatchContext } from "@/context/locationNamesContext";
+import { useEffect } from "react";
+//! components
+import PhotoViewerContainer from "@/components/top-photo-viewer/PhotoViewerContainer";
+import SiteDiscription from "@/components/SiteDiscription";
+import Location from "@/components/location/Location/Location";
+import { Loading } from "@/components/Loading";
+import { News } from "@/components/News";
 
 type Params = {
   allImages: Record<string, ImagesType[]>;
   topImages: ImagesType[];
-  locations: ImagesType[];
+  locationsImages: ImagesType[];
   newsTitles: NewsTitles[];
+  locationNames: string[];
 };
 
 type NewsTitles = {
@@ -23,7 +30,12 @@ type NewsTitles = {
   date: string;
 };
 
-const Home = ({ allImages, topImages, locations, newsTitles }: Params) => {
+const Home = ({ allImages, topImages, locationsImages, newsTitles, locationNames }: Params) => {
+  const { setLocationNamesDispatcher } = useLocationNamesDispatchContext();
+  useEffect(() => {
+    if (!locationNames) return;
+    setLocationNamesDispatcher(locationNames);
+  }, [locationNames]);
   return (
     <>
       <div className={`md:flex md:justify-between relative`}>
@@ -36,7 +48,7 @@ const Home = ({ allImages, topImages, locations, newsTitles }: Params) => {
         <News news={newsTitles} />
       </section>
       <section>
-        <Location locations={locations} />
+        <Location locationsImages={locationsImages} />
       </section>
     </>
   );
@@ -48,6 +60,15 @@ const Home = ({ allImages, topImages, locations, newsTitles }: Params) => {
 export const getStaticProps: GetStaticProps = async () => {
   try {
     const allImages = await fetchAllImagesApi();
+
+    //? headerに表示させるlocationsを作成
+    const locationNames = Object.keys(allImages)
+      .map((key) => {
+        if (allImages[key].length) {
+          return key;
+        }
+      })
+      .filter((obj): obj is string => obj !== undefined);
 
     //? トップ画面に表示させる写真を各locationからランダムに1枚ずつセレクト
     // const randomTopImages = Object.values(allImages)
@@ -66,35 +87,41 @@ export const getStaticProps: GetStaticProps = async () => {
       .map((images) => {
         const length = images.length;
         if (!length) return;
-        const recentImage = images.sort((first, second) => first.createAt._seconds - second.createAt._seconds)[
-          length - 1
-        ];
+        const recentImage = images.sort(
+          (first, second) => (first.createAt as CreateAtType)._seconds - (second.createAt as CreateAtType)._seconds
+        )[length - 1];
         return recentImage;
       })
       .filter((el) => el !== undefined);
 
     //? Locationエリアのリンクに表示させる写真を選択(トップ画面のカルーセル？に表示される写真と同じにならない様にする)
-    const locations = Object.values(allImages)
+    const locationsImages = Object.values(allImages)
       .map((ImageInfo) => {
         const length = ImageInfo.length;
         if (!length) return;
+        //? 写真が1枚しかない場合は同じになるしかないので、それを表示させる
+        if (length < 2) {
+          return ImageInfo[0];
+        }
         const min = 0;
         const max = length - 1;
         let isImageSame: boolean;
-        let randomLocation: ImagesType;
+        let randomLocationImage: ImagesType;
+        //? 同じ写真にならない様に do while をつかってるので無限ループにならない様に注意
         do {
           const random = Math.floor(Math.random() * (max + 1 - min)) + min;
-          randomLocation = ImageInfo[random];
-          isImageSame = recentImagesOnLocation.some((el) => el!.id === randomLocation.id);
+          randomLocationImage = ImageInfo[random];
+          isImageSame = recentImagesOnLocation.some((el) => el!.id === randomLocationImage.id);
         } while (isImageSame);
-        return randomLocation;
+        return randomLocationImage;
       })
       .filter((e) => e !== undefined);
 
     return {
       props: {
+        locationNames,
         allImages,
-        locations,
+        locationsImages,
         newsTitles: getPostsTitles(),
         topImages: recentImagesOnLocation,
       },
@@ -103,8 +130,9 @@ export const getStaticProps: GetStaticProps = async () => {
     console.log(error);
     return {
       props: {
+        locationNames: [],
         allImages: [],
-        locations: [],
+        locationsImages: [],
         newsTitles: getPostsTitles(),
         topImages: [],
       },
@@ -129,16 +157,12 @@ const getPostsTitles = () => {
     })
     .filter((el) => el !== undefined)
     .sort((a, b) => {
-      const NumA = moment(a!.data.date);
-      const NumB = moment(b!.data.date);
-      if (NumA > NumB) return -1;
-      if (NumA < NumB) return 1;
-      return 0;
+      return dayjs(b!.data.date).unix() - dayjs(a!.data.date).unix();
     })
     .map((f) => {
       return {
         title: f!.data.title,
-        date: moment(f!.data.date).toJSON(),
+        date: dayjs(f!.data.date).toJSON(),
       };
     })
     .slice(0, 5);

@@ -2,8 +2,8 @@ import React from "react";
 import Location from "./Location";
 import { render } from "@testing-library/react";
 import { cleanup } from "@testing-library/react-hooks";
-
-const image = [
+import { ImagesType } from "@/@types/types";
+const image: ImagesType[] = [
   {
     documentId: "",
     width: 200,
@@ -25,7 +25,7 @@ const image = [
 ];
 
 const props = {
-  locations: image,
+  locationsImages: image,
 };
 
 afterEach(() => {
@@ -34,7 +34,7 @@ afterEach(() => {
 
 describe(`Location`, () => {
   it(`propsで受けたデータがlistでrenderingされているか`, () => {
-    const { asFragment, getAllByTestId } = render(<Location {...props} />);
+    const { asFragment, getAllByTestId } = render(<Location locationsImages={image} />);
     const renderList = getAllByTestId(`h2`).map((el) => el.textContent);
     const imageList = image.map((el) => {
       const name = el.id.split(`_`)[0];

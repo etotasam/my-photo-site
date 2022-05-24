@@ -14,8 +14,10 @@ export const deleteImageUrl = functions.region(`asia-northeast1`).storage.object
     const photoLabel = fileDir.split(`/`)[1]
     const fileNameWithoutExt = fileName.split(`.`)[0]
     if (topCollection !== `images`) return
-    // imagesコレクション内でディレクトリが削除された場合
+    //? imagesコレクション内でディレクトリが削除された場合
     if (object.contentType?.match(/application\/x-www-form-urlencoded/)) {
+      functions.logger.log("fileName", fileName);
+      functions.logger.log("photoLabel", photoLabel);
       await db.collection(topCollection).doc(photoLabel).delete()
     }
 

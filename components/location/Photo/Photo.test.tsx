@@ -13,7 +13,7 @@ const image = {
 };
 
 const props = {
-  location: image,
+  locationImage: image,
   index: 1,
   hasBreak: false,
 };
