@@ -9,19 +9,28 @@ import { MainModal } from "../MainModal";
 import { ModalState, useModalStateContext, useModalDispatchContext } from "@/context/modalStateContext";
 import { useHeihgtDispatchContext } from "@/context/heightStateContext";
 import { useWindowResize } from "@/hooks";
+import { fetchLocationsApi, fetchImagesByLocationApi, fetchAllImagesApi } from "@/api/imagesApi";
+//! components
+import { Loading } from "@/components/Loading";
+//! types
+import { ImagesType } from "@/@types/types";
+//! context
+import { useLocationNamesStateContext } from "@/context/locationNamesContext";
 
 export const Header = () => {
   const router = useRouter();
   const { isModalActive }: ModalState = useModalStateContext();
   const { modalOpenDispathcer, modalCloseDispatcher } = useModalDispatchContext();
   const { setHeaderHeightDispatcher } = useHeihgtDispatchContext();
+  const { locationNames } = useLocationNamesStateContext();
 
   const breakpointWidth = 768;
-  const apiUrl = process.env.API_URL;
-  const fetcher = async (url: string) => await axios.get(url).then((res) => res.data);
-  const { data: locations, error } = useSWR(`${apiUrl}/locations`, fetcher);
+  //? headerに表示するlocationを取得
+  // const apiUrl = process.env.API_URL;
+  // const fetcher = async (url: string) => await axios.get(url).then((res) => res.data);
+  // const { data: locations, error } = useSWR(`${apiUrl}/locations`, fetcher);
 
-  // viewportの幅からモバイルかどうかを判断
+  //? viewportの幅からモバイルかどうかを判断
   const { width: windowWidth } = useWindowResize();
   const isMobile = windowWidth < breakpointWidth;
   useEffect(() => {
@@ -47,8 +56,8 @@ export const Header = () => {
   return (
     <header
       ref={ref}
-      className={`t-header-height bg-white/90 fixed flex justify-center top-0 left-0 w-full md:w-[99vw] z-50 duration-300 ${
-        isModalActive ? `bg-opacity-100` : `bg-opacity-90`
+      className={`t-header-height fixed flex justify-center top-0 left-0 w-[100vw] z-50 duration-300 ${
+        isModalActive ? `bg-white` : `bg-white/90`
       }`}
     >
       <div className={`flex relative items-center w-[90%] max-w-[1024px] mx-auto`}>
@@ -57,7 +66,7 @@ export const Header = () => {
         ) : isMobile ? (
           <HeaderNavOnMobile />
         ) : (
-          isMobile !== undefined && <HeaderNavOnPC locations={locations} error={error} />
+          isMobile !== undefined && <HeaderNavOnPC locations={locationNames.sort()} />
         )}
         <div className={`absolute right-0`}>
           <a
@@ -69,7 +78,7 @@ export const Header = () => {
           </a>
         </div>
       </div>
-      <AnimatePresence>{isModalActive && <MainModal locations={locations} error={error} />}</AnimatePresence>
+      <AnimatePresence>{isModalActive && <MainModal locations={locationNames.sort()} />}</AnimatePresence>
     </header>
   );
 };

@@ -3,8 +3,8 @@ import * as fs from "fs";
 import { GetStaticPaths, GetStaticProps } from "next";
 import matter from "gray-matter";
 import marked from "marked";
-import moment from "moment";
 import Head from "next/head";
+import dayjs from "dayjs";
 
 interface Props {
   date: string;
@@ -19,7 +19,7 @@ const Title = ({ date, content, title }: Props) => {
         <title>{`News ${title}`}</title>
       </Head>
       <div className={`font-serif`}>
-        <p className={`text-gray-400 pt-5`}>{moment(date).format(`YYYY年M月D日`)}</p>
+        <p className={`text-gray-400 pt-5`}>{dayjs(date).format(`YYYY年M月D日`)}</p>
         <div className={`py-5`} dangerouslySetInnerHTML={{ __html: marked(content) }} />
       </div>
     </>
@@ -63,7 +63,7 @@ const getPostsAll = () => {
       return {
         content: post.content,
         title: post.data.title,
-        date: moment(post.data.date).toJSON(),
+        date: dayjs(post.data.date).toJSON(),
       };
     })
     .filter((el) => el !== undefined);

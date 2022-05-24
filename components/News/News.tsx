@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import moment from "moment";
+import dayjs from "dayjs";
 
 type Props = {
   news: {
@@ -19,7 +19,7 @@ export const News = ({ news }: Props) => {
         {news &&
           news.map((f, index) => (
             <li key={index} className={`flex flex-col font-thin text-sm mb-2 last-of-type:mb-0`}>
-              <time className={`text-xs`}>{moment(f.date).format(`YYYY/M/D`)}</time>
+              <time className={`text-xs`}>{dayjs(f.date).format(`YYYY/M/D`)}</time>
               <div className={`pl-3 t-news_title-base hover:t-news_title pointer-events-none`}>
                 <Link href={`/news/${f.title}`}>
                   <a className={`pointer-events-auto text-gray-600 font-light`}>{f.title}</a>

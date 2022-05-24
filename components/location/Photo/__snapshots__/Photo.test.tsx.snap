@@ -17,6 +17,7 @@ exports[`Photo Component hasBreakの値での表示の切り替えの検証 2`] 
   >
     <a
       class="block cursor-pointer relative w-[90%] pt-[45%] mx-auto"
+      href="/photo/1?image=1"
       style="opacity: 0; transform: translateY(20px) translateZ(0);"
     >
       <div

@@ -4,10 +4,10 @@ import { ImagesType } from "@/@types/types";
 import { useScrollPosition, useWindowResize } from "@/hooks";
 
 type props = {
-  locations: ImagesType[];
+  locationsImages: ImagesType[];
 };
 
-const Location = ({ locations }: props) => {
+const Location = ({ locationsImages }: props) => {
   const [refTopPotion, setRefTopPotion] = useState<number>(0);
   const [hasBreak, setHasBreak] = useState<boolean>(false);
   const { height } = useWindowResize();
@@ -31,9 +31,9 @@ const Location = ({ locations }: props) => {
         <h1 className={`t-under-border text-green-600 mt-5 mx-auto`}>Location</h1>
       </div>
       <ul ref={ref} className={`mt-10 mx-auto`}>
-        {locations &&
-          locations.map((location, index) => (
-            <Photo index={index} key={location.id} location={location} hasBreak={hasBreak} />
+        {locationsImages &&
+          locationsImages.map((locationImage, index) => (
+            <Photo index={index} key={locationImage.id} locationImage={locationImage} hasBreak={hasBreak} />
           ))}
       </ul>
     </>

@@ -20,6 +20,7 @@ exports[`Location propsで受けたデータがlistでrenderingされている�
     >
       <a
         class="block cursor-pointer relative w-[90%] pt-[45%] mx-auto"
+        href="/photo/test?image=1"
         style="opacity: 0; transform: translateY(20px) translateZ(0);"
       >
         <div
@@ -49,6 +50,7 @@ exports[`Location propsで受けたデータがlistでrenderingされている�
     >
       <a
         class="block cursor-pointer relative w-[90%] pt-[45%] mx-auto"
+        href="/photo/test?image=1"
         style="opacity: 0; transform: translateY(20px) translateZ(0);"
       >
         <div
