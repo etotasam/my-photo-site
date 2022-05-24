@@ -1,20 +1,13 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { AnimatePresence } from "framer-motion";
-import useSWR from "swr";
-import axios from "axios";
 import { HeaderNavOnMobile } from "../HeaderNavOnMobile";
 import { HeaderNavOnPC } from "../HeaderNavOnPC";
 import { MainModal } from "../MainModal";
+import { useWindowResize } from "@/hooks";
+//! context
 import { ModalState, useModalStateContext, useModalDispatchContext } from "@/context/modalStateContext";
 import { useHeihgtDispatchContext } from "@/context/heightStateContext";
-import { useWindowResize } from "@/hooks";
-import { fetchLocationsApi, fetchImagesByLocationApi, fetchAllImagesApi } from "@/api/imagesApi";
-//! components
-import { Loading } from "@/components/Loading";
-//! types
-import { ImagesType } from "@/@types/types";
-//! context
 import { useLocationNamesStateContext } from "@/context/locationNamesContext";
 
 export const Header = () => {
@@ -25,10 +18,6 @@ export const Header = () => {
   const { locationNames } = useLocationNamesStateContext();
 
   const breakpointWidth = 768;
-  //? headerに表示するlocationを取得
-  // const apiUrl = process.env.API_URL;
-  // const fetcher = async (url: string) => await axios.get(url).then((res) => res.data);
-  // const { data: locations, error } = useSWR(`${apiUrl}/locations`, fetcher);
 
   //? viewportの幅からモバイルかどうかを判断
   const { width: windowWidth } = useWindowResize();

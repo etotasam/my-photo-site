@@ -1,5 +1,4 @@
 import { GetStaticProps } from "next";
-import { getFirestore } from "firebase/firestore";
 import matter from "gray-matter";
 import * as fs from "fs";
 import * as path from "path";
@@ -32,6 +31,8 @@ type NewsTitles = {
 
 const Home = ({ allImages, topImages, locationsImages, newsTitles, locationNames }: Params) => {
   const { setLocationNamesDispatcher } = useLocationNamesDispatchContext();
+
+  //? locationの名前をheaderに渡す(context)
   useEffect(() => {
     if (!locationNames) return;
     setLocationNamesDispatcher(locationNames);
@@ -53,9 +54,6 @@ const Home = ({ allImages, topImages, locationsImages, newsTitles, locationNames
     </>
   );
 };
-
-// firestore
-// const db = getFirestore();
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
