@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import PhotoPagination from "./PhotoPagination";
+import BulletNav from "./BulletNav";
 import { ImagesType } from "@/@types/types";
 import NextImage from "next/image";
 import { Loading } from "@/components/Loading";
@@ -15,7 +15,7 @@ type Params = {
   allImages: Record<string, ImagesType[]>;
 };
 
-const TopPhotoViewer = ({ topImages, allImages }: Params) => {
+const PhotoSliderContainer = ({ topImages, allImages }: Params) => {
   const { currentPhotoIndex, setCurrentPhotoIndex, tapOn, tapOff } = usePhotoSlide({ topImages });
 
   //? トップ画面のスライド写真をランダムに選択
@@ -65,7 +65,7 @@ const TopPhotoViewer = ({ topImages, allImages }: Params) => {
         ))}
         <AnimatePresence>{(imagesLangth > imageLoaded || currentPhotoIndex === null) && <Loading />}</AnimatePresence>
       </div>
-      <PhotoPagination
+      <BulletNav
         topImages={topImages}
         currentPhotoIndex={currentPhotoIndex}
         setCurrentPhotoIndex={(num: number) => setCurrentPhotoIndex(num)}
@@ -74,4 +74,4 @@ const TopPhotoViewer = ({ topImages, allImages }: Params) => {
   );
 };
 
-export default memo(TopPhotoViewer);
+export default memo(PhotoSliderContainer);
