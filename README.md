@@ -1,16 +1,18 @@
-# 自身の写真サイトです
+# 自身の写真サイトです
 
 [Journery's Photo](https://www.teraphoto.net/)
 
-## Next.js
+## 以下、使用言語　フレームワーク ライブラリ等
+
+### Next.js
 
 SSG を使ってみたかったので Next.js を採用しました。
 
-## Typescript
+### Typescript
 
 型を使って安全にデータを扱う為にも Typescript を採用しています。
 
-## Framer Motion
+### Framer Motion
 
 アニメーションは Framer Motion を使いました。
 
@@ -18,25 +20,26 @@ SSG を使ってみたかったので Next.js を採用しました。
 
 とはいえ、簡単なものは css でアニメーションをつけています。
 
-## Tailwind CSS
+### Tailwind CSS
 
 css ライブラリは Tailwind CSS を使ってみました
 
 Material-UI 等を使わず Tailwind CSS を採用したのは、基本的に自分でデザインをしてみたいと思ったから…ですが、やはりデザインはきつかったです。
 
-## JEST
+### JEST
 
 テストには JEST を採用しました。
 
+webサイトなのでテストを書く必要性があるかどうかは微妙ですが勉強の為に書いてみました。
 テスト自体書くのは初めてだったし、どの程度のテストをするべきなのかもわからず一番苦戦したかもしれません。
 
-## Firebase
+### Firebase
 
 バックエンドには Firebase の Cloud Functions を採用しています。
 
 処理としては Firebase Storage にフォルダ、写真の追加をすると Cloud Firestore に自動的に追加され、同時に写真はリサイズされて Storage に保存し直され、Storage 側でフォルダ、写真の削除をした時も Cloud Firestore 側の同データが削除される様にしています。
 
-## Vercel
+### Vercel
 
 Hosting 先は Vercel です。
 
