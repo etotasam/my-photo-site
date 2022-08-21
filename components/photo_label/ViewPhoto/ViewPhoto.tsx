@@ -3,10 +3,12 @@ import NextImage from "next/image";
 import { useRouter } from "next/router";
 import { AnimatePresence, motion } from "framer-motion";
 import type { ImagesType } from "@/@types/types";
+//! context
 import { useModalDispatchContext } from "@/context/modalStateContext";
 import { useHeihgtStateContext } from "@/context/heightStateContext";
 import { useLoadDispatchContext } from "@/context/loadStateContext";
-import { useViewPhotoSize } from "@/hooks";
+//! hooks
+import { useAdjustSizeForWrapperPhoto } from "@/hooks";
 //! component
 import { Loading } from "@/components/Loading";
 import { LoadingBound } from "@/components/LoadingBound";
@@ -20,7 +22,7 @@ export const ViewPhoto = ({ imageRef, imagesLength: lastImage }: Params) => {
   const router = useRouter();
   const { photo_label, image } = router.query;
   const { headerHeight, footerHeight } = useHeihgtStateContext();
-  const size = useViewPhotoSize(imageRef, headerHeight, footerHeight);
+  const { photoSize } = useAdjustSizeForWrapperPhoto(imageRef, headerHeight, footerHeight);
 
   function prevPhoto() {
     let prev: number | undefined;
@@ -100,7 +102,7 @@ export const ViewPhoto = ({ imageRef, imagesLength: lastImage }: Params) => {
         onTouchEnd={tapOff}
         transition={{ duration: 0.5 }}
         className={`relative leading-3`}
-        style={{ ...size }}
+        style={{ ...photoSize }}
         onClick={(e) => imageTranstion(e)}
       >
         <NextImage

@@ -1,1 +1,1 @@
-export * from "./useViewPhotoSize"
+export * from "./useAdjustSizeForWrapperPhoto"

@@ -94,10 +94,10 @@
   .t-under-border::after {
     content: "";
     position: absolute;
-    bottom: -7px;
-    left: -10px;
+    bottom: -5px;
+    left: -5%;
     background-color: #c4c4c4;
-    width: calc(100% + 20px);
+    width: 110%;
     height: 1px;
   }
 

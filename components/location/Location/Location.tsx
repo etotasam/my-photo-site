@@ -3,27 +3,29 @@ import { Photo } from "../Photo";
 import { ImagesType } from "@/@types/types";
 import { useScrollPosition, useWindowResize } from "@/hooks";
 
-type props = {
+type propsType = {
   locationsImages: ImagesType[];
 };
 
-const Location = ({ locationsImages }: props) => {
-  const [refTopPotion, setRefTopPotion] = useState<number>(0);
+const Location = ({ locationsImages }: propsType) => {
   const [hasBreak, setHasBreak] = useState<boolean>(false);
-  const { height } = useWindowResize();
-  const scrollPoition = useScrollPosition();
-  const breakpoint = height + scrollPoition;
-  const breakState = breakpoint > refTopPotion;
-  if (breakState && !hasBreak) {
-    setHasBreak(true);
-  }
 
   const ref = useRef<HTMLUListElement>(null);
+  //? observerのテスト
+  const callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setHasBreak(true);
+        observer.unobserve(entry.target);
+      }
+    });
+  };
   useEffect(() => {
     if (!ref.current) return;
-    const refTopPotion = ref.current.getBoundingClientRect().top;
-    setRefTopPotion(refTopPotion);
-  }, []);
+    const target = ref.current;
+    const observer = new IntersectionObserver(callback);
+    observer.observe(target);
+  }, [ref]);
 
   return (
     <>
