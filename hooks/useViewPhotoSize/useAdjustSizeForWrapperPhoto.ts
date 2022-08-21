@@ -2,7 +2,7 @@ import { useState, useEffect, DependencyList } from "react"
 import { ImagesType } from "@/@types/types";
 
 
-type Size = {
+type PhotoSizeType = {
   width: number;
   height: number;
   minWidth: number;
@@ -11,8 +11,8 @@ type Size = {
   maxHeight: number;
 };
 
-export const useViewPhotoSize = (imageRef: ImagesType, headerHeight: number, footerHeight: number) => {
-  const [size, setSize] = useState<Size>({
+export const useAdjustSizeForWrapperPhoto = (imageRef: ImagesType, headerHeight: number, footerHeight: number) => {
+  const [photoSize, setPhotoSize] = useState<PhotoSizeType>({
     width: 0,
     height: 0,
     minWidth: 0,
@@ -75,7 +75,7 @@ export const useViewPhotoSize = (imageRef: ImagesType, headerHeight: number, foo
         maxHeight = maxLongSide * ratio;
       }
     }
-    setSize({
+    setPhotoSize({
       width: Math.floor(width),
       height: Math.floor(height),
       minWidth: Math.floor(minWidth),
@@ -92,5 +92,5 @@ export const useViewPhotoSize = (imageRef: ImagesType, headerHeight: number, foo
       window.removeEventListener(`resize`, getSize)
     }
   }, [])
-  return size
+  return { photoSize }
 }

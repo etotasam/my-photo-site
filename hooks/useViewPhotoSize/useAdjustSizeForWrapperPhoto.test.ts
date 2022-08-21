@@ -1,10 +1,10 @@
 import { act, cleanup, renderHook } from "@testing-library/react-hooks"
 
-import { useViewPhotoSize } from "."
+import { useAdjustSizeForWrapperPhoto } from "."
 
 afterEach(() => cleanup())
 
-describe(`useViewPhotoSize 比率の検証`, () => {
+describe(`useAdjustSizeForWrapperPhoto 比率の検証`, () => {
   const headerHeight = 50
   const footerHeight = 50
   const minLongSide = 350
@@ -53,8 +53,9 @@ describe(`useViewPhotoSize 比率の検証`, () => {
     const maxWidth = maxLongSide;
     const maxHeight = maxLongSide * ratio;
     setWindowSize(windowSize.width, windowSize.height)
-    const { result } = renderHook(() => useViewPhotoSize(image, headerHeight, footerHeight))
-    expect(result.current).toEqual({
+    const { result } = renderHook(() => useAdjustSizeForWrapperPhoto(image, headerHeight, footerHeight))
+    const { photoSize } = result.current
+    expect(photoSize).toEqual({
       width: Math.floor(width),
       height: Math.floor(height),
       minWidth: Math.floor(minWidth),
@@ -79,8 +80,9 @@ describe(`useViewPhotoSize 比率の検証`, () => {
     const minHeight = minLongSide;
     const maxWidth = maxLongSide * ratio;
     const maxHeight = maxLongSide;
-    const { result } = renderHook(() => useViewPhotoSize(image, headerHeight, footerHeight))
-    expect(result.current).toEqual({
+    const { result } = renderHook(() => useAdjustSizeForWrapperPhoto(image, headerHeight, footerHeight))
+    const { photoSize } = result.current
+    expect(photoSize).toEqual({
       width: Math.floor(width),
       height: Math.floor(height),
       minWidth: Math.floor(minWidth),
@@ -105,8 +107,9 @@ describe(`useViewPhotoSize 比率の検証`, () => {
     const minHeight = minLongSide * ratio;
     const maxWidth = maxLongSide;
     const maxHeight = maxLongSide * ratio;
-    const { result } = renderHook(() => useViewPhotoSize(image, headerHeight, footerHeight))
-    expect(result.current).toEqual({
+    const { result } = renderHook(() => useAdjustSizeForWrapperPhoto(image, headerHeight, footerHeight))
+    const { photoSize } = result.current
+    expect(photoSize).toEqual({
       width: Math.floor(width),
       height: Math.floor(height),
       minWidth: Math.floor(minWidth),
@@ -131,8 +134,9 @@ describe(`useViewPhotoSize 比率の検証`, () => {
     const minHeight = minLongSide;
     const maxWidth = maxLongSide * ratio;
     const maxHeight = maxLongSide;
-    const { result } = renderHook(() => useViewPhotoSize(image, headerHeight, footerHeight))
-    expect(result.current).toEqual({
+    const { result } = renderHook(() => useAdjustSizeForWrapperPhoto(image, headerHeight, footerHeight))
+    const { photoSize } = result.current
+    expect(photoSize).toEqual({
       width: Math.floor(width),
       height: Math.floor(height),
       minWidth: Math.floor(minWidth),

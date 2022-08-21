@@ -20,7 +20,7 @@ const Title = ({ date, content, title }: Props) => {
       </Head>
       <div className={`font-serif`}>
         <p className={`text-gray-400 pt-5`}>{dayjs(date).format(`YYYY年M月D日`)}</p>
-        <div className={`py-5`} dangerouslySetInnerHTML={{ __html: marked(content) }} />
+        <article className={`py-5`} dangerouslySetInnerHTML={{ __html: marked(content) }} />
       </div>
     </>
   );
