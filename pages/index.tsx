@@ -10,7 +10,7 @@ import { CreateAtType, ImagesType } from "@/@types/types";
 import { useLocationNamesDispatchContext } from "@/context/locationNamesContext";
 import { useEffect } from "react";
 //! components
-import PhotoViewerContainer from "@/components/top-photo-viewer/PhotoViewerContainer";
+import PhotoSliderContainer from "@/components/top-photo-viewer/PhotoSliderContainer";
 import SiteDiscription from "@/components/SiteDiscription";
 import Location from "@/components/location/Location/Location";
 import { Loading } from "@/components/Loading";
@@ -40,7 +40,7 @@ const Home = ({ allImages, topImages, locationsImages, newsTitles, locationNames
   return (
     <>
       <div className={`md:flex md:justify-between relative`}>
-        <PhotoViewerContainer topImages={topImages} allImages={allImages} />
+        <PhotoSliderContainer topImages={topImages} allImages={allImages} />
         <section className={`flex md:justify-end`}>
           <SiteDiscription />
         </section>

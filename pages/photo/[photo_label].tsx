@@ -32,14 +32,13 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
   });
 
   //? imageのpre-loading
-  const imagesPreload = () => {
-    images.map((el) => {
-      const img = new Image();
-      img.src = el.url;
-    });
-  };
-
   useEffect(() => {
+    const imagesPreload = () => {
+      images.map((el) => {
+        const img = new Image();
+        img.src = el.url;
+      });
+    };
     imagesPreload();
   }, []);
 
