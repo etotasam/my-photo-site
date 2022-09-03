@@ -35,6 +35,7 @@
     "react-transition-group": "^4.4.2"
   },
   "devDependencies": {
+    "@stylelint/postcss-css-in-js": "^0.38.0",
     "@types/axios": "^0.14.0",
     "@types/jest": "^27.0.3",
     "@types/node": "^16.9.1",
