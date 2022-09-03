@@ -48,20 +48,23 @@ const PhotoSliderContainer = ({ topImages, allImages }: Params) => {
     <div className={`md:w-[65%] max-w-[700px] flex md:flex-col`}>
       <div className={`relative pt-[90%] w-[90%] md:pt-[95%] md:w-[95%]`}>
         {topImages.map((photo, index) => (
-          <NextImage
-            onTouchStart={tapOn}
-            onTouchEnd={tapOff}
-            onClick={() => clickImage(photo)}
-            onLoad={imageOnLoad}
+          <div
             className={`cursor-pointer duration-1000 ${
               currentPhotoIndex === index ? `opacity-100 z-10` : `opacity-0 z-0`
             }`}
-            key={index}
-            src={photo.url}
-            layout="fill"
-            objectFit="cover"
-            alt={``}
-          />
+          >
+            <NextImage
+              onTouchStart={tapOn}
+              onTouchEnd={tapOff}
+              onClick={() => clickImage(photo)}
+              onLoad={imageOnLoad}
+              key={index}
+              src={photo.url}
+              layout="fill"
+              objectFit="cover"
+              alt={``}
+            />
+          </div>
         ))}
         <AnimatePresence>{(imagesLangth > imageLoaded || currentPhotoIndex === null) && <Loading />}</AnimatePresence>
       </div>
