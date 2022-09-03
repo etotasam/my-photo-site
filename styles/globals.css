@@ -121,11 +121,11 @@
 
   @keyframes slide-string {
     0% {
-      transform: translateX(50px);
+      transform: translateX(-20px);
     }
-    50% {
+    /* 50% {
       transform: translateX(-5px);
-    }
+    } */
     100% {
       transform: translateX(0px);
     }
