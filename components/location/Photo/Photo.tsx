@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import NextImage from "next/image";
@@ -7,10 +7,11 @@ import { ImagesType } from "@/@types/types";
 type Props = {
   locationImage: ImagesType;
   index: number;
+  loadedLocationImage: () => void;
   // hasBreak: boolean;
 };
 
-export const Photo = ({ locationImage, index }: Props) => {
+export const Photo = ({ locationImage, loadedLocationImage, index }: Props) => {
   const label = locationImage.id.split(`_`)[0];
 
   //? photo表示部分のアニメーション
@@ -82,6 +83,12 @@ export const Photo = ({ locationImage, index }: Props) => {
     });
   };
 
+  // const [imagesLoaded ,setImagesLoaded] = useState(0)
+  // const loadedImage = () => {
+  //   if(locationImage < imagesLoaded) return
+  //   setImagesLoaded((v) => v + 1)
+  // };
+
   return (
     <>
       {/* {hasBreak ? ( */}
@@ -112,6 +119,7 @@ export const Photo = ({ locationImage, index }: Props) => {
               objectFit="cover"
               src={locationImage.url}
               alt={``}
+              onLoad={loadedLocationImage}
             />
             {/* </motion.a> */}
           </a>
