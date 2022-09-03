@@ -4,7 +4,8 @@ import { ImagesType } from "@/@types/types";
 import { useScrollPosition, useWindowResize } from "@/hooks";
 
 //! component
-import { Loading } from "@/components/Loading";
+import { LoadingBound } from "@/components/LoadingBound";
+// import { Loading } from "@/components/Loading";
 
 type propsType = {
   locationsImages: ImagesType[];
@@ -33,7 +34,11 @@ const Location = ({ locationsImages }: propsType) => {
   const [loaded, setLoaded] = useState(false);
   const [locationImagesLoaded, setLocationImagesLoaded] = useState(0);
   useEffect(() => {
-    if (locationImagesLoaded >= locationImagesLoaded) setLoaded(true);
+    if (locationImagesLoaded >= locationImagesLoaded) {
+      setTimeout(() => {
+        setLoaded(true);
+      }, 5000);
+    }
   }, [locationImagesLoaded]);
 
   return (
@@ -45,13 +50,14 @@ const Location = ({ locationsImages }: propsType) => {
         {locationsImages &&
           locationsImages.map((locationImage, index) => (
             <Photo
-              index={index}
+              imageIndex={index}
               key={locationImage.id}
               locationImage={locationImage}
               loadedLocationImage={() => setLocationImagesLoaded((v) => v + 1)}
+              testloaded={loaded}
             />
           ))}
-        {!loaded && <Loading />}
+        {!loaded && <LoadingBound />}
       </ul>
     </>
   );

@@ -6,17 +6,19 @@ import { ImagesType } from "@/@types/types";
 
 type Props = {
   locationImage: ImagesType;
-  index: number;
+  imageIndex: number;
   loadedLocationImage: () => void;
+  testloaded: boolean;
   // hasBreak: boolean;
 };
+export const Photo = ({ locationImage, loadedLocationImage, imageIndex, testloaded }: Props) => {
 
-export const Photo = ({ locationImage, loadedLocationImage, index }: Props) => {
   const label = locationImage.id.split(`_`)[0];
 
   //? photo表示部分のアニメーション
   const photoElRef = React.useRef<HTMLAnchorElement>(null);
   React.useEffect(() => {
+    if (!testloaded) return;
     if (!photoElRef.current) return;
     const target = photoElRef.current;
     const options: IntersectionObserverInit = {
@@ -29,20 +31,21 @@ export const Photo = ({ locationImage, loadedLocationImage, index }: Props) => {
         photoElRef.current?.classList.remove("opacity-0");
         Object.assign(photoElRef.current!.style, {
           opacity: "1",
-          transition: `opacity 1s ${(index + 1) * 5}00ms`,
+          transition: `opacity 1s ${(imageIndex + 1) * 5}00ms`,
           animation: `vertical-slide 1s`,
-          animationDelay: `${(index + 1) * 5}00ms`,
+          animationDelay: `${(imageIndex + 1) * 5}00ms`,
         });
         observer.unobserve(entries[0].target);
       }
     };
     const io = new IntersectionObserver(callback, options);
     io.observe(target);
-  }, [photoElRef]);
+  }, [photoElRef, testloaded]);
 
   //? h2文字列のアニメーション
   const h2ElRef = React.useRef<HTMLHeadingElement>(null);
   React.useEffect(() => {
+    if (!testloaded) return;
     if (!h2ElRef.current || !photoElRef.current) return;
     const animationTarget = h2ElRef.current;
     const breakPoint = photoElRef.current;
@@ -56,9 +59,9 @@ export const Photo = ({ locationImage, loadedLocationImage, index }: Props) => {
         animationTarget.classList.remove("opacity-0");
         Object.assign(animationTarget.style, {
           opacity: "1",
-          transition: `1s ${index * 5}00ms`,
+          transition: `1s ${imageIndex * 5}00ms`,
           animation: `slide-string 1s`,
-          animationDelay: `${index * 5}00ms`,
+          animationDelay: `${imageIndex * 5}00ms`,
         });
 
         observer.unobserve(entries[0].target);
@@ -67,7 +70,7 @@ export const Photo = ({ locationImage, loadedLocationImage, index }: Props) => {
 
     const io = new IntersectionObserver(callback, options);
     io.observe(breakPoint);
-  }, [h2ElRef, photoElRef]);
+  }, [h2ElRef, photoElRef, testloaded]);
 
   //? 写真にhoverした時のアニメーション(jsで実装)
   const hover = (e: React.MouseEvent<HTMLAnchorElement>) => {
