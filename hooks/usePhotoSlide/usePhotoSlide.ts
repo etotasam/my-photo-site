@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { ImagesType } from "@/@types/types";
 
 type PropsType = {
@@ -7,11 +7,10 @@ type PropsType = {
 
 export const usePhotoSlide = ({ topImages }: PropsType) => {
 
-  const [currentPhotoIndex, setCurrentPhotoIndex] = React.useState<number | null>(null);
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState<number | null>(null);
 
   const nextPhoto = () => {
-    // clearTimeout(timeOutId);
-    startPhotoSlide();
+    if (timeOutId) clearTimeout(timeOutId);
     setCurrentPhotoIndex((state: number) => {
       if (topImages.length - 1 <= state) {
         return (state = 0);
@@ -21,8 +20,7 @@ export const usePhotoSlide = ({ topImages }: PropsType) => {
   };
 
   const prevPhoto = () => {
-    // clearTimeout(timeOutId);
-    startPhotoSlide();
+    if (timeOutId) clearTimeout(timeOutId);
     setCurrentPhotoIndex((state: number) => {
       if (state <= 0) {
         return (state = topImages.length - 1);
@@ -54,8 +52,6 @@ export const usePhotoSlide = ({ topImages }: PropsType) => {
   let timeOutId: NodeJS.Timer;
   const ms = 5000;
   const startPhotoSlide = () => {
-    // timeOutId = setInterval(() => {
-    //   nextPhoto();
     timeOutId = setTimeout(() => {
       nextPhoto();
     }, ms);
