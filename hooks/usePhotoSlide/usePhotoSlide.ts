@@ -10,7 +10,7 @@ export const usePhotoSlide = ({ topImages }: PropsType) => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = React.useState<number | null>(null);
 
   const nextPhoto = () => {
-    clearTimeout(timeOutId);
+    // clearTimeout(timeOutId);
     startPhotoSlide();
     setCurrentPhotoIndex((state: number) => {
       if (topImages.length - 1 <= state) {
@@ -21,7 +21,7 @@ export const usePhotoSlide = ({ topImages }: PropsType) => {
   };
 
   const prevPhoto = () => {
-    clearTimeout(timeOutId);
+    // clearTimeout(timeOutId);
     startPhotoSlide();
     setCurrentPhotoIndex((state: number) => {
       if (state <= 0) {
@@ -52,12 +52,12 @@ export const usePhotoSlide = ({ topImages }: PropsType) => {
   };
 
   let timeOutId: NodeJS.Timer;
-  const ms = 2000;
+  const ms = 5000;
   const startPhotoSlide = () => {
-    timeOutId = setInterval(() => {
+    // timeOutId = setInterval(() => {
+    //   nextPhoto();
+    timeOutId = setTimeout(() => {
       nextPhoto();
-      // timeOutId = setTimeout(() => {
-      //   nextPhoto();
     }, ms);
   };
 
