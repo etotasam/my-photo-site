@@ -35,9 +35,7 @@ const Location = ({ locationsImages }: propsType) => {
   const [locationImagesLoaded, setLocationImagesLoaded] = useState(0);
   useEffect(() => {
     if (locationImagesLoaded >= locationImagesLoaded) {
-      setTimeout(() => {
-        setLoaded(true);
-      }, 5000);
+      setLoaded(true);
     }
   }, [locationImagesLoaded]);
 
