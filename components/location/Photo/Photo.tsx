@@ -11,8 +11,8 @@ type Props = {
   testloaded: boolean;
   // hasBreak: boolean;
 };
-
 export const Photo = ({ locationImage, loadedLocationImage, imageIndex, testloaded }: Props) => {
+
   const label = locationImage.id.split(`_`)[0];
 
   //? photo表示部分のアニメーション
