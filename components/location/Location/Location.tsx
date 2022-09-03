@@ -3,6 +3,10 @@ import { Photo } from "../Photo";
 import { ImagesType } from "@/@types/types";
 import { useScrollPosition, useWindowResize } from "@/hooks";
 
+//! component
+import { LoadingBound } from "@/components/LoadingBound";
+// import { Loading } from "@/components/Loading";
+
 type propsType = {
   locationsImages: ImagesType[];
 };
@@ -27,16 +31,33 @@ const Location = ({ locationsImages }: propsType) => {
   //   observer.observe(target);
   // }, [ref]);
 
+  const [loaded, setLoaded] = useState(false);
+  const [locationImagesLoaded, setLocationImagesLoaded] = useState(0);
+  useEffect(() => {
+    if (locationImagesLoaded >= locationImagesLoaded) {
+      setTimeout(() => {
+        setLoaded(true);
+      }, 5000);
+    }
+  }, [locationImagesLoaded]);
+
   return (
     <>
       <div className={`flex justify-center items-center`}>
         <h1 className={`t-under-border text-green-600 mt-5 mx-auto`}>Location</h1>
       </div>
-      <ul className={`mt-10 mx-auto`}>
+      <ul className={`mt-10 mx-auto relative`}>
         {locationsImages &&
           locationsImages.map((locationImage, index) => (
-            <Photo index={index} key={locationImage.id} locationImage={locationImage} />
+            <Photo
+              imageIndex={index}
+              key={locationImage.id}
+              locationImage={locationImage}
+              loadedLocationImage={() => setLocationImagesLoaded((v) => v + 1)}
+              testloaded={loaded}
+            />
           ))}
+        {!loaded && <LoadingBound />}
       </ul>
     </>
   );
