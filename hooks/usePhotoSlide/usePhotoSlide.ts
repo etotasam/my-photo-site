@@ -52,10 +52,12 @@ export const usePhotoSlide = ({ topImages }: PropsType) => {
   };
 
   let timeOutId: NodeJS.Timer;
-  const ms = 5000;
+  const ms = 3000;
   const startPhotoSlide = () => {
-    timeOutId = setTimeout(() => {
+    timeOutId = setInterval(() => {
       nextPhoto();
+      // timeOutId = setTimeout(() => {
+      //   nextPhoto();
     }, ms);
   };
 
