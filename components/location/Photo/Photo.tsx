@@ -8,17 +8,17 @@ type Props = {
   locationImage: ImagesType;
   imageIndex: number;
   loadedLocationImage: () => void;
-  testloaded: boolean;
+  isAllImagesloaded: boolean;
   // hasBreak: boolean;
 };
-export const Photo = ({ locationImage, loadedLocationImage, imageIndex, testloaded }: Props) => {
+export const Photo = ({ locationImage, loadedLocationImage, imageIndex, isAllImagesloaded }: Props) => {
 
   const label = locationImage.id.split(`_`)[0];
 
   //? photo表示部分のアニメーション
   const photoElRef = React.useRef<HTMLAnchorElement>(null);
   React.useEffect(() => {
-    if (!testloaded) return;
+    if (!isAllImagesloaded) return;
     if (!photoElRef.current) return;
     const target = photoElRef.current;
     const options: IntersectionObserverInit = {
@@ -40,12 +40,12 @@ export const Photo = ({ locationImage, loadedLocationImage, imageIndex, testload
     };
     const io = new IntersectionObserver(callback, options);
     io.observe(target);
-  }, [photoElRef, testloaded]);
+  }, [photoElRef, isAllImagesloaded]);
 
   //? h2文字列のアニメーション
   const h2ElRef = React.useRef<HTMLHeadingElement>(null);
   React.useEffect(() => {
-    if (!testloaded) return;
+    if (!isAllImagesloaded) return;
     if (!h2ElRef.current || !photoElRef.current) return;
     const animationTarget = h2ElRef.current;
     const breakPoint = photoElRef.current;
@@ -70,7 +70,7 @@ export const Photo = ({ locationImage, loadedLocationImage, imageIndex, testload
 
     const io = new IntersectionObserver(callback, options);
     io.observe(breakPoint);
-  }, [h2ElRef, photoElRef, testloaded]);
+  }, [h2ElRef, photoElRef, isAllImagesloaded]);
 
   //? 写真にhoverした時のアニメーション(jsで実装)
   const hover = (e: React.MouseEvent<HTMLAnchorElement>) => {

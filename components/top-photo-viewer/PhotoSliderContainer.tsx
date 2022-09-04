@@ -1,11 +1,11 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import BulletNav from "./BulletNav";
 import { ImagesType } from "@/@types/types";
 import NextImage from "next/image";
 import { Loading } from "@/components/Loading";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 // hooks
 import { usePhotoSlide } from "@/hooks/usePhotoSlide";
@@ -37,36 +37,51 @@ const PhotoSliderContainer = ({ topImages, allImages }: Params) => {
     router.push(`/photo/${locationName}?image=${imageIndex + 1}`);
   }, []);
 
+  //? topImageのpreLoadingとその判定
   const imagesLangth = topImages.length;
-  const [imageLoaded, setImageLoaded] = useState(0);
-  const imageOnLoad = () => {
-    if (imagesLangth <= imageLoaded) return;
-    setImageLoaded((v) => v + 1);
-  };
+  const [imagePreLoaded, setImagePreLoaded] = useState<boolean[]>([]);
+  useEffect(() => {
+    let image;
+    const preLoad = topImages.reduce((prev: boolean[], curr: ImagesType): boolean[] => {
+      image = new Image();
+      image.src = curr.url;
+      return [...prev, true];
+    }, []);
+    setImagePreLoaded(preLoad);
+  }, [topImages]);
 
   return (
     <div className={`md:w-[65%] max-w-[700px] flex md:flex-col`}>
       <div className={`relative pt-[90%] w-[90%] md:pt-[95%] md:w-[95%]`}>
-        {topImages.map((photo, index) => (
-          <div
-            className={`cursor-pointer duration-1000 ${
-              currentPhotoIndex === index ? `opacity-100 z-10` : `opacity-0 z-0`
-            }`}
-          >
-            <NextImage
-              onTouchStart={tapOn}
-              onTouchEnd={tapOff}
-              onClick={() => clickImage(photo)}
-              onLoad={imageOnLoad}
-              key={index}
-              src={photo.url}
-              layout="fill"
-              objectFit="cover"
-              alt={``}
-            />
-          </div>
-        ))}
-        <AnimatePresence>{(imagesLangth > imageLoaded || currentPhotoIndex === null) && <Loading />}</AnimatePresence>
+        <AnimatePresence>
+          {topImages.map(
+            (photo, index) =>
+              currentPhotoIndex === index && (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className={`cursor-pointer`}
+                  transition={{ duration: 1 }}
+                >
+                  <NextImage
+                    onTouchStart={tapOn}
+                    onTouchEnd={tapOff}
+                    onClick={() => clickImage(photo)}
+                    // onLoad={imageOnLoad}
+                    src={photo.url}
+                    layout="fill"
+                    objectFit="cover"
+                    alt={``}
+                  />
+                </motion.div>
+              )
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {(imagesLangth > imagePreLoaded.length || currentPhotoIndex === null) && <Loading />}
+        </AnimatePresence>
       </div>
       <BulletNav
         topImages={topImages}

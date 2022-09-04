@@ -31,11 +31,11 @@ const Location = ({ locationsImages }: propsType) => {
   //   observer.observe(target);
   // }, [ref]);
 
-  const [loaded, setLoaded] = useState(false);
+  const [isAllImagesloaded, setIsAllImagesloaded] = useState(false);
   const [locationImagesLoaded, setLocationImagesLoaded] = useState(0);
   useEffect(() => {
     if (locationImagesLoaded >= locationImagesLoaded) {
-      setLoaded(true);
+      setIsAllImagesloaded(true);
     }
   }, [locationImagesLoaded]);
 
@@ -52,10 +52,10 @@ const Location = ({ locationsImages }: propsType) => {
               key={locationImage.id}
               locationImage={locationImage}
               loadedLocationImage={() => setLocationImagesLoaded((v) => v + 1)}
-              testloaded={loaded}
+              isAllImagesloaded={isAllImagesloaded}
             />
           ))}
-        {!loaded && <LoadingBound />}
+        {!isAllImagesloaded && <LoadingBound />}
       </ul>
     </>
   );
