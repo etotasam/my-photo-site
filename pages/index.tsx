@@ -31,6 +31,7 @@ type NewsTitles = {
 
 const Home = ({ allImages, topImages, locationsImages, newsTitles, locationNames }: Params) => {
   const { setLocationNamesDispatcher } = useLocationNamesDispatchContext();
+
   //? locationの名前をheaderに渡す(context)
   useEffect(() => {
     if (!locationNames) return;
