@@ -1,13 +1,15 @@
-import React, { memo, useEffect } from "react";
-import { useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import BulletNav from "./BulletNav";
 import { ImagesType } from "@/@types/types";
 import NextImage from "next/image";
-import { Loading } from "@/components/Loading";
 import { AnimatePresence, motion } from "framer-motion";
-
-// hooks
+import Link from "next/link";
+//! components
+import { TopPhoto } from "./TopPhoto";
+import { Loading } from "@/components/Loading";
+import { LoadingBound } from "@/components/LoadingBound";
+//! hooks
 import { usePhotoSlide } from "@/hooks/usePhotoSlide";
 
 type Params = {
@@ -16,7 +18,8 @@ type Params = {
 };
 
 const PhotoSliderContainer = ({ topImages, allImages }: Params) => {
-  const { currentPhotoIndex, setCurrentPhotoIndex, tapOn, tapOff } = usePhotoSlide({ topImages });
+  const [topImageAllLoaded, setTopImageAllLoaded] = useState(false);
+  const { currentPhotoIndex, setCurrentPhotoIndex, tapOn, tapOff } = usePhotoSlide({ topImages, topImageAllLoaded });
 
   //? トップ画面のスライド写真をランダムに選択
   React.useEffect(() => {
@@ -24,31 +27,25 @@ const PhotoSliderContainer = ({ topImages, allImages }: Params) => {
     setCurrentPhotoIndex(random);
   }, []);
 
-  const router = useRouter();
-  const clickImage = React.useCallback((photo: ImagesType) => {
-    const locationName = photo.id.split(`_`)[0];
-    const locationsImages = allImages[locationName];
-    const imagesSortedInDescById = locationsImages.sort((a, b) => {
-      if (Number(a.id.split(`_`).pop()) > Number(b.id.split(`_`).pop())) return -1;
-      if (Number(a.id.split(`_`).pop()) < Number(b.id.split(`_`).pop())) return 1;
-      return 0;
-    });
-    const imageIndex = imagesSortedInDescById.findIndex((el) => el.id === photo.id);
-    router.push(`/photo/${locationName}?image=${imageIndex + 1}`);
+  //? 表示するイメージ数をcount
+  const imagesLangth = topImages.length;
+
+  //? 読み込んだimageのcount
+  const [topImageLoadedCount, setTopImageLoadedCount] = useState<number>(0);
+  const imageOnloaded = React.useCallback(() => {
+    setTopImageLoadedCount((v) => v + 1);
   }, []);
 
-  //? topImageのpreLoadingとその判定
-  const imagesLangth = topImages.length;
-  const [imagePreLoaded, setImagePreLoaded] = useState<boolean[]>([]);
+  //? 表示するimageを全部読み込んだかどうかの判定
+  const [isTopImageAllLoaded, setIsTopImageAllLoaded] = useState(false);
   useEffect(() => {
-    let image;
-    const preLoad = topImages.reduce((prev: boolean[], curr: ImagesType): boolean[] => {
-      image = new Image();
-      image.src = curr.url;
-      return [...prev, true];
-    }, []);
-    setImagePreLoaded(preLoad);
-  }, [topImages]);
+    setIsTopImageAllLoaded(imagesLangth <= topImageLoadedCount);
+  }, [topImageLoadedCount]);
+
+  //? 表示するimageを全部読み込んだかどうかをhooks usePhotoSlideの引数にわたす
+  useEffect(() => {
+    setTopImageAllLoaded(isTopImageAllLoaded);
+  }, [isTopImageAllLoaded]);
 
   return (
     <div className={`md:w-[65%] max-w-[700px] flex md:flex-col`}>
@@ -56,32 +53,20 @@ const PhotoSliderContainer = ({ topImages, allImages }: Params) => {
         <AnimatePresence>
           {topImages.map(
             (photo, index) =>
-              currentPhotoIndex === index && (
-                <motion.div
+              (!isTopImageAllLoaded || currentPhotoIndex === index) && (
+                <TopPhoto
                   key={index}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className={`cursor-pointer`}
-                  transition={{ duration: 1 }}
-                >
-                  <NextImage
-                    onTouchStart={tapOn}
-                    onTouchEnd={tapOff}
-                    onClick={() => clickImage(photo)}
-                    // onLoad={imageOnLoad}
-                    src={photo.url}
-                    layout="fill"
-                    objectFit="cover"
-                    alt={``}
-                  />
-                </motion.div>
+                  index={index}
+                  photo={photo}
+                  allImages={allImages}
+                  tapOn={tapOn}
+                  tapOff={tapOff}
+                  isOnloaded={imageOnloaded}
+                />
               )
           )}
         </AnimatePresence>
-        <AnimatePresence>
-          {(imagesLangth > imagePreLoaded.length || currentPhotoIndex === null) && <Loading />}
-        </AnimatePresence>
+        <AnimatePresence>{(!isTopImageAllLoaded || currentPhotoIndex === null) && <Loading />}</AnimatePresence>
       </div>
       <BulletNav
         topImages={topImages}
