@@ -86,36 +86,17 @@ export const Photo = ({ locationImage, loadedLocationImage, imageIndex, isAllIma
     });
   };
 
-  // const [imagesLoaded ,setImagesLoaded] = useState(0)
-  // const loadedImage = () => {
-  //   if(locationImage < imagesLoaded) return
-  //   setImagesLoaded((v) => v + 1)
-  // };
-
   return (
     <>
-      {/* {hasBreak ? ( */}
       <li data-testid={`breaked`} key={locationImage.id} className={`w-1/2 md:w-1/5 mb-5 inline-block`}>
         <Link href={`/photo/${label}?image=1`} passHref>
-          <a
+          <motion.a
             ref={photoElRef}
-            onMouseOver={hover}
-            onMouseLeave={unHover}
+            whileHover={{ scale: [1, 1.12, 1.1], transition: { duration: 0.5, times: [0, 0.8, 1] } }}
+            // onMouseOver={hover}
+            // onMouseOut={unHover}
             className={`block cursor-pointer relative w-[90%] pt-[45%] mx-auto opacity-0`}
           >
-            {/* <motion.a
-              initial={{ opacity: 0, y: 20 }}
-              animate={{
-                opacity: 1,
-                y: [null, -2, 0],
-                transition: { duration: 1, delay: index / 3 },
-              }}
-              whileHover={{
-                scale: [null, 1.04, 1.03],
-                transition: { duration: 0.5 },
-              }}
-              className={`block cursor-pointer relative w-[90%] pt-[45%] mx-auto`}
-            > */}
             <NextImage
               className={`pointer-events-none`}
               layout="fill"
@@ -124,23 +105,12 @@ export const Photo = ({ locationImage, loadedLocationImage, imageIndex, isAllIma
               alt={``}
               onLoad={loadedLocationImage}
             />
-            {/* </motion.a> */}
-          </a>
+          </motion.a>
         </Link>
-        {/* <motion.h2
-          data-testid={`h2`}
-          animate={{ opacity: [0, 1], x: [-5, 0] }}
-          transition={{ duration: 0.5, delay: index / 2 }}
-          className={`font-extralight`}
-        > */}
         <h2 ref={h2ElRef} data-testid={`h2`} className={`font-extralight opacity-0`}>{`${label
           .charAt(0)
           .toUpperCase()}${label.slice(1)}`}</h2>
-        {/* </motion.h2> */}
       </li>
-      {/* ) : (
-        <li data-testid={`non-break`} className={`w-1/2 md:w-1/5 mb-5 inline-block`}></li>
-      )} */}
     </>
   );
 };
