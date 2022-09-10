@@ -1,11 +1,12 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { ImagesType } from "@/@types/types";
 
 type PropsType = {
   topImages: ImagesType[]
+  topImageAllLoaded: boolean;
 }
 
-export const usePhotoSlide = ({ topImages }: PropsType) => {
+export const usePhotoSlide = ({ topImages, topImageAllLoaded = false }: PropsType) => {
 
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState<number | null>(null);
 
@@ -57,12 +58,13 @@ export const usePhotoSlide = ({ topImages }: PropsType) => {
     }, ms);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    if (!topImageAllLoaded) return
     startPhotoSlide();
     return () => {
       clearTimeout(timeOutId);
     };
-  }, [currentPhotoIndex]);
+  }, [currentPhotoIndex, topImageAllLoaded]);
 
   return { currentPhotoIndex, setCurrentPhotoIndex, tapOn, tapOff }
 
