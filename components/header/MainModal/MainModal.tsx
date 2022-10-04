@@ -2,15 +2,16 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 
-type Params = {
+export type NavMenuModalType = {
   locations: string[] | undefined;
+  photoLabelName: string | string[] | undefined;
 };
 
-export const MainModal = ({ locations }: Params) => {
+export const MainModal = ({ locations, photoLabelName }: NavMenuModalType) => {
   const router = useRouter();
   let photo_label: string;
-  if (typeof router.query.photo_label === "string") {
-    photo_label = router.query.photo_label;
+  if (typeof photoLabelName === "string") {
+    photo_label = photoLabelName;
   }
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, location: string) => {

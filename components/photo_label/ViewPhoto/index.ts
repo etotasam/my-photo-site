@@ -1,1 +1,1 @@
-export * from "./ViewPhoto"
+export * from "./ViewPhotoContainer"

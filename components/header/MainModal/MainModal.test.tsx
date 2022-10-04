@@ -13,6 +13,7 @@ nextRouer.mockImplementation(() => {
 const props = {
   locations: ["jordan", "egypt"],
   error: { message: "エラーです", name: "エラー" },
+  photoLabelName: "jordan",
 };
 
 afterEach(() => {
@@ -34,7 +35,7 @@ describe(`MainModal`, () => {
   // });
 
   it(`router.pushのURLの検証`, async () => {
-    const { queryByText } = render(<MainModal locations={props.locations} />);
+    const { queryByText } = render(<MainModal locations={props.locations} photoLabelName={props.photoLabelName} />);
     expect(queryByText(/Jordan/)).toBeInTheDocument();
     fireEvent.click(queryByText(/Jordan/) as HTMLElement);
     expect(push).toHaveBeenCalledWith(`/photo/jordan`);

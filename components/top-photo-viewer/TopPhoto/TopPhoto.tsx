@@ -5,9 +5,6 @@ import NextImage from "next/image";
 import { ImagesType } from "@/@types/types";
 
 type PropsType = {
-  index: number;
-  // currentPhotoIndex: number | null;
-  // isCurrent: boolean;
   photo: ImagesType;
   allImages: Record<string, ImagesType[]>;
   tapOn: (event: React.TouchEvent<HTMLImageElement>) => void;
@@ -15,9 +12,10 @@ type PropsType = {
   isOnloaded: () => void;
 };
 
-export const TopPhoto = React.memo(({ photo, allImages, index, tapOn, tapOff, isOnloaded }: PropsType) => {
+export const TopPhoto = React.memo(({ photo, allImages, tapOn, tapOff, isOnloaded }: PropsType) => {
+  //? 写真表示のURLを作成
   const [toLink, setToLink] = useState<string>("/");
-  useEffect(() => {
+  const createURL = React.useCallback(() => {
     const locationName = photo.id.split(`_`)[0];
     const locationsImages = allImages[locationName];
     const imagesSortedInDescById = locationsImages.sort((a, b) => {
@@ -27,6 +25,10 @@ export const TopPhoto = React.memo(({ photo, allImages, index, tapOn, tapOff, is
     });
     const imageIndex = imagesSortedInDescById.findIndex((el) => el.id === photo.id);
     setToLink(`/photo/${locationName}?image=${imageIndex + 1}`);
+  }, [photo.id]);
+
+  useEffect(() => {
+    createURL();
   }, []);
 
   const variables = {

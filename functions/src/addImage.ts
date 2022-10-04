@@ -111,8 +111,8 @@ export const addImageUrl = functions.region(`asia-northeast1`).storage.object().
         createAt: FieldValue.serverTimestamp()
       })
     })
-    functions.logger.log(`${registerFilename}の情報をfirestoreへ追加しました`)
+    functions.logger.log(`${registerFilename}の情報をfirestoreの${fileDir}へ追加しました`)
   } catch (error) {
-    functions.logger.log(`imageデータをfirestoreに追加が出来ませんでした`, error)
+    functions.logger.log(`imageデータをfirestoreの${fileDir}に追加が出来ませんでした`, error)
   }
 })
