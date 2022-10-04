@@ -1,5 +1,5 @@
 import React from "react";
-import { ViewPhoto } from ".";
+import { ViewPhoto } from "./ViewPhoto";
 import { fireEvent, render, screen, act } from "@testing-library/react";
 import { cleanup } from "@testing-library/react-hooks";
 import renderer from "react-test-renderer";
@@ -24,9 +24,15 @@ const image = {
   id: "1",
 };
 
+const imageTranstionMock = jest.fn().mockReturnValue("get imageTransiton");
+
 const props = {
   imageRef: image,
-  imagesLength: 1,
+  imageTranstion: imageTranstionMock,
+  tapOn: jest.fn().mockReturnValue("gat tapOn"),
+  tapOff: jest.fn().mockReturnValue("gat tapOff"),
+  isImageLoading: false,
+  closeLoadingModal: jest.fn().mockReturnValue(true),
 };
 
 const nextRouer = jest.spyOn(require("next/router"), `useRouter`);
@@ -55,6 +61,12 @@ describe(`ViewPhoto`, () => {
     expect(asFragment()).toMatchSnapshot();
     act(() => resizeWidth(700, 1000));
     expect(asFragment()).toMatchSnapshot();
+  });
+  it(`画像クリックでonClick指定の関数が呼ばれる`, () => {
+    render(<ViewPhoto {...props} />);
+    const imageEl = screen.getByTestId(`imageWrap`);
+    fireEvent.click(imageEl);
+    expect(imageTranstionMock).toBeCalledTimes(1);
   });
 });
 

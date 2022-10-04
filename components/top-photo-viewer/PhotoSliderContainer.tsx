@@ -55,8 +55,7 @@ const PhotoSliderContainer = ({ topImages, allImages }: Params) => {
             (photo, index) =>
               (!isTopImageAllLoaded || currentPhotoIndex === index) && (
                 <TopPhoto
-                  key={index}
-                  index={index}
+                  key={photo.id}
                   photo={photo}
                   allImages={allImages}
                   tapOn={tapOn}
