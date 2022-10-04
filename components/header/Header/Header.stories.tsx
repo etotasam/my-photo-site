@@ -1,13 +1,11 @@
 import { Header, HeaderType } from "./Header";
 import { Story, Meta } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
 
 export default {
   title: "Header",
   component: Header,
 } as Meta<typeof Header>;
-// const Caution = () => {
-//   return <p style={{ marginTop: "50px" }}>controlsのisModalActiveのtrue/falseでアニメーションを確認</p>;
-// };
 
 const Template: Story<typeof Header> = (args: any) => {
   return (
@@ -21,7 +19,11 @@ DefaultHeader.args = {
   device: "PC",
   locationNames: ["てすと1", "てすと2"],
   photoLabelName: "てすと1",
-  toggleModal: () => {},
+  toggleModal: action("toggleModalFunc"),
   isModalActive: false,
-  // headerRef: (<div>test</div>) as unknown,
+  toLink: action("toLink"),
+  handleClick: (e) => {
+    e.preventDefault();
+    action("handleClick");
+  },
 } as HeaderType;

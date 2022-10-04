@@ -5,6 +5,12 @@ import CSRLayout from "../layouts/CSRLayout";
 import Plain from "@/layouts/Plain";
 import { initializeApp } from "firebase/app";
 
+//! context
+import { ModalStateProvider } from "@/context/modalStateContext";
+import { LoadStateProvider } from "@/context/loadStateContext";
+import { HeightProvider } from "@/context/heightStateContext";
+import { LocationNamesProvider } from "@/context/locationNamesContext";
+
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -42,9 +48,17 @@ function MyApp({ Component, pageProps }) {
     default: {
       return (
         <>
-          <Default>
-            <Component {...pageProps} />
-          </Default>
+          <LocationNamesProvider>
+            <HeightProvider>
+              <LoadStateProvider>
+                <ModalStateProvider>
+                  <Default>
+                    <Component {...pageProps} />
+                  </Default>
+                </ModalStateProvider>
+              </LoadStateProvider>
+            </HeightProvider>
+          </LocationNamesProvider>
         </>
       );
     }
