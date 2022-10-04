@@ -8,7 +8,9 @@ const db = admin.firestore()
 export const deleteImageUrl = functions.region(`asia-northeast1`).storage.object().onDelete(async (object) => {
   try {
     const filePath = object.name
+    //? 削除対象のあるディレクトリ
     const fileDir = path.dirname(filePath!)
+    //? 削除対象のファイル、フォルダの名前
     const fileName = path.basename(filePath!)
     const topCollection = fileDir.split(`/`)[0]
     const photoLabel = fileDir.split(`/`)[1]
@@ -27,7 +29,7 @@ export const deleteImageUrl = functions.region(`asia-northeast1`).storage.object
     // imagesコレクション内でimageオブジェクトが削除された場合
     if (object.contentType?.match(/image\//)) {
       await imageDataSrc.delete();
-      functions.logger.log(`firestoreから${fileNameWithoutExt}を削除しました`)
+      functions.logger.log(`firestoreの${fileDir}から${fileNameWithoutExt}を削除しました`)
     }
 
   } catch (error) {
