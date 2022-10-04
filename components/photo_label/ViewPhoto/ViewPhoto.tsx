@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import NextImage from "next/image";
-import { useRouter } from "next/router";
+
 import { AnimatePresence, motion } from "framer-motion";
 import type { ImagesType } from "@/@types/types";
 //! context
-import { useModalDispatchContext } from "@/context/modalStateContext";
+
 import { useHeihgtStateContext } from "@/context/heightStateContext";
-import { useLoadDispatchContext } from "@/context/loadStateContext";
+
 //! hooks
 import { useAdjustSizeForWrapperPhoto } from "@/hooks";
 //! component
@@ -15,82 +15,16 @@ import { LoadingBound } from "@/components/LoadingBound";
 
 type Params = {
   imageRef: ImagesType;
-  imagesLength: number;
+  imageTranstion: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  tapOn: (e: React.TouchEvent<HTMLImageElement>) => void;
+  tapOff: (e: React.TouchEvent<HTMLImageElement>) => void;
+  isImageLoading: boolean;
+  closeLoadingModal: () => void;
 };
 
-export const ViewPhoto = ({ imageRef, imagesLength: lastImage }: Params) => {
-  const router = useRouter();
-  const { photo_label, image } = router.query;
+export const ViewPhoto = ({ imageRef, imageTranstion, tapOn, tapOff, isImageLoading, closeLoadingModal }: Params) => {
   const { headerHeight, footerHeight } = useHeihgtStateContext();
   const { photoSize } = useAdjustSizeForWrapperPhoto(imageRef, headerHeight, footerHeight);
-
-  function prevPhoto() {
-    let prev: number | undefined;
-    if (image) prev = Number(image) - 1;
-    if (!image) prev = lastImage;
-    if (prev! < 1) return router.push(`/photo/${photo_label}?image=${lastImage}`);
-    router.push(`/photo/${photo_label}?image=${prev}`);
-  }
-
-  // photo transition
-  function nextPhoto() {
-    let next: number;
-    if (image) next = Number(image) + 1;
-    if (!image) next = 2;
-    if (next! > lastImage) return router.push(`/photo/${photo_label}?image=1`);
-    router.push(`/photo/${photo_label}?image=${next!}`);
-  }
-
-  // image loading check
-  const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
-  function closeLoadingModal() {
-    setIsImageLoading(false);
-  }
-
-  // get values headerHeight and footerHeight by useContext
-  const { modalCloseDispatcher } = useModalDispatchContext();
-  const { loadedDispatcher } = useLoadDispatchContext();
-
-  const closeModal = () => {
-    modalCloseDispatcher();
-    loadedDispatcher();
-  };
-
-  useEffect(() => {
-    // imageLoad();
-    closeModal();
-  }, []);
-
-  // image transtion
-  const imageTranstion = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const el = e.target as HTMLElement;
-    const elWidth = el.clientWidth;
-    const elLeftPosition = Math.floor(el.getBoundingClientRect().left);
-    const centerPoint = elWidth / 2;
-    const clickPoint = e.pageX;
-    if (clickPoint - elLeftPosition > centerPoint) {
-      nextPhoto();
-    } else {
-      prevPhoto();
-    }
-  };
-
-  let tapOnPositon: number;
-  const tapOn = (e: React.TouchEvent<HTMLImageElement>) => {
-    tapOnPositon = e.changedTouches[0].pageX;
-  };
-
-  const requireNum = 100;
-  const tapOff = (e: React.TouchEvent<HTMLImageElement>) => {
-    const tapOffPosition = e.changedTouches[0].pageX;
-    const movedNum = tapOffPosition - tapOnPositon;
-    if (Math.abs(movedNum) < requireNum) return;
-    if (movedNum > 0) {
-      nextPhoto();
-    } else {
-      prevPhoto();
-    }
-  };
 
   return (
     <>

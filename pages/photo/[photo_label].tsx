@@ -1,16 +1,25 @@
 import React, { memo, useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { ViewPhoto } from "@/components/photo_label/ViewPhoto";
+import { ViewPhotoContainer } from "@/components/photo_label/ViewPhoto";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { ImagesType } from "@/@types/types";
-import { fetchLocationsApi, fetchImagesByLocationApi, fetchAllImagesApi } from "@/api/imagesApi";
+import { fetchImagesByLocationApi, fetchAllImagesApi } from "@/api/imagesApi";
+//! context
+import { useLocationNamesDispatchContext } from "@/context/locationNamesContext";
 
-const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
+const PhotoLabel = ({ images, locationNames }: { images: ImagesType[]; locationNames: string[] }) => {
   const route = useRouter();
   const [viewImageIndex, setViewImageIndex] = useState<number>();
   const imagesLength = images.length;
   const { photo_label, image } = route.query;
+
+  //? Nav,Modalに表示させるlocation名をcontextにセット
+  const { setLocationNamesDispatcher } = useLocationNamesDispatchContext();
+  useEffect(() => {
+    if (!locationNames.length) return;
+    setLocationNamesDispatcher(locationNames);
+  }, [locationNames]);
 
   useEffect(() => {
     if (!image) return;
@@ -57,7 +66,9 @@ const PhotoLabel = ({ images }: { images: ImagesType[] }) => {
       <div ref={element} className={`t-main-height flex justify-center items-center`}>
         {sortImagesByIdInDesc.map(
           (imageRef, index) =>
-            viewImageIndex === index && <ViewPhoto key={imageRef.id} imageRef={imageRef} imagesLength={imagesLength} />
+            viewImageIndex === index && (
+              <ViewPhotoContainer key={imageRef.id} imageRef={imageRef} imagesLength={imagesLength} />
+            )
         )}
       </div>
     </>
@@ -90,10 +101,18 @@ export const getStaticProps: GetStaticProps = async ({
   params: { photo_label: string };
 }) => {
   const images = await fetchImagesByLocationApi(photo_label as string);
-
+  //? Navに表示する為のlocation名を取得する(フォルダが存在しても写真が入ってないモノは除外する)
+  const allImages = await fetchAllImagesApi();
+  const locationNames = Object.keys(allImages)
+    .map((key) => {
+      if (allImages[key].length) return key;
+    })
+    .filter((obj) => obj !== undefined)
+    .sort();
   return {
     props: {
       images,
+      locationNames: locationNames,
     },
   };
 };

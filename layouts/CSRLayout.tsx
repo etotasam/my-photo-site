@@ -1,9 +1,9 @@
-import { Header } from "@/components/header/Header";
+import { HeaderContainer } from "@/components/header/Header";
 
 export default function TestLayout({ children }) {
   return (
     <>
-      <Header />
+      <HeaderContainer />
       <main className={`t-main`}>{children}</main>
       <footer className={`t-footer-height bg-pink-300`}>テストフッター</footer>
     </>

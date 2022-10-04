@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Header } from "@/components/header/Header";
+// import { Header } from "@/components/header/Header";
+import { HeaderContainer } from "@/components/header/Header";
 import Footer from "@/components/Footer";
 import Head from "next/head";
 import { ModalStateProvider } from "@/context/modalStateContext";
@@ -36,7 +37,7 @@ const Layout: React.FC<ChildElement> = ({ children }) => {
         <HeightProvider>
           <LoadStateProvider>
             <ModalStateProvider>
-              <Header />
+              <HeaderContainer />
               <main className={`t-main`}>{children}</main>
               <Footer />
             </ModalStateProvider>
