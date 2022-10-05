@@ -12,7 +12,7 @@ import { useEffect } from "react";
 //! components
 import PhotoSliderContainer from "@/components/top-photo-viewer/PhotoSliderContainer";
 import SiteDiscription from "@/components/SiteDiscription";
-import Location from "@/components/location/Location/Location";
+import { Location } from "@/components/location/Location";
 import { Loading } from "@/components/Loading";
 import { News } from "@/components/News";
 

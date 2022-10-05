@@ -8,7 +8,6 @@ import type { ImagesType } from "@/@types/types";
 
 //! context
 import { useModalDispatchContext } from "@/context/modalStateContext";
-import { useHeihgtStateContext } from "@/context/heightStateContext";
 import { useLoadDispatchContext } from "@/context/loadStateContext";
 
 type Params = {

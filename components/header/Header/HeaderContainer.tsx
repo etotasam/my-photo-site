@@ -17,10 +17,10 @@ export const HeaderContainer = () => {
 
   const { locationNames } = useLocationNamesStateContext();
 
-  const toLink = (location: string, e: React.MouseEvent<HTMLAnchorElement>) => {
+  const toLink = (locationName: string, e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault;
-    if (location === photoLabelName) return;
-    router.push(`/photo/${location}?image=1`);
+    if (locationName === photoLabelName) return;
+    router.push(`/photo/${locationName}?image=1`);
   };
 
   //! NavOnSP logic

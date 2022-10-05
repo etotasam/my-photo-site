@@ -1,36 +1,14 @@
 import React, { memo, useState, useEffect, useRef } from "react";
-import { Photo } from "../Photo";
+import { Photo, PhotoContainer } from "../Photo";
 import { ImagesType } from "@/@types/types";
-import { useScrollPosition, useWindowResize } from "@/hooks";
-
 //! component
-import { LoadingBound } from "@/components/LoadingBound";
-// import { Loading } from "@/components/Loading";
+// import { LoadingBound } from "@/components/LoadingBound";
 
-type propsType = {
+export type LocationType = {
   locationsImages: ImagesType[];
 };
 
-const Location = ({ locationsImages }: propsType) => {
-  // const [hasBreak, setHasBreak] = useState<boolean>(false);
-
-  // const ref = useRef<HTMLUListElement>(null);
-  // //? intersection observerでのアニメーション
-  // const callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-  //   entries.forEach((entry) => {
-  //     if (entry.isIntersecting) {
-  //       setHasBreak(true);
-  //       observer.unobserve(entry.target);
-  //     }
-  //   });
-  // };
-  // useEffect(() => {
-  //   if (!ref.current) return;
-  //   const target = ref.current;
-  //   const observer = new IntersectionObserver(callback);
-  //   observer.observe(target);
-  // }, [ref]);
-
+export const Location = ({ locationsImages }: LocationType) => {
   const [isAllImagesloaded, setIsAllImagesloaded] = useState(false);
   const [locationImagesLoaded, setLocationImagesLoaded] = useState(0);
   useEffect(() => {
@@ -47,18 +25,23 @@ const Location = ({ locationsImages }: propsType) => {
       <ul className={`mt-10 mx-auto relative`}>
         {locationsImages &&
           locationsImages.map((locationImage, index) => (
-            <Photo
-              imageIndex={index}
+            <PhotoContainer
               key={locationImage.id}
               locationImage={locationImage}
+              imageIndex={index}
               loadedLocationImage={() => setLocationImagesLoaded((v) => v + 1)}
               isAllImagesloaded={isAllImagesloaded}
             />
+            // <Photo
+            //   imageIndex={index}
+            //   key={locationImage.id}
+            //   locationImage={locationImage}
+            //   loadedLocationImage={() => setLocationImagesLoaded((v) => v + 1)}
+            //   isAllImagesloaded={isAllImagesloaded}
+            // />
           ))}
-        {!isAllImagesloaded && <LoadingBound />}
+        {/* {!isAllImagesloaded && <LoadingBound />} */}
       </ul>
     </>
   );
 };
-
-export default memo(Location);

@@ -45,7 +45,7 @@ const PhotoLabel = ({ images, locationNames }: { images: ImagesType[]; locationN
     const imagesPreload = () => {
       images.map((el) => {
         const img = new Image();
-        img.src = el.url;
+        img.src = el.url as string;
       });
     };
     imagesPreload();

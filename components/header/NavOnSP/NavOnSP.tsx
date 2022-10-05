@@ -28,19 +28,19 @@ const Hamburger = ({ isModalActive, toggleModal }: NavOnSPType) => {
   return (
     <div data-testid={`humburger`} onClick={toggleModal} className={`relative w-[25px] h-[20px] cursor-pointer`}>
       <motion.span
-        className={`absolute top-0 left-0 inline-block w-1/2 h-[1px] bg-gray-700`}
+        className={`absolute top-0 left-0 inline-block w-1/2 h-[1px] ${isModalActive ? `bg-white` : `bg-gray-700`}`}
         custom={0}
         animate={controls}
         transition={{ duration: 0.4 }}
       ></motion.span>
       <motion.span
-        className={`absolute top-[45%] left-0 inline-block w-3/4 h-[1px] bg-gray-700`}
+        className={`absolute top-[45%] left-0 inline-block w-3/4 h-[1px] ${isModalActive ? `bg-white` : `bg-gray-700`}`}
         custom={1}
         animate={controls}
         transition={{ duration: 0.4 }}
       ></motion.span>
       <motion.span
-        className={`absolute bottom-0 left-0 inline-block w-full h-[1px] bg-gray-700`}
+        className={`absolute bottom-0 left-0 inline-block w-full h-[1px] ${isModalActive ? `bg-white` : `bg-gray-700`}`}
         custom={2}
         animate={controls}
         transition={{ duration: 0.4 }}

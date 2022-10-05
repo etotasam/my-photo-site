@@ -1,5 +1,5 @@
 import React from "react";
-import { MainModal } from ".";
+import { NavMenuModal } from ".";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { cleanup } from "@testing-library/react-hooks";
 
