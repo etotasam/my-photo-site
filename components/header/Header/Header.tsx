@@ -3,7 +3,7 @@ import { AnimatePresence } from "framer-motion";
 //! component
 import { NavOnSP, NavOnSPType } from "../NavOnSP";
 import { NavOnPC, NavOnPCType } from "../NavOnPC";
-import { NavMenuModal } from "../../NavMenuModal";
+import { NavMenuModal } from "../NavMenuModal";
 
 export type HeaderType = {
   device: "PC" | "SP" | undefined;

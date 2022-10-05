@@ -3,7 +3,7 @@ export type ImagesType = {
   width: number;
   createAt: CreateAtType | Date;
   height: number;
-  url: StaticImageData;
+  url: StaticImageData | string;
   filename: string;
   id: string;
 };

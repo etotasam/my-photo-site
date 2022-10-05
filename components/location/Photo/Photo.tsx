@@ -24,7 +24,7 @@ export const Photo = ({ locationImage, loadedLocationImage, photoElRef, h2ElRef,
         <Link href={`/photo/${locationName}?image=1`} passHref>
           <motion.a
             ref={photoElRef}
-            whileHover={{ scale: [1, 1.12, 1.1], transition: { duration: 0.5, times: [0, 0.8, 1] } }}
+            whileHover={{ scale: [1, 1.11, 1.1], transition: { duration: 0.5, times: [0, 0.8, 1] } }}
             // onMouseOver={hover}
             // onMouseOut={unHover}
             className={`block cursor-pointer relative w-[90%] pt-[45%] mx-auto ${
