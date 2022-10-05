@@ -7,6 +7,8 @@ export default {
   component: Header,
 } as Meta<typeof Header>;
 
+const handleClick = action("テスト");
+
 const Template: Story<typeof Header> = (args: any) => {
   return (
     <>
@@ -24,6 +26,6 @@ DefaultHeader.args = {
   toLink: action("toLink"),
   handleClick: (e) => {
     e.preventDefault();
-    action("handleClick");
+    handleClick(e);
   },
 } as HeaderType;

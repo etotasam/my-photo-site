@@ -12,14 +12,14 @@ export const NavOnPC = ({ locationNames, toLink, photoLabelName }: NavOnPCType) 
     <>
       <ul data-testid={`pc`} className={`flex`}>
         {locationNames &&
-          locationNames.map((location: string) => (
-            <li key={location} className={`pr-3 text-gray-900 font-thin`}>
+          locationNames.map((locationName: string) => (
+            <li key={locationName} className={`pr-3 text-gray-900 font-thin`}>
               <motion.a
-                onClick={(e) => toLink(location, e)}
+                onClick={(e) => toLink(locationName, e)}
                 whileHover={{ y: -4, transition: { duration: 0.3 } }}
-                className={`inline-block cursor-pointer ${photoLabelName === location && `text-green-600`}`}
+                className={`inline-block cursor-pointer ${photoLabelName === locationName && `text-green-600`}`}
               >
-                {`${location.charAt(0).toUpperCase()}${location.slice(1)}`}
+                {`${locationName.charAt(0).toUpperCase()}${locationName.slice(1)}`}
               </motion.a>
             </li>
           ))}

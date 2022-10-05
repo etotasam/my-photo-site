@@ -1,101 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import NextImage from "next/image";
 import { ImagesType } from "@/@types/types";
 
-type Props = {
+export type PhotoType = {
   locationImage: ImagesType;
-  imageIndex: number;
   loadedLocationImage: () => void;
-  isAllImagesloaded: boolean;
-  // hasBreak: boolean;
+  photoElRef: React.RefObject<HTMLAnchorElement>;
+  h2ElRef: React.RefObject<HTMLHeadingElement>;
+} & TypeForTest;
+
+type TypeForTest = {
+  opacity?: boolean;
 };
-export const Photo = ({ locationImage, loadedLocationImage, imageIndex, isAllImagesloaded }: Props) => {
 
-  const label = locationImage.id.split(`_`)[0];
-
-  //? photo表示部分のアニメーション
-  const photoElRef = React.useRef<HTMLAnchorElement>(null);
-  React.useEffect(() => {
-    if (!isAllImagesloaded) return;
-    if (!photoElRef.current) return;
-    const target = photoElRef.current;
-    const options: IntersectionObserverInit = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0,
-    };
-    const callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-      if (entries[0].isIntersecting) {
-        photoElRef.current?.classList.remove("opacity-0");
-        Object.assign(photoElRef.current!.style, {
-          opacity: "1",
-          transition: `opacity 1s ${(imageIndex + 1) * 5}00ms`,
-          animation: `vertical-slide 1s`,
-          animationDelay: `${(imageIndex + 1) * 5}00ms`,
-        });
-        observer.unobserve(entries[0].target);
-      }
-    };
-    const io = new IntersectionObserver(callback, options);
-    io.observe(target);
-  }, [photoElRef, isAllImagesloaded]);
-
-  //? h2文字列のアニメーション
-  const h2ElRef = React.useRef<HTMLHeadingElement>(null);
-  React.useEffect(() => {
-    if (!isAllImagesloaded) return;
-    if (!h2ElRef.current || !photoElRef.current) return;
-    const animationTarget = h2ElRef.current;
-    const breakPoint = photoElRef.current;
-    const options: IntersectionObserverInit = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0,
-    };
-    const callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-      if (entries[0].isIntersecting) {
-        animationTarget.classList.remove("opacity-0");
-        Object.assign(animationTarget.style, {
-          opacity: "1",
-          transition: `1s ${imageIndex * 5}00ms`,
-          animation: `slide-string 1s`,
-          animationDelay: `${imageIndex * 5}00ms`,
-        });
-
-        observer.unobserve(entries[0].target);
-      }
-    };
-
-    const io = new IntersectionObserver(callback, options);
-    io.observe(breakPoint);
-  }, [h2ElRef, photoElRef, isAllImagesloaded]);
-
-  //? 写真にhoverした時のアニメーション(jsで実装)
-  const hover = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    Object.assign((e.target as HTMLDivElement).style, {
-      transform: "scale(1.1)",
-      transition: ".5s",
-    });
-  };
-  const unHover = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    Object.assign((e.target as HTMLDivElement).style, {
-      transform: "scale(1)",
-      transition: ".5s",
-    });
-  };
+export const Photo = ({ locationImage, loadedLocationImage, photoElRef, h2ElRef, opacity = true }: PhotoType) => {
+  const locationName = locationImage.id.split(`_`)[0];
 
   return (
     <>
       <li data-testid={`breaked`} key={locationImage.id} className={`w-1/2 md:w-1/5 mb-5 inline-block`}>
-        <Link href={`/photo/${label}?image=1`} passHref>
+        <Link href={`/photo/${locationName}?image=1`} passHref>
           <motion.a
             ref={photoElRef}
             whileHover={{ scale: [1, 1.12, 1.1], transition: { duration: 0.5, times: [0, 0.8, 1] } }}
             // onMouseOver={hover}
             // onMouseOut={unHover}
-            className={`block cursor-pointer relative w-[90%] pt-[45%] mx-auto opacity-0`}
+            className={`block cursor-pointer relative w-[90%] pt-[45%] mx-auto ${
+              opacity ? `opacity-0` : `opacity-100`
+            }`}
           >
             <NextImage
               className={`pointer-events-none`}
@@ -107,9 +41,11 @@ export const Photo = ({ locationImage, loadedLocationImage, imageIndex, isAllIma
             />
           </motion.a>
         </Link>
-        <h2 ref={h2ElRef} data-testid={`h2`} className={`font-extralight opacity-0`}>{`${label
-          .charAt(0)
-          .toUpperCase()}${label.slice(1)}`}</h2>
+        <h2
+          ref={h2ElRef}
+          data-testid={`h2`}
+          className={`font-extralight ${opacity ? `opacity-0` : `opacity-100`}`}
+        >{`${locationName.charAt(0).toUpperCase()}${locationName.slice(1)}`}</h2>
       </li>
     </>
   );
