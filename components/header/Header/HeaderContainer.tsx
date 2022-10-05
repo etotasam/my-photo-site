@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 //! hooks
 import { useDeviceCheck } from "@/hooks";
 //! component
-
 import { Header } from "./Header";
 //! context
 import { useLocationNamesStateContext } from "@/context/locationNamesContext";
