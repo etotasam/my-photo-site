@@ -3,7 +3,7 @@ import { Story, Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
 export default {
-  title: "NavOnSP",
+  title: "Header/Nav",
   component: NavOnSP,
 } as Meta<typeof NavOnSP>;
 
@@ -14,8 +14,8 @@ const Template: Story<typeof NavOnSP> = (args: any) => {
     </div>
   );
 };
-export const DefaultHamburger = Template.bind({});
-DefaultHamburger.args = {
+export const SP = Template.bind({});
+SP.args = {
   toggleModal: action("toggleModalFunc"),
   isModalActive: false,
 } as NavOnSPType;
