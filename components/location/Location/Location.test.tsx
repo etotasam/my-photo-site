@@ -1,15 +1,30 @@
 import React from "react";
-import Location from "./Location";
-import { render } from "@testing-library/react";
+import { Location } from "./Location";
+import { render, screen } from "@testing-library/react";
+
 import { cleanup } from "@testing-library/react-hooks";
+// import { PhotoContainer } from "../Photo";
 import { ImagesType } from "@/@types/types";
+
+jest.mock("../Photo", () => ({
+  PhotoContainer: () => {
+    return <div>PhotoContainerコンポーネント</div>;
+  },
+}));
+// const PhotoContainerMock =
+
+const images = {
+  img1: "/test_image/img1.jpg",
+  img2: "/test_image/img2.jpg",
+};
+
 const image: ImagesType[] = [
   {
     documentId: "",
-    width: 200,
     createAt: new Date(),
+    width: 200,
     height: 200,
-    url: "https://picsum.photos/200",
+    url: images.img1,
     filename: "",
     id: "test_1",
   },
@@ -18,7 +33,7 @@ const image: ImagesType[] = [
     width: 200,
     createAt: new Date(),
     height: 200,
-    url: "https://picsum.photos/200",
+    url: images.img2,
     filename: "",
     id: "test_2",
   },
@@ -33,14 +48,9 @@ afterEach(() => {
 });
 
 describe(`Location`, () => {
-  it(`propsで受けたデータがlistでrenderingされているか`, () => {
-    // const { asFragment, getAllByTestId } = render(<Location locationsImages={image} />);
-    // const renderList = getAllByTestId(`h2`).map((el) => el.textContent);
-    // const imageList = image.map((el) => {
-    //   const name = el.id.split(`_`)[0];
-    //   return `${name.charAt(0).toUpperCase()}${name.slice(1)}`;
-    // });
-    // expect(renderList).toEqual(imageList);
-    // expect(asFragment()).toMatchSnapshot();
+  it(`渡されたobjの数分表示される`, () => {
+    const { asFragment } = render(<Location {...props} />);
+    // screen.debug();
+    expect(asFragment()).toMatchSnapshot();
   });
 });

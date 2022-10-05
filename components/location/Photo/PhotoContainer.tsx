@@ -29,10 +29,11 @@ export const PhotoContainer = (props: PhotoContainerType) => {
     const callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
       if (entries[0].isIntersecting) {
         photoElRef.current?.classList.remove("opacity-0");
+        // photoElRef.current?.classList.add("opacity-100");
         Object.assign(photoElRef.current!.style, {
           opacity: "1",
           transition: `opacity 1s ${(imageIndex + 1) * 5}00ms`,
-          animation: `vertical-slide 1s`,
+          // animation: `vertical-slide 1s`,
           animationDelay: `${(imageIndex + 1) * 5}00ms`,
         });
         observer.unobserve(entries[0].target);

@@ -32,13 +32,6 @@ export const Location = ({ locationsImages }: LocationType) => {
               loadedLocationImage={() => setLocationImagesLoaded((v) => v + 1)}
               isAllImagesloaded={isAllImagesloaded}
             />
-            // <Photo
-            //   imageIndex={index}
-            //   key={locationImage.id}
-            //   locationImage={locationImage}
-            //   loadedLocationImage={() => setLocationImagesLoaded((v) => v + 1)}
-            //   isAllImagesloaded={isAllImagesloaded}
-            // />
           ))}
         {/* {!isAllImagesloaded && <LoadingBound />} */}
       </ul>

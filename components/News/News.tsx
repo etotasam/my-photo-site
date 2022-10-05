@@ -2,14 +2,14 @@ import React from "react";
 import Link from "next/link";
 import dayjs from "dayjs";
 
-type Props = {
+export type NewsType = {
   news: {
     title: string;
     date: string;
   }[];
 };
 
-export const News = ({ news }: Props) => {
+export const News = ({ news }: NewsType) => {
   return (
     <>
       <div className={`flex justify-center`}>
