@@ -5,7 +5,7 @@ import { HeaderType } from "../Header";
 
 //? Headerコンポーネント mock
 const mockHeader = jest.fn();
-jest.mock("../Header", () => ({
+jest.mock("./Header", () => ({
   Header: (props: HeaderType) => {
     mockHeader(props);
     return "mockHeader";
