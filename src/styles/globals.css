@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans text-gray-800;
+  }
+  h1 {
+    @apply text-2xl;
+  }
+
+  input {
+    @apply border border-gray-400 rounded;
+  }
+}
+
+@layer components {
+  :root {
+    --header-height: 45px;
+    --footer-height: 50px;
+    --window-vh: 1vh;
+    --inner-main-div-height: calc((var(--window-vh) * 100) - (var(--header-height)) - (var(--footer-height)));
+    --img-container-height: calc((var(--window-vh) * 100) - (var(--header-height)) - (var(--footer-height)));
+  }
+
+  .t-header-height {
+    @apply h-[var(--header-height)];
+  }
+
+  .t-footer-height {
+    @apply h-[var(--footer-height)];
+  }
+
+  .t-main {
+    @apply min-h-[var(--inner-main-div-height)] w-[90%] max-w-[1024px] mx-auto mt-[var(--header-height)];
+  }
+
+  .t-main-height {
+    @apply min-h-[var(--inner-main-div-height)];
+  }
+
+  .t-loading-text {
+    @apply top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%];
+  }
+
+  .t-text-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+  }
+
+  .t-news_title {
+    position: relative;
+  }
+  .t-news_title-base {
+    position: relative;
+  }
+  .t-news_title-base::before {
+    content: "";
+    position: absolute;
+    top: 20%;
+    left: 0;
+    width: 3px;
+    height: 60%;
+    opacity: 0;
+    transition-duration: 0.5s;
+    @apply bg-green-600;
+  }
+  .t-news_title::before {
+    content: "";
+    position: absolute;
+    top: 20%;
+    left: 0;
+    width: 3px;
+    height: 60%;
+    opacity: 1;
+    transition-duration: 0.5s;
+    @apply bg-green-600;
+  }
+
+  .link {
+    @apply text-green-600;
+  }
+}
+
+@layer utilities {
+  .t-under-border {
+    position: relative;
+  }
+  .t-under-border::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: -5%;
+    background-color: #c4c4c4;
+    width: 110%;
+    height: 1px;
+  }
+
+  .t-font-clamp-sm {
+    font-size: clamp(12px, 2vw, 20px);
+  }
+
+  @keyframes vertical-slide {
+    0% {
+      /* opacity: 0; */
+      transform: translateY(20px);
+    }
+    50% {
+      transform: translateY(-2px);
+    }
+    100% {
+      /* opacity: 1; */
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes slide-string {
+    0% {
+      transform: translateX(-20px);
+    }
+    100% {
+      transform: translateX(0px);
+    }
+  }
+
+  .t-location-scale-up {
+    animation-name: scale-up;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+  }
+
+  .t-location-scale-origin {
+    transform: scale(1);
+    transition: all 1s ease;
+  }
+
+  @keyframes scale-up {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.15);
+    }
+    100% {
+      transform: scale(1.1);
+    }
+  }
+  @keyframes scale-origin {
+    0% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+}
