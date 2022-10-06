@@ -34,7 +34,7 @@ export const TopImage = ({
   tapOff,
   setCurrentPhotoIndex,
 }: TopImageType) => {
-  console.log("currentPhotoIndex", currentPhotoIndex);
+
   return (
     <div className={`md:w-[65%] max-w-[700px] flex md:flex-col`}>
       <div className={`relative pt-[90%] w-[90%] md:pt-[95%] md:w-[95%]`}>
