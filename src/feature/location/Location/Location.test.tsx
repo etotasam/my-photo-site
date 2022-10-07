@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 
 import { cleanup } from "@testing-library/react-hooks";
 // import { PhotoContainer } from "../Photo";
-import { ImagesType } from "@/@types/types";
+import { ImagesType } from "@/types";
 
 jest.mock("../Photo", () => ({
   PhotoContainer: () => {

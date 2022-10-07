@@ -2,7 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import NextImage from "next/image";
-import { ImagesType } from "@/@types/types";
+//! type
+import { ImagesType } from "@/types";
 
 export type PhotoType = {
   locationImage: ImagesType;

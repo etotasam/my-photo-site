@@ -1,5 +1,5 @@
 import { useState, useEffect, DependencyList } from "react"
-import { ImagesType } from "@/@types/types";
+import { ImagesType } from "@/types";
 
 
 type PhotoSizeType = {
@@ -22,11 +22,13 @@ export const useAdjustSizeForWrapperPhoto = (imageRef: ImagesType, headerHeight:
   });
 
   function getSize() {
+    //? windowサイズの取得
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
     const elementHeight = windowHeight - (headerHeight + footerHeight);
     const elementWidth = windowWidth * 0.9
 
+    //? windowがwide型かtall型か
     const isVerticalEl = elementHeight > elementWidth;
     const isVerticalImg = imageRef.height > imageRef.width;
 
@@ -36,6 +38,7 @@ export const useAdjustSizeForWrapperPhoto = (imageRef: ImagesType, headerHeight:
     let minHeight: number;
     let maxWidth: number;
     let maxHeight: number;
+    //? 高さの最低値と最大値を設定
     const minLongSide = 350;
     const maxLongSide = Math.min(1000, Math.max(imageRef.width, imageRef.height));
     if (isVerticalEl) {

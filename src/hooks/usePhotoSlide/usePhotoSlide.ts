@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { ImagesType } from "@/@types/types";
+import { ImagesType } from "@/types";
 
 type PropsType = {
   topImages: ImagesType[]

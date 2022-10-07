@@ -1,12 +1,15 @@
 import React, { memo, useState, useEffect, useRef } from "react";
+import { GetStaticProps, GetStaticPaths } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { ViewPhotoContainer } from "@/feature/photo_label/ViewPhoto";
-import { GetStaticProps, GetStaticPaths } from "next";
-import { ImagesType } from "@/@types/types";
+//! component
+import { ImageViewerContainer } from "@/feature/image_viewer/ImageViewer";
+//! api
 import { fetchImagesByLocationApi, fetchAllImagesApi } from "@/api/imagesApi";
 //! context
 import { useLocationNamesDispatchContext } from "@/context/locationNamesContext";
+//! types
+import { ImagesType } from "@/types";
 
 const PhotoLabel = ({ images, locationNames }: { images: ImagesType[]; locationNames: string[] }) => {
   const route = useRouter();
@@ -63,14 +66,19 @@ const PhotoLabel = ({ images, locationNames }: { images: ImagesType[]; locationN
             : process.env.NEXT_PUBLIC_SITE_TITLE}
         </title>
       </Head>
-      <div ref={element} className={`t-main-height flex justify-center items-center`}>
-        {sortImagesByIdInDesc.map(
-          (imageRef, index) =>
-            viewImageIndex === index && (
-              <ViewPhotoContainer key={imageRef.id} imageRef={imageRef} imagesLength={imagesLength} />
-            )
-        )}
-      </div>
+      {/* <div ref={element} className={`t-main-height flex justify-center items-center`}> */}
+      {sortImagesByIdInDesc.map(
+        (imageData, index) =>
+          viewImageIndex === index && (
+            <ImageViewerContainer
+              className={`t-main-height flex justify-center items-center`}
+              key={imageData.id}
+              imageData={imageData}
+              imagesLength={imagesLength}
+            />
+          )
+      )}
+      {/* </div> */}
     </>
   );
 };

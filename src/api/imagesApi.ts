@@ -1,5 +1,6 @@
 import axios from "axios";
-import { ImagesType } from "@/@types/types";
+//! type
+import { ImagesType } from "@/types";
 
 const apiUrl = process.env.API_URL;
 
@@ -8,7 +9,7 @@ export const fetchAllImagesApi = async (): Promise<Record<string, ImagesType[]>>
   return allImages
 }
 
-export const fetchLocationsApi = async (): Promise<string[]> => {
+export const fetchLocationNamesApi = async (): Promise<string[]> => {
   const { data: locations }: { data: string[] } = await axios.get(`${apiUrl}/locations`);
   return locations
 }

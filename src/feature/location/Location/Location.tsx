@@ -1,7 +1,9 @@
 import React, { memo, useState, useEffect, useRef } from "react";
-import { Photo, PhotoContainer } from "../Photo";
-import { ImagesType } from "@/@types/types";
+//!type
+import { ImagesType } from "@/types";
 //! component
+import { Photo, PhotoContainer } from "../Photo";
+import { Headline } from "@/components/Element/Headline";
 // import { LoadingBound } from "@/components/LoadingBound";
 
 export type LocationType = {
@@ -19,9 +21,7 @@ export const Location = ({ locationsImages }: LocationType) => {
 
   return (
     <>
-      <div className={`flex justify-center items-center`}>
-        <h1 className={`t-under-border text-green-600 mt-5 mx-auto`}>Location</h1>
-      </div>
+      <Headline>Location</Headline>
       <ul className={`mt-10 mx-auto relative`}>
         {locationsImages &&
           locationsImages.map((locationImage, index) => (

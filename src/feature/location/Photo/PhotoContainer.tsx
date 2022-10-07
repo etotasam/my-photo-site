@@ -1,6 +1,6 @@
 import React from "react";
 import { Photo } from "./Photo";
-import { ImagesType } from "@/@types/types";
+import { ImagesType } from "@/types";
 
 type PhotoContainerType = {
   locationImage: ImagesType;
