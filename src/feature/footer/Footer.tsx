@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 // import { useHeihgtDispatchContext } from "@/context/heightStateContext";
 import { useHeihgtDispatchContext } from "@/context/heightStateContext";
 
-const Footer = () => {
+export const Footer = () => {
   const { setFooterHeightDispatcher } = useHeihgtDispatchContext();
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -16,5 +16,3 @@ const Footer = () => {
     </footer>
   );
 };
-
-export default Footer;

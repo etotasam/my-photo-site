@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Head from "next/head";
 //! component
 import { HeaderContainer } from "@/feature/header/Header";
-import Footer from "@/feature/Footer";
+import { Footer } from "@/feature/footer";
 
 type ChildElement = {
   children: JSX.Element | JSX.Element[];
