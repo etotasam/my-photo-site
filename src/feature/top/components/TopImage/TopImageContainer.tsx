@@ -19,8 +19,9 @@ export const TopImageContainer = ({ topImages, allImages }: TopImageContainerTyp
     setCurrentPhotoIndex(random);
   }, []);
 
+  //? 表示するimageのすべての読み込みが完了しているかを取得
   const { isTopImagesLoaded, imageOnloaded } = useTopImagesLoadState({ topImages });
-
+  //? 表示するimageのindexを取得
   const { currentPhotoIndex, setCurrentPhotoIndex, tapOn, tapOff } = useAutoPhotoSlider({
     topImages,
     isTopImagesLoaded,
