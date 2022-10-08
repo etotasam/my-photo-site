@@ -11,7 +11,7 @@ import { useLocationNamesDispatchContext } from "@/context/locationNamesContext"
 import { useEffect } from "react";
 //! components
 import { Top } from "@/feature/top";
-import { News } from "@/feature/news";
+import { News } from "@/feature/news/News";
 import { Location } from "@/feature/location";
 
 type Params = {
