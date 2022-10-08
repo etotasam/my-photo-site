@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest --verbose",
-    "watch": "jest -o --watch",
+    "watch": "jest -o --watch --verbose",
     "sb": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },

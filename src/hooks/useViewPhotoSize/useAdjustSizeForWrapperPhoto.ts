@@ -1,5 +1,6 @@
+import React from "react";
 import { useState, useEffect, DependencyList } from "react"
-import { ImagesType } from "@/@types/types";
+import { ImagesType } from "@/types";
 
 
 type PhotoSizeType = {
@@ -11,78 +12,103 @@ type PhotoSizeType = {
   maxHeight: number;
 };
 
-export const useAdjustSizeForWrapperPhoto = (imageRef: ImagesType, headerHeight: number, footerHeight: number) => {
-  const [photoSize, setPhotoSize] = useState<PhotoSizeType>({
-    width: 0,
-    height: 0,
-    minWidth: 0,
-    minHeight: 0,
-    maxWidth: 0,
-    maxHeight: 0,
-  });
+type PropType = {
+  imageData: ImagesType,
+  headerHeight: number,
+  footerHeight: number
+}
+
+type TmpPhotoSizeType = {
+  width: number,
+  height: number,
+  minWidth: number,
+  minHeight: number,
+  maxWidth: number,
+  maxHeight: number,
+}
+
+const initialPhotoSize = {
+  width: 0,
+  height: 0,
+  minWidth: 0,
+  minHeight: 0,
+  maxWidth: 0,
+  maxHeight: 0,
+}
+
+export const useAdjustSizeForWrapperPhoto = ({ imageData, headerHeight, footerHeight }: PropType) => {
+  const [photoSize, setPhotoSize] = useState<PhotoSizeType>({ ...initialPhotoSize });
 
   function getSize() {
+    //? windowサイズの取得
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
+    //? page表示範囲のサイズ
     const elementHeight = windowHeight - (headerHeight + footerHeight);
     const elementWidth = windowWidth * 0.9
 
-    const isVerticalEl = elementHeight > elementWidth;
-    const isVerticalImg = imageRef.height > imageRef.width;
+    //? windowがwide型かtall型か
+    const isTallEl = elementHeight > elementWidth;
+    const isWideEl = elementHeight <= elementWidth;
+    //? imageがwideかtallか
+    const isTallImg = imageData.height > imageData.width;
+    const isWideImg = imageData.height <= imageData.width
 
-    let width: number;
-    let height: number;
-    let minWidth: number;
-    let minHeight: number;
-    let maxWidth: number;
-    let maxHeight: number;
+    //? 高さの最低値と最大値を設定
     const minLongSide = 350;
-    const maxLongSide = Math.min(1000, Math.max(imageRef.width, imageRef.height));
-    if (isVerticalEl) {
-      if (isVerticalImg) {
-        const ratio = imageRef.width / imageRef.height;
-        width = elementWidth * ratio;
-        height = elementWidth;
-        minWidth = minLongSide * ratio;
-        minHeight = minLongSide;
-        maxWidth = maxLongSide * ratio;
-        maxHeight = maxLongSide;
-      } else {
-        const ratio = imageRef.height / imageRef.width;
-        width = elementWidth;
-        height = elementWidth * ratio;
-        minWidth = minLongSide;
-        minHeight = minLongSide * ratio;
-        maxWidth = maxLongSide;
-        maxHeight = maxLongSide * ratio;
+    const maxLongSide = Math.min(1000, Math.max(imageData.width, imageData.height));
+    if (isTallEl) {
+      if (isTallImg) {
+        const ratio = imageData.width / imageData.height;
+        const size = {
+          width: Math.floor(elementWidth * ratio),
+          height: elementWidth,
+          minWidth: Math.floor(minLongSide * ratio),
+          minHeight: minLongSide,
+          maxWidth: Math.floor(maxLongSide * ratio),
+          maxHeight: maxLongSide,
+        }
+        setPhotoSize({ ...size })
       }
-    } else {
-      if (isVerticalImg) {
-        const ratio = imageRef.width / imageRef.height;
-        width = elementHeight * ratio;
-        height = elementHeight;
-        minWidth = minLongSide * ratio;
-        minHeight = minLongSide;
-        maxWidth = maxLongSide * ratio;
-        maxHeight = maxLongSide;
-      } else {
-        const ratio = imageRef.height / imageRef.width;
-        width = elementHeight;
-        height = elementHeight * ratio;
-        minWidth = minLongSide;
-        minHeight = minLongSide * ratio;
-        maxWidth = maxLongSide;
-        maxHeight = maxLongSide * ratio;
+      if (isWideImg) {
+        const ratio = imageData.height / imageData.width;
+        const size = {
+          width: elementWidth,
+          height: Math.floor(elementWidth * ratio),
+          minWidth: minLongSide,
+          minHeight: Math.floor(minLongSide * ratio),
+          maxWidth: maxLongSide,
+          maxHeight: Math.floor(maxLongSide * ratio),
+        }
+        setPhotoSize({ ...size })
       }
     }
-    setPhotoSize({
-      width: Math.floor(width),
-      height: Math.floor(height),
-      minWidth: Math.floor(minWidth),
-      minHeight: Math.floor(minHeight),
-      maxWidth: Math.floor(maxWidth),
-      maxHeight: Math.floor(maxHeight)
-    })
+    if (isWideEl) {
+      if (isTallImg) {
+        const ratio = imageData.width / imageData.height;
+        const size = {
+          width: Math.floor(elementHeight * ratio),
+          height: elementHeight,
+          minWidth: Math.floor(minLongSide * ratio),
+          minHeight: minLongSide,
+          maxWidth: Math.floor(maxLongSide * ratio),
+          maxHeight: maxLongSide
+        }
+        setPhotoSize({ ...size })
+      }
+      if (isWideImg) {
+        const ratio = imageData.height / imageData.width;
+        const size = {
+          width: elementHeight,
+          height: Math.floor(elementHeight * ratio),
+          minWidth: minLongSide,
+          minHeight: Math.floor(minLongSide * ratio),
+          maxWidth: maxLongSide,
+          maxHeight: Math.floor(maxLongSide * ratio)
+        }
+        setPhotoSize({ ...size })
+      }
+    }
   }
 
   useEffect(() => {

@@ -37,7 +37,7 @@ webサイトなのでテストを書く必要性があるかどうかは微妙�
 
 バックエンドには Firebase の Cloud Functions を採用しています。
 
-処理としては Firebase Storage にフォルダ、写真の追加をすると Cloud Firestore に自動的に追加され、同時に写真はリサイズされて Storage に保存し直され、Storage 側でフォルダ、写真の削除をした時も Cloud Firestore 側の同データが削除される様にしています。
+バックエンドといっても処理としては Firebase Storage にディレクトリ、写真の追加をすると Cloud Firestore に自動的に必要なデータ取得とデータ形成をして Storage に保存し直され、Storage 側でディレクトリ、写真の削除をした時も Cloud Firestore 側の同データが削除される様にしています。
 
 ### Vercel
 

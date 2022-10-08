@@ -9,6 +9,8 @@ export default {
 
 const handleClick = action("テスト");
 
+const locationNames = ["てすと1", "てすと2"];
+
 const Template: Story<typeof Header> = (args: any) => {
   return (
     <>
@@ -16,11 +18,11 @@ const Template: Story<typeof Header> = (args: any) => {
     </>
   );
 };
-export const DefaultHeader = Template.bind({});
-DefaultHeader.args = {
+export const Default = Template.bind({});
+Default.args = {
   device: "PC",
-  locationNames: ["てすと1", "てすと2"],
-  photoLabelName: "てすと1",
+  locationNames,
+  photoLabelName: locationNames[0],
   toggleModal: action("toggleModalFunc"),
   isModalActive: false,
   toLink: action("toLink"),

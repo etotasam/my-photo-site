@@ -2,9 +2,9 @@ import { useRef, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import clsx from "clsx";
 //! component
-import { NavOnSP, NavOnSPType } from "../NavOnSP";
-import { NavOnPC, NavOnPCType } from "../NavOnPC";
-import { NavMenuModal } from "../NavMenuModal";
+import { NavOnSP, NavOnSPType } from "../component/NavOnSP";
+import { NavOnPC, NavOnPCType } from "../component/NavOnPC";
+import { NavMenuModal } from "../component/NavMenuModal";
 
 export type HeaderType = {
   device: "PC" | "SP" | undefined;
