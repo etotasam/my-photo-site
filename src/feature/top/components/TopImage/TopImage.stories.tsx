@@ -7,7 +7,7 @@ import img2 from "@/test_image/img2.jpg";
 import img3 from "@/test_image/img3.jpg";
 
 export default {
-  title: "top/TopImage",
+  title: "top/component/TopImage",
   component: TopImage,
 } as Meta<typeof TopImage>;
 
@@ -28,8 +28,8 @@ const allImages: Record<string, any[]> = {
 const Template: Story<typeof TopImage> = (args: any) => {
   return <TopImage {...args} />;
 };
-export const DefaultTopImage = Template.bind({});
-DefaultTopImage.args = {
+export const Default = Template.bind({});
+Default.args = {
   topImages: allImages.japan,
   allImages,
   currentPhotoIndex: 1,

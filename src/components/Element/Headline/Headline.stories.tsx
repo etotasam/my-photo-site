@@ -9,7 +9,7 @@ export default {
 const Template: Story<typeof Headline> = (args: any) => {
   return <Headline {...args} />;
 };
-export const DefaultHeader = Template.bind({});
-DefaultHeader.args = {
+export const Default = Template.bind({});
+Default.args = {
   children: "てすとタイトル",
 } as HeadlineType;

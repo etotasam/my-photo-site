@@ -2,9 +2,9 @@ import React, { memo, useState, useEffect, useRef } from "react";
 //!type
 import { ImagesType } from "@/types";
 //! component
-import { Photo, PhotoContainer } from "../Photo";
+import { Photo, PhotoContainer } from "../component/Photo";
 import { Headline } from "@/components/Element/Headline";
-// import { LoadingBound } from "@/components/LoadingBound";
+import { LoadingBound } from "@/components/Element/LoadingBound";
 
 export type LocationType = {
   locationsImages: ImagesType[];

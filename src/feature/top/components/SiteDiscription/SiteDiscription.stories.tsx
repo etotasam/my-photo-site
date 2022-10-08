@@ -2,7 +2,7 @@ import { SiteDiscription } from "./SiteDiscription";
 import { Story, Meta } from "@storybook/react";
 
 export default {
-  title: "top/SiteDiscription",
+  title: "top/component/SiteDiscription",
   component: SiteDiscription,
 } as Meta<typeof SiteDiscription>;
 

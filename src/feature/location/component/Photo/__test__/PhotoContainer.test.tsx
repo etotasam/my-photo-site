@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { PhotoContainer } from "../PhotoContainer";
-import { PhotoType, Photo } from "../Photo";
+import { Photo, PhotoType } from "../Photo";
 
 const mockPhoto = jest.fn();
 jest.mock("../Photo");

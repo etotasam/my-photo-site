@@ -8,15 +8,13 @@ import { MyLink } from "@/components/Element/MyLink";
 //! hooks
 
 export type ImageWrapperType = {
-  photo: ImagesType;
-  allImages: Record<string, ImagesType[]>;
+  imageData: ImagesType;
   tapOn: (event: React.TouchEvent<HTMLImageElement>) => void;
   tapOff: (event: React.TouchEvent<HTMLImageElement>) => void;
-  isOnloaded: () => void;
-  toLink: string;
+  isOnloaded: (id: string) => void;
 };
 
-export const ImageWrapper = React.memo(({ photo, allImages, tapOn, tapOff, isOnloaded, toLink }: ImageWrapperType) => {
+export const ImageWrapper = React.memo(({ imageData, tapOn, tapOff, isOnloaded }: ImageWrapperType) => {
   const variables = {
     hide: {
       opacity: 0,
@@ -32,14 +30,16 @@ export const ImageWrapper = React.memo(({ photo, allImages, tapOn, tapOff, isOnl
     },
   };
 
+  const linkUrl = `/photo/${imageData.id.split("_")[0]}?image=1`;
+
   return (
     <motion.div initial="hide" animate="show" exit="hide" variants={variables}>
-      <MyLink href={toLink} className="block cursor-pointer">
+      <MyLink href={linkUrl} className="block cursor-pointer">
         <NextImage
           onTouchStart={tapOn}
           onTouchEnd={tapOff}
-          onLoad={isOnloaded}
-          src={photo.url}
+          onLoad={() => isOnloaded(imageData.id)}
+          src={imageData.url}
           layout="fill"
           objectFit="cover"
           alt={``}

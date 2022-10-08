@@ -3,7 +3,7 @@ import { Story, Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
 export default {
-  title: "top/TopImage/BulletNav",
+  title: "top/component/TopImage/component/BulletNav",
   component: BulletNav,
 } as Meta<typeof BulletNav>;
 
@@ -18,8 +18,8 @@ const topImages = [{ id: "1" }, { id: "2" }, { id: "3" }];
 const Template: Story<typeof BulletNav> = (args: any) => {
   return <BulletNav {...args} />;
 };
-export const DefaultBulletNav = Template.bind({});
-DefaultBulletNav.args = {
+export const Default = Template.bind({});
+Default.args = {
   topImages,
   currentPhotoIndex: 0,
   setCurrentPhotoIndex: action("setCurrentPhotoIndex"),

@@ -12,7 +12,7 @@ import { useEffect } from "react";
 //! components
 import { Top } from "@/feature/top";
 import { News } from "@/feature/news";
-import { Location } from "@/feature/location/Location";
+import { Location } from "@/feature/location";
 
 type Params = {
   allImages: Record<string, ImagesType[]>;

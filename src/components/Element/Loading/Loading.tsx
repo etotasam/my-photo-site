@@ -1,7 +1,10 @@
 import React from "react";
 import { motion, Variants } from "framer-motion";
+import clsx from "clsx";
 
-export const Loading = (): JSX.Element => {
+type LoadingType = {};
+
+export const Loading = ({}: LoadingType): JSX.Element => {
   const loadingString = Array.from("Loading...");
 
   const loadingVariant: Variants = {
@@ -12,7 +15,7 @@ export const Loading = (): JSX.Element => {
         delay: i * 0.1,
         repeat: Infinity,
         repeatType: "reverse",
-        duration: 1,
+        duration: loadingString.length * 0.1,
       },
     }),
   };
@@ -30,7 +33,7 @@ export const Loading = (): JSX.Element => {
           initial="hidden"
           animate="loading"
           variants={loadingVariant}
-          className={`text-green-600 text-md tracking-widest font-extralight select-none`}
+          className={`ml-1 text-green-600 text-md tracking-widest font-extralight select-none`}
         >
           {el}
         </motion.span>

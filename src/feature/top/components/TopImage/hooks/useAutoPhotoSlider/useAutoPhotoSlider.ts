@@ -3,15 +3,15 @@ import { ImagesType } from "@/types";
 
 type PropsType = {
   topImages: ImagesType[]
-  topImageAllLoaded: boolean;
+  isTopImagesLoaded: boolean;
 }
 
-export const usePhotoSlide = ({ topImages, topImageAllLoaded = false }: PropsType) => {
+export const useAutoPhotoSlider = ({ topImages, isTopImagesLoaded = false }: PropsType) => {
 
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState<number | undefined>();
 
   const nextPhoto = () => {
-    if (timeOutId) clearTimeout(timeOutId);
+    if (timeOutId.current) clearTimeout(timeOutId.current);
     setCurrentPhotoIndex((state: number) => {
       if (topImages.length - 1 <= state) {
         return (state = 0);
@@ -21,7 +21,7 @@ export const usePhotoSlide = ({ topImages, topImageAllLoaded = false }: PropsTyp
   };
 
   const prevPhoto = () => {
-    if (timeOutId) clearTimeout(timeOutId);
+    if (timeOutId.current) clearTimeout(timeOutId.current);
     setCurrentPhotoIndex((state: number) => {
       if (state <= 0) {
         return (state = topImages.length - 1);
@@ -34,7 +34,7 @@ export const usePhotoSlide = ({ topImages, topImageAllLoaded = false }: PropsTyp
   let touchStartPositionX: number;
   const tapOn = (event: React.TouchEvent<HTMLImageElement>) => {
     touchStartPositionX = event.changedTouches[0].pageX;
-    clearTimeout(timeOutId);
+    if (timeOutId.current) clearTimeout(timeOutId.current);
   };
   const tapOff = (event: React.TouchEvent<HTMLImageElement>) => {
     const touchEndPositionX = event.changedTouches[0].pageX;
@@ -50,21 +50,47 @@ export const usePhotoSlide = ({ topImages, topImageAllLoaded = false }: PropsTyp
     }
   };
 
-  let timeOutId: NodeJS.Timer;
+
+  const timeOutId = React.useRef<NodeJS.Timer>()
   const ms = 5000;
   const startPhotoSlide = () => {
-    timeOutId = setTimeout(() => {
+    if (!isTopImagesLoaded) return
+    timeOutId.current = setTimeout(() => {
       nextPhoto();
     }, ms);
   };
 
+  //? windowがactiveかチェック
+  const [isWindowActive, setIsWindowActive] = useState(true)
+  React.useEffect(() => {
+    const setActive = () => {
+      setIsWindowActive(true)
+    }
+    const setInactive = () => {
+      setIsWindowActive(false)
+    }
+    window.addEventListener("focus", setActive)
+    window.addEventListener('blur', setInactive);
+    return () => {
+      window.removeEventListener("focus", setActive)
+      window.removeEventListener('blur', setInactive)
+    }
+  }, [])
+
   useEffect(() => {
-    if (!topImageAllLoaded) return
+    //? windowがアクティブじゃない時はsliderをストップ
+    if (!isWindowActive) {
+      if (timeOutId.current) {
+        clearTimeout(timeOutId.current)
+      }
+      return
+    }
     startPhotoSlide();
     return () => {
-      clearTimeout(timeOutId);
+      if (timeOutId.current) clearTimeout(timeOutId.current);
     };
-  }, [currentPhotoIndex, topImageAllLoaded]);
+  }, [currentPhotoIndex, isTopImagesLoaded, isWindowActive]);
+
 
   return { currentPhotoIndex, setCurrentPhotoIndex, tapOn, tapOff }
 

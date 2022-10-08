@@ -2,12 +2,12 @@ import { ImageWrapper, ImageWrapperType } from "./ImageWrapper";
 import { Story, Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
-import img1 from "../../../test_image/img1.jpg";
-import img2 from "../../../test_image/img2.jpg";
-import img3 from "../../../test_image/img3.jpg";
+import img1 from "@/test_image/img1.jpg";
+import img2 from "@/test_image/img2.jpg";
+import img3 from "@/test_image/img3.jpg";
 
 export default {
-  title: "top/TopImage/ImageWrapper",
+  title: "top/component/TopImage/component/ImageWrapper",
   component: ImageWrapper,
 } as Meta<typeof ImageWrapper>;
 
@@ -34,8 +34,8 @@ const Template: Story<typeof ImageWrapper> = (args: any) => {
     </div>
   );
 };
-export const DefaultImageWrapper = Template.bind({});
-DefaultImageWrapper.args = {
+export const Default = Template.bind({});
+Default.args = {
   photo,
   // allImages,
   tapOn: action("tapOn"),

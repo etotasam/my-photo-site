@@ -50,7 +50,7 @@ const Template: Story<typeof Location> = (args: any) => {
     </>
   );
 };
-export const DefaultLocation = Template.bind({});
-DefaultLocation.args = {
+export const Default = Template.bind({});
+Default.args = {
   locationsImages: locationsImages,
 } as LocationType;

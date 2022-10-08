@@ -3,7 +3,7 @@ import { Story, Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
 export default {
-  title: "Header/Nav",
+  title: "Header/component/PC",
   component: NavOnPC,
 } as Meta<typeof NavOnPC>;
 

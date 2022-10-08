@@ -12,7 +12,7 @@ export const LoadingBound = (): JSX.Element => {
         duration: 0.5,
         yoyo: Infinity,
         ease: "easeOut",
-        delay: i * 0.3,
+        delay: i * 0.25,
       },
     }),
   };
@@ -40,23 +40,23 @@ export const LoadingBound = (): JSX.Element => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { duration: 1.5 } }}
       >
-        <motion.div
+        <motion.span
           variants={boundVariant}
           custom={0}
           animate={`bound`}
-          className="bg-green-500 rounded-lg ml-1 w-2 h-2"
+          className="block bg-green-500 rounded-lg ml-1 w-2 h-2"
         />
-        <motion.div
+        <motion.span
           variants={boundVariant}
           custom={1}
           animate={`bound`}
-          className="bg-green-500 rounded-lg ml-1 w-2 h-2"
+          className="block bg-green-500 rounded-lg ml-1 w-2 h-2"
         />
-        <motion.div
+        <motion.span
           variants={boundVariant}
           custom={2}
           animate={`bound`}
-          className="bg-green-500 rounded-lg ml-1 w-2 h-2"
+          className="block bg-green-500 rounded-lg ml-1 w-2 h-2"
         />
       </motion.div>
     </motion.div>
