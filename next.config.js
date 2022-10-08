@@ -2,6 +2,7 @@ const isProduction = process.env.NODE_ENV === `production`
 // const path = require('path')
 
 module.exports = {
+  distDir: 'build',
   reactStrictMode: true,
   env: {
     API_URL: isProduction ? process.env.PRODUCTION_API_URL : process.env.DEVELOPMENT_API_URL,

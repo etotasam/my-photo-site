@@ -41,7 +41,7 @@ describe(`Photo Component`, () => {
     expect(screen.getByRole("img")).toBe;
     expect(screen.getByText("Test")).toBe;
   });
-  it.only(`<Link>のhrefが正しいurlになる`, () => {
+  it(`<Link>のhrefが正しいurlになる`, () => {
     render(<Photo {...props} />);
     const LinkText = screen.getByTestId("Link").textContent;
     expect(LinkText).toEqual(`/photo/${img.id.split("_")[0]}?image=1`);

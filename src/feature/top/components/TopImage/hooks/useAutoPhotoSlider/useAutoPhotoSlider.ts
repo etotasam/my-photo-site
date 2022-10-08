@@ -30,15 +30,17 @@ export const useAutoPhotoSlider = ({ topImages, isTopImagesLoaded = false }: Pro
     });
   };
 
+  //? imageのタップ
   const requiredMoveX = 100;
-  let touchStartPositionX: number;
+  // let touchStartPositionX: number;
+  const touchStartPositionX = React.useRef<number>()
   const tapOn = (event: React.TouchEvent<HTMLImageElement>) => {
-    touchStartPositionX = event.changedTouches[0].pageX;
+    touchStartPositionX.current = event.changedTouches[0].pageX;
     if (timeOutId.current) clearTimeout(timeOutId.current);
   };
   const tapOff = (event: React.TouchEvent<HTMLImageElement>) => {
     const touchEndPositionX = event.changedTouches[0].pageX;
-    const movePositionX = touchStartPositionX - touchEndPositionX;
+    const movePositionX = touchStartPositionX.current! - touchEndPositionX;
     if (Math.abs(movePositionX) < requiredMoveX) {
       startPhotoSlide();
       return;
@@ -60,7 +62,7 @@ export const useAutoPhotoSlider = ({ topImages, isTopImagesLoaded = false }: Pro
     }, ms);
   };
 
-  //? windowがactiveかチェック
+  //? windowがactiveかどうか
   const [isWindowActive, setIsWindowActive] = useState(true)
   React.useEffect(() => {
     const setActive = () => {

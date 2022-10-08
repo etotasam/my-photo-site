@@ -2,154 +2,66 @@ import { act, cleanup, renderHook } from "@testing-library/react-hooks"
 
 import { useAdjustSizeForWrapperPhoto } from "."
 
-afterEach(() => cleanup())
 
-describe(`useAdjustSizeForWrapperPhoto 比率の検証`, () => {
-  const headerHeight = 50
-  const footerHeight = 50
-  const minLongSide = 350
-  const maxLong = 1000
-  let maxLongSide = 0
-  let ratio: number
-  const getMaxLongSide = (maxLong: number, imgHeight: number, imgWidth: number) => {
-    return Math.min(maxLong, Math.max(imgHeight, imgWidth))
-  }
-  const image = {
-    documentId: "",
-    width: 0,
-    height: 0,
-    createAt: new Date(),
-    url: "",
-    filename: "",
-    id: "",
-  }
-  const windowSize = {
-    width: 0,
-    height: 0
-  }
+const wideImage: any = {
+  width: 1000,
+  height: 750
+}
+const tallImage: any = {
+  width: 750,
+  height: 1000
+}
+const headerHeight = 45
+const footerHeight = 45
 
-  const sizeRatio = (width: number, height: number) => {
-    if (width === height) return `square`
-    return width > height ? `horizon` : `vartical`
-    // if (width > height) return `horizon`
-    // if (height > width) return `vartical`
-    // return `square`
-  }
-  it(`window: 横長, image: 横長`, () => {
-    windowSize.width = 1500
-    windowSize.height = 1000
-    expect(sizeRatio(windowSize.width, windowSize.height)).toBe(`horizon`)
-    image.width = 1000
-    image.height = 700
-    expect(sizeRatio(image.width, image.height)).toBe(`horizon`)
-    // const maxLongSide = Math.min(1000, Math.max(image.height, image.width))
-    maxLongSide = getMaxLongSide(maxLong, image.height, image.width)
-    const elementHeight = windowSize.height - (headerHeight + footerHeight)
-    const ratio = image.height / image.width;
-    const width = elementHeight;
-    const height = elementHeight * ratio;
-    const minWidth = minLongSide;
-    const minHeight = minLongSide * ratio;
-    const maxWidth = maxLongSide;
-    const maxHeight = maxLongSide * ratio;
-    setWindowSize(windowSize.width, windowSize.height)
-    const { result } = renderHook(() => useAdjustSizeForWrapperPhoto(image, headerHeight, footerHeight))
-    const { photoSize } = result.current
-    expect(photoSize).toEqual({
-      width: Math.floor(width),
-      height: Math.floor(height),
-      minWidth: Math.floor(minWidth),
-      minHeight: Math.floor(minHeight),
-      maxWidth: Math.floor(maxWidth),
-      maxHeight: Math.floor(maxHeight)
-    })
-  })
-  it(`window: 横長, image: 縦長`, () => {
-    windowSize.width = 1500
-    windowSize.height = 1000
-    expect(sizeRatio(windowSize.width, windowSize.height)).toBe(`horizon`)
-    image.width = 700
-    image.height = 1000
-    expect(sizeRatio(image.width, image.height)).toBe(`vartical`)
-    maxLongSide = getMaxLongSide(maxLong, image.height, image.width)
-    const elementHeight = windowSize.height - (headerHeight + footerHeight)
-    const ratio = image.width / image.height;
-    const width = elementHeight * ratio;
-    const height = elementHeight;
-    const minWidth = minLongSide * ratio;
-    const minHeight = minLongSide;
-    const maxWidth = maxLongSide * ratio;
-    const maxHeight = maxLongSide;
-    const { result } = renderHook(() => useAdjustSizeForWrapperPhoto(image, headerHeight, footerHeight))
-    const { photoSize } = result.current
-    expect(photoSize).toEqual({
-      width: Math.floor(width),
-      height: Math.floor(height),
-      minWidth: Math.floor(minWidth),
-      minHeight: Math.floor(minHeight),
-      maxWidth: Math.floor(maxWidth),
-      maxHeight: Math.floor(maxHeight)
-    })
-  })
-  it(`window: 縦長, image: 横長`, () => {
-    windowSize.width = 1000
-    windowSize.height = 1500
-    expect(sizeRatio(windowSize.width, windowSize.height)).toBe(`vartical`)
-    image.width = 1000
-    image.height = 700
-    expect(sizeRatio(image.width, image.height)).toBe(`horizon`)
-    maxLongSide = getMaxLongSide(maxLong, image.height, image.width)
-    const elementWidth = windowSize.width * 0.9
-    const ratio = image.height / image.width;
-    const width = elementWidth;
-    const height = elementWidth * ratio;
-    const minWidth = minLongSide;
-    const minHeight = minLongSide * ratio;
-    const maxWidth = maxLongSide;
-    const maxHeight = maxLongSide * ratio;
-    const { result } = renderHook(() => useAdjustSizeForWrapperPhoto(image, headerHeight, footerHeight))
-    const { photoSize } = result.current
-    expect(photoSize).toEqual({
-      width: Math.floor(width),
-      height: Math.floor(height),
-      minWidth: Math.floor(minWidth),
-      minHeight: Math.floor(minHeight),
-      maxWidth: Math.floor(maxWidth),
-      maxHeight: Math.floor(maxHeight)
-    })
-  })
-  it(`window: 縦長, image: 縦長`, () => {
-    windowSize.width = 1000
-    windowSize.height = 1500
-    expect(sizeRatio(windowSize.width, windowSize.height)).toBe(`vartical`)
-    image.width = 700
-    image.height = 1000
-    expect(sizeRatio(image.width, image.height)).toBe(`vartical`)
-    maxLongSide = getMaxLongSide(maxLong, image.height, image.width)
-    const elementWidth = windowSize.width * 0.9
-    const ratio = image.width / image.height;
-    const width = elementWidth * ratio;
-    const height = elementWidth;
-    const minWidth = minLongSide * ratio;
-    const minHeight = minLongSide;
-    const maxWidth = maxLongSide * ratio;
-    const maxHeight = maxLongSide;
-    const { result } = renderHook(() => useAdjustSizeForWrapperPhoto(image, headerHeight, footerHeight))
-    const { photoSize } = result.current
-    expect(photoSize).toEqual({
-      width: Math.floor(width),
-      height: Math.floor(height),
-      minWidth: Math.floor(minWidth),
-      minHeight: Math.floor(minHeight),
-      maxWidth: Math.floor(maxWidth),
-      maxHeight: Math.floor(maxHeight)
-    })
-  })
-
-})
-
-const setWindowSize = (width: number, height: number) => {
+//? windowサイズの変更
+const setWindowSize = ({ width, height }: { width: number, height: number }) => {
   window.innerWidth = width;
   window.innerHeight = height;
   window.dispatchEvent(new Event("resize"));
 };
+
+afterEach(() => cleanup())
+
+describe("windowサイズの変更でimageサイズも変更され、比率は保たれる", () => {
+  it("windowがwideの時、image(wide)の比率が保たれる", () => {
+    const sourceImageRatio = wideImage.height / wideImage.width
+    const windowSize = { width: 800, height: 700 }
+    const { result } = renderHook(() => useAdjustSizeForWrapperPhoto({ imageData: wideImage, headerHeight, footerHeight }))
+    act(() => setWindowSize(windowSize))
+    const photoSize = result.current.photoSize
+    const ratio = Math.ceil((photoSize.height / photoSize.width) * 100) / 100
+    expect(ratio).toEqual(sourceImageRatio)
+    expect(photoSize.width).toEqual(windowSize.height - (headerHeight + footerHeight))
+  })
+  it("windowがtallの時、image(wide)の比率が保たれる", () => {
+    const sourceImageRatio = wideImage.height / wideImage.width
+    const windowSize = { width: 800, height: 1000 }
+    const { result } = renderHook(() => useAdjustSizeForWrapperPhoto({ imageData: wideImage, headerHeight, footerHeight }))
+    act(() => setWindowSize(windowSize))
+    const photoSize = result.current.photoSize
+    const ratio = Math.ceil((photoSize.height / photoSize.width) * 100) / 100
+    expect(ratio).toEqual(sourceImageRatio)
+    expect(photoSize.width).toEqual(windowSize.width * 0.9)
+  })
+  it("windowがwideの時、image(tall)の比率が保たれる", () => {
+    const sourceImageRatio = tallImage.width / tallImage.height
+    const windowSize = { width: 1200, height: 1000 }
+    const { result } = renderHook(() => useAdjustSizeForWrapperPhoto({ imageData: tallImage, headerHeight, footerHeight }))
+    act(() => setWindowSize(windowSize))
+    const photoSize = result.current.photoSize
+    const ratio = Math.ceil((photoSize.width / photoSize.height) * 100) / 100
+    expect(ratio).toEqual(sourceImageRatio)
+    expect(photoSize.width).toEqual(Math.floor((windowSize.height - (headerHeight + footerHeight)) * ratio))
+  })
+  it("windowがtallの時、image(tall)の比率が保たれる", () => {
+    const sourceImageRatio = tallImage.width / tallImage.height
+    const windowSize = { width: 659, height: 1000 }
+    const { result } = renderHook(() => useAdjustSizeForWrapperPhoto({ imageData: tallImage, headerHeight, footerHeight }))
+    act(() => setWindowSize(windowSize))
+    const photoSize = result.current.photoSize
+    const ratio = Math.ceil((photoSize.width / photoSize.height) * 100) / 100
+    expect(ratio).toEqual(sourceImageRatio)
+    expect(photoSize.width).toEqual(Math.floor((windowSize.width * 0.9) * ratio))
+  })
+})

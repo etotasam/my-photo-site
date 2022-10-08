@@ -11,7 +11,7 @@ export default {
   component: ImageWrapper,
 } as Meta<typeof ImageWrapper>;
 
-const photo = {
+const imageData: any = {
   id: "test_1",
   url: img1,
 };
@@ -36,10 +36,8 @@ const Template: Story<typeof ImageWrapper> = (args: any) => {
 };
 export const Default = Template.bind({});
 Default.args = {
-  photo,
-  // allImages,
+  imageData,
   tapOn: action("tapOn"),
   tapOff: action("tapOff"),
   isOnloaded: () => {},
-  toLink: "url",
 } as ImageWrapperType;
