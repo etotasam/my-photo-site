@@ -4,31 +4,11 @@ import { cleanup } from "@testing-library/react";
 
 afterEach(() => cleanup());
 
-const topImages = [{
-  documentId: "document_id",
-  width: 1000,
-  createAt: new Date,
-  height: 750,
-  url: "url",
-  filename: "filename",
-  id: "egypt_1"
-}, {
-  documentId: "document_id",
-  width: 1000,
-  createAt: new Date,
-  height: 750,
-  url: "url",
-  filename: "filename",
-  id: "france_1"
-}, {
-  documentId: "document_id",
-  width: 1000,
-  createAt: new Date,
-  height: 750,
-  url: "url",
-  filename: "filename",
-  id: "truky_1"
-}]
+const topImages: any = [
+  { id: "egypt_1" },
+  { id: "france_1" },
+  { id: "truky_1" }
+]
 
 
 describe(`useTopImagesLoadStateのテスト`, () => {
