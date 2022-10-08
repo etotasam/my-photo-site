@@ -5,16 +5,14 @@ import * as path from "path";
 import { fetchAllImagesApi } from "@/api/imagesApi";
 import dayjs from "dayjs";
 //! types
-import { CreateAtType, ImagesType } from "@/@types/types";
+import { CreateAtType, ImagesType } from "@/types";
 //! context
 import { useLocationNamesDispatchContext } from "@/context/locationNamesContext";
 import { useEffect } from "react";
 //! components
-import { TopImage, TopImageContainer } from "@/feature/top_image";
-import SiteDiscription from "@/feature/SiteDiscription";
-import { Location } from "@/feature/location/Location";
-import { Loading } from "@/feature/Loading";
+import { Top } from "@/feature/top";
 import { News } from "@/feature/News";
+import { Location } from "@/feature/location";
 
 type Params = {
   allImages: Record<string, ImagesType[]>;
@@ -39,12 +37,7 @@ const Home = ({ allImages, topImages, locationsImages, newsTitles, locationNames
   }, [locationNames]);
   return (
     <>
-      <div className={`md:flex md:justify-between relative`}>
-        <TopImageContainer topImages={topImages} allImages={allImages} />
-        <section className={`flex md:justify-end`}>
-          <SiteDiscription />
-        </section>
-      </div>
+      <Top topImages={topImages} allImages={allImages} />
       <section className={`mt-5`}>
         <News news={newsTitles} />
       </section>
