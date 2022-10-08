@@ -31,7 +31,7 @@ export const ImageViewer = ({
   className,
 }: ImageViewerType) => {
   const { headerHeight, footerHeight } = useHeihgtStateContext();
-  const { photoSize } = useAdjustSizeForWrapperPhoto(imageData, headerHeight, footerHeight);
+  const { photoSize } = useAdjustSizeForWrapperPhoto({ imageData, headerHeight, footerHeight });
 
   return (
     <>
