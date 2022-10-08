@@ -25,7 +25,7 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 function MyApp({ Component, pageProps }) {
-  const NoSSR = dynamic(() => import("@/feature/NoSSR"), {
+  const NoSSR = dynamic(() => import("@/layouts/NoSSR/NoSSR"), {
     ssr: false,
   });
   switch (pageProps.layout) {
