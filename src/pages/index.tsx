@@ -11,8 +11,8 @@ import { useLocationNamesDispatchContext } from "@/context/locationNamesContext"
 import { useEffect } from "react";
 //! components
 import { Top } from "@/feature/top";
-import { News } from "@/feature/news";
 import { Location } from "@/feature/location";
+import { News } from "@/feature/news/News";
 
 type Params = {
   allImages: Record<string, ImagesType[]>;
