@@ -2,15 +2,22 @@ import React, { useEffect } from "react";
 import { ImagesType } from "@/types";
 import { motion, useAnimation } from "framer-motion";
 import clsx from "clsx";
+//! context
+import {
+  useCurrentImageIndexDispatchContext,
+  useCurrentImageIndexStateContext,
+} from "@/context/currentImageIndexContext";
 
 export type BulletNavType = {
   topImages: ImagesType[];
   currentPhotoIndex: number | undefined;
-  setCurrentPhotoIndex: (num: number) => void;
+  // setCurrentPhotoIndex: (num: number) => void;
   className?: string;
 };
 
-export const BulletNav = ({ topImages, currentPhotoIndex, setCurrentPhotoIndex, className }: BulletNavType) => {
+export const BulletNav = ({ topImages, className }: BulletNavType) => {
+  const { currentImageIndexDispathcer } = useCurrentImageIndexDispatchContext();
+  const { currentImageIndex } = useCurrentImageIndexStateContext();
   const variants = {
     initial_scale: {
       scale: 1,
@@ -41,7 +48,7 @@ export const BulletNav = ({ topImages, currentPhotoIndex, setCurrentPhotoIndex, 
             layout
             key={photo.id}
             whileHover="scale"
-            animate={currentPhotoIndex === index ? "scale" : "initial_scale"}
+            animate={currentImageIndex === index ? "scale" : "initial_scale"}
             variants={variants}
             className={clsx(
               `flex justify-center items-center w-[10px] h-[10px] cursor-pointer md:mt-0`,
@@ -50,9 +57,9 @@ export const BulletNav = ({ topImages, currentPhotoIndex, setCurrentPhotoIndex, 
           >
             <motion.span
               variants={variants}
-              animate={currentPhotoIndex === index ? "current_color" : "default_color"}
+              animate={currentImageIndex === index ? "current_color" : "default_color"}
               className={`block rounded-[50%] w-1 h-1`}
-              onClick={() => setCurrentPhotoIndex(index)}
+              onClick={() => currentImageIndexDispathcer(index)}
             />
           </motion.li>
         ))}

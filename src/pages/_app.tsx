@@ -10,6 +10,7 @@ import { ModalStateProvider } from "@/context/modalStateContext";
 import { LoadStateProvider } from "@/context/loadStateContext";
 import { HeightProvider } from "@/context/heightStateContext";
 import { LocationNamesProvider } from "@/context/locationNamesContext";
+import { CurrentImageIndexProvider } from "@/context/currentImageIndexContext";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -48,17 +49,19 @@ function MyApp({ Component, pageProps }) {
     default: {
       return (
         <>
-          <LocationNamesProvider>
-            <HeightProvider>
-              <LoadStateProvider>
-                <ModalStateProvider>
-                  <Default>
-                    <Component {...pageProps} />
-                  </Default>
-                </ModalStateProvider>
-              </LoadStateProvider>
-            </HeightProvider>
-          </LocationNamesProvider>
+          <CurrentImageIndexProvider>
+            <LocationNamesProvider>
+              <HeightProvider>
+                <LoadStateProvider>
+                  <ModalStateProvider>
+                    <Default>
+                      <Component {...pageProps} />
+                    </Default>
+                  </ModalStateProvider>
+                </LoadStateProvider>
+              </HeightProvider>
+            </LocationNamesProvider>
+          </CurrentImageIndexProvider>
         </>
       );
     }
