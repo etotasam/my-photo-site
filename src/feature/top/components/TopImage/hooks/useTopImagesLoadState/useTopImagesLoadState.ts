@@ -20,7 +20,6 @@ export const useTopImagesLoadState = ({ topImages }: PropsType) => {
   //? 読み込んだimageはimageLoadStateの値をtrueにする
   const imageOnloaded = (id: string) => {
     const key = id.split("_")[0];
-    if (!imageLoadState) return;
     setImageLoadState((v) => {
       return { ...v, [key]: true };
     });

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { ImagesType } from "@/types";
+//! context
+import { useCurrentImageIndexDispatchContext, useCurrentImageIndexStateContext } from "@/context/currentImageIndexContext"
 
 type PropsType = {
   topImages: ImagesType[]
@@ -8,31 +10,25 @@ type PropsType = {
 
 export const useAutoPhotoSlider = ({ topImages, isTopImagesLoaded = false }: PropsType) => {
 
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState<number | undefined>();
+  const { currentImageIndexDispathcer } = useCurrentImageIndexDispatchContext()
+  const { currentImageIndex } = useCurrentImageIndexStateContext()
 
   const nextPhoto = () => {
     if (timeOutId.current) clearTimeout(timeOutId.current);
-    setCurrentPhotoIndex((state: number) => {
-      if (topImages.length - 1 <= state) {
-        return (state = 0);
-      }
-      return state + 1;
-    });
+    if (currentImageIndex === undefined) return
+    if (topImages.length - 1 <= currentImageIndex) return currentImageIndexDispathcer(0)
+    currentImageIndexDispathcer(currentImageIndex + 1)
   };
 
   const prevPhoto = () => {
     if (timeOutId.current) clearTimeout(timeOutId.current);
-    setCurrentPhotoIndex((state: number) => {
-      if (state <= 0) {
-        return (state = topImages.length - 1);
-      }
-      return (state = state - 1);
-    });
+    if (currentImageIndex === undefined) return
+    if (currentImageIndex <= 0) return currentImageIndexDispathcer(topImages.length - 1)
+    currentImageIndexDispathcer(currentImageIndex - 1)
   };
 
   //? imageのタップ
   const requiredMoveX = 100;
-  // let touchStartPositionX: number;
   const touchStartPositionX = React.useRef<number>()
   const tapOn = (event: React.TouchEvent<HTMLImageElement>) => {
     touchStartPositionX.current = event.changedTouches[0].pageX;
@@ -91,9 +87,10 @@ export const useAutoPhotoSlider = ({ topImages, isTopImagesLoaded = false }: Pro
     return () => {
       if (timeOutId.current) clearTimeout(timeOutId.current);
     };
-  }, [currentPhotoIndex, isTopImagesLoaded, isWindowActive]);
+  }, [currentImageIndex, isTopImagesLoaded, isWindowActive]);
 
 
-  return { currentPhotoIndex, setCurrentPhotoIndex, tapOn, tapOff }
+  //? currentImageIndex, currentImageIndexDispathcerはテスト用に返してるだけ・・・
+  return { currentImageIndex, currentImageIndexDispathcer, tapOn, tapOff }
 
 }

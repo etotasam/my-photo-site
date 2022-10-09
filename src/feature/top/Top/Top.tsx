@@ -6,14 +6,14 @@ import { SiteDiscription } from "../components/SiteDiscription";
 import { ImagesType } from "@/types";
 
 type TopType = {
-  allImages: Record<string, ImagesType[]>;
+  // allImages: Record<string, ImagesType[]>;
   topImages: ImagesType[];
 };
 
-export const Top = ({ topImages, allImages }: TopType) => {
+export const Top = ({ topImages }: TopType) => {
   return (
     <section className={`md:flex md:justify-between relative`}>
-      <TopImageContainer topImages={topImages} allImages={allImages} />
+      <TopImageContainer topImages={topImages} />
       <div className={`flex md:justify-end`}>
         <SiteDiscription />
       </div>
