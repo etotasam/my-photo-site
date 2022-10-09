@@ -7,7 +7,6 @@ import img2 from "../../../test_image/img2.jpg";
 import img3 from "../../../test_image/img3.jpg";
 import img4 from "../../../test_image/img4.jpg";
 import img5 from "../../../test_image/img5.jpg";
-// import img6 from "../../../test_image/img6.jpg";
 
 export default {
   title: "Location",
@@ -15,12 +14,11 @@ export default {
 } as Meta<typeof Location>;
 
 const locationsImages = [
-  { id: "test_1", url: img1 },
-  { id: "test_2", url: img2 },
-  { id: "test_3", url: img3 },
-  { id: "test_4", url: img4 },
-  { id: "test_5", url: img5 },
-  // { id: "test_6", url: img6 },
+  { id: "egypt_1", url: img1 },
+  { id: "france_2", url: img2 },
+  { id: "landscape_3", url: img3 },
+  { id: "turky_4", url: img4 },
+  { id: "america_5", url: img5 },
 ];
 
 const AboveComponent = () => {

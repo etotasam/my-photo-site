@@ -12,7 +12,7 @@ const Template: Story<typeof MyLink> = (args: any) => {
 };
 export const Default = Template.bind({});
 Default.args = {
-  children: "てすとタイトル",
+  children: "てすとLink",
   href: "url",
   onClick: action("クリック"),
 } as MyLinkType;

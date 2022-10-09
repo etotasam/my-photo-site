@@ -1,4 +1,4 @@
-import { ImageWrapper, ImageWrapperType } from "./ImageWrapper";
+import { ImageWrapper, ImageWrapperType } from "../TopImage";
 import { Story, Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
@@ -27,7 +27,8 @@ const allImages: Record<string, any[]> = {
 
 const Template: Story<typeof ImageWrapper> = (args: any) => {
   return (
-    <div style={{ backgroundColor: "#a3a3a3", height: "100vh", padding: "25px" }}>
+    <div style={{ backgroundColor: "#cdcdcd", height: "100vh", padding: "25px" }}>
+      imageが表示されればOK
       <div style={{ position: "relative", width: "250px", height: "350px" }}>
         <ImageWrapper {...args} />
       </div>
@@ -39,5 +40,7 @@ Default.args = {
   imageData,
   tapOn: action("tapOn"),
   tapOff: action("tapOff"),
-  isOnloaded: () => {},
+  imageLoaded: (id) => {},
+  imageIndex: 0,
+  currentImageIndex: 0,
 } as ImageWrapperType;

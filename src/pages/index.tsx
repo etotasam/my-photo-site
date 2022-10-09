@@ -37,7 +37,7 @@ const Home = ({ allImages, topImages, locationsImages, newsTitles, locationNames
   }, [locationNames]);
   return (
     <>
-      <Top topImages={topImages} allImages={allImages} />
+      <Top topImages={topImages} />
       <section className={`mt-5`}>
         <News news={newsTitles} />
       </section>
