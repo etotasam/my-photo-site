@@ -1,4 +1,4 @@
-import { BulletNav, BulletNavType } from "./BulletNav";
+import { BulletNav, BulletNavType } from "../TopImage";
 import { Story, Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
@@ -9,18 +9,24 @@ export default {
 
 type ArgType = {
   topImages: any;
-  currentPhotoIndex: 0 | 1 | 2;
+  currentImageIndex: number;
   setCurrentPhotoIndex: (n: number) => {};
 };
 
 const topImages = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
 const Template: Story<typeof BulletNav> = (args: any) => {
-  return <BulletNav {...args} />;
+  return (
+    <div className="flex justify-center items-center w-[100vw] min-h-[100vh]">
+      <div>
+        <BulletNav {...args} />
+      </div>
+    </div>
+  );
 };
 export const Default = Template.bind({});
 Default.args = {
   topImages,
-  currentPhotoIndex: 0,
+  currentImageIndex: 0,
   setCurrentPhotoIndex: action("setCurrentPhotoIndex"),
 } as ArgType;

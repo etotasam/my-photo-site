@@ -1,4 +1,4 @@
-import { TopImage, TopImageType } from "./TopImage";
+import { TopImage, TopImageType } from "../TopImage";
 import { Story, Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
@@ -26,16 +26,19 @@ const allImages: Record<string, any[]> = {
 };
 
 const Template: Story<typeof TopImage> = (args: any) => {
-  return <TopImage {...args} />;
+  return (
+    <div className="bg-gray-300">
+      <TopImage {...args} />
+    </div>
+  );
 };
 export const Default = Template.bind({});
 Default.args = {
+  currentImageIndex: 1,
   topImages: allImages.japan,
-  allImages,
-  currentPhotoIndex: 1,
   isTopImageAllLoaded: true,
-  imageOnloaded: () => {},
+  imageLoaded: () => {},
   tapOn: () => {},
   tapOff: () => {},
-  setCurrentPhotoIndex: () => {},
+  setCurrentImageIndex: () => {},
 } as TopImageType;

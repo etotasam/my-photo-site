@@ -42,7 +42,8 @@ type Action = {
 export const reducer = (state: CurrentImageIndexStateType, action: Action) => {
   switch (action.type) {
     case "changeImageIndex":
-      return { currentImageIndex: (state.currentImageIndex = action.payload) };
+      return { currentImageIndex: action.payload };
+    // return { currentImageIndex: (state.currentImageIndex = action.payload) };
     default:
       throw new Error("changeImageIndex action-type input error");
   }

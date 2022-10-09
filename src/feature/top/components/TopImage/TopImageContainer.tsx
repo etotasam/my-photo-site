@@ -14,7 +14,6 @@ import {
 
 type TopImageContainerType = {
   topImages: ImagesType[];
-  // allImages: Record<string, ImagesType[]>;
 };
 
 export const TopImageContainer = ({ topImages }: TopImageContainerType) => {
@@ -40,13 +39,12 @@ export const TopImageContainer = ({ topImages }: TopImageContainerType) => {
   return (
     <TopImage
       topImages={topImages}
-      // allImages={allImages}
-      // currentPhotoIndex={currentPhotoIndex}
-      imageOnloaded={(id) => imageOnloaded(id)}
+      currentImageIndex={currentImageIndex}
+      imageLoaded={(id) => imageOnloaded(id)}
       tapOn={tapOn}
       tapOff={tapOff}
       isTopImageAllLoaded={isTopImagesLoaded}
-      // setCurrentPhotoIndex={setCurrentPhotoIndex}
+      setCurrentImageIndex={(payload) => currentImageIndexDispathcer(payload)}
     />
   );
 };
