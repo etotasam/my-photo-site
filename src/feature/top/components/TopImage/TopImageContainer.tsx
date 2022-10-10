@@ -11,6 +11,7 @@ import {
   useCurrentImageIndexDispatchContext,
   useCurrentImageIndexStateContext,
 } from "@/context/currentImageIndexContext";
+import { useTopImagesLoadStateContext } from "@/context/topImagesLoadStateContext";
 
 type TopImageContainerType = {
   topImages: ImagesType[];
@@ -18,6 +19,7 @@ type TopImageContainerType = {
 
 export const TopImageContainer = ({ topImages }: TopImageContainerType) => {
   const { currentImageIndexDispathcer } = useCurrentImageIndexDispatchContext();
+  const { isTopImagesLoaded } = useTopImagesLoadStateContext();
   const { currentImageIndex } = useCurrentImageIndexStateContext();
 
   //? トップ画面のスライド写真の中からひとつをランダムに選択してセット
@@ -29,7 +31,7 @@ export const TopImageContainer = ({ topImages }: TopImageContainerType) => {
   }, [currentImageIndex]);
 
   //? 表示するimageのすべての読み込みが完了しているかを取得
-  const { isTopImagesLoaded, imageOnloaded } = useTopImagesLoadState({ topImages });
+  const { imageOnloaded } = useTopImagesLoadState({ topImages });
   //? 表示するimageのindexを取得
   const { tapOn, tapOff } = useAutoPhotoSlider({
     topImages,
@@ -43,7 +45,7 @@ export const TopImageContainer = ({ topImages }: TopImageContainerType) => {
       imageLoaded={(id) => imageOnloaded(id)}
       tapOn={tapOn}
       tapOff={tapOff}
-      isTopImageAllLoaded={isTopImagesLoaded}
+      isTopImagesLoaded={isTopImagesLoaded}
       setCurrentImageIndex={(payload) => currentImageIndexDispathcer(payload)}
     />
   );
