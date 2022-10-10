@@ -11,11 +11,6 @@ export default {
   component: TopImage,
 } as Meta<typeof TopImage>;
 
-const photo = {
-  id: "test_1",
-  url: img1,
-};
-
 const allImages: Record<string, any[]> = {
   japan: [
     { id: "japan_1", url: img1 },
@@ -36,7 +31,7 @@ export const Default = Template.bind({});
 Default.args = {
   currentImageIndex: 1,
   topImages: allImages.japan,
-  isTopImageAllLoaded: true,
+  isTopImagesLoaded: true,
   imageLoaded: () => {},
   tapOn: () => {},
   tapOff: () => {},
