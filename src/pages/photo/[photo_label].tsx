@@ -2,7 +2,7 @@ import React, { memo, useState, useEffect, useRef } from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { animate, AnimatePresence, motion } from "framer-motion";
+// import { animate, AnimatePresence, motion } from "framer-motion";
 //! component
 import { ImageViewerContainer } from "@/feature/image_viewer/ImageViewer";
 //! api
@@ -69,23 +69,7 @@ const PhotoLabel = ({ locationImages, locationNames }: PropsType) => {
             : process.env.NEXT_PUBLIC_SITE_TITLE}
         </title>
       </Head>
-      <div className="relative t-main-height flex justify-center items-center">
-        <AnimatePresence>
-          {sortImagesByIdInDesc.map(
-            (imageData, index) =>
-              viewImageIndex === index && (
-                <ImageViewerContainer
-                  className={`absolute`}
-                  key={imageData.id}
-                  imageData={imageData}
-                  imagesLength={imagesLength}
-                />
-              )
-          )}
-        </AnimatePresence>
-      </div>
-      {/* <div className="bg-red-400"> */}
-      {/* </div> */}
+      <ImageViewerContainer locationImages={locationImages} />
     </>
   );
 };

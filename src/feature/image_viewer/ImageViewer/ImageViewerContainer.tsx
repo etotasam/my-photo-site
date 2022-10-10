@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { AnimatePresence } from "framer-motion";
 //! component
-import { ImageViewer } from "./ImageViewer";
+import { ImageViewer } from "./";
+import { LoadingBound } from "@/components/Element/LoadingBound";
 //! types
 import type { ImagesType } from "@/types";
 //! context
 import { useModalDispatchContext } from "@/context/modalStateContext";
-import { react } from "@babel/types";
 
 type Params = {
-  imageData: ImagesType;
-  imagesLength: number;
   className?: string;
+  locationImages: ImagesType[];
 };
-export const ImageViewerContainer = ({ imageData, imagesLength: lastImage, className }: Params) => {
+export const ImageViewerContainer = ({ locationImages, className }: Params) => {
   const router = useRouter();
   const { photo_label: queryPhotoLabel, image: queryImage } = router.query;
 
@@ -22,15 +22,15 @@ export const ImageViewerContainer = ({ imageData, imagesLength: lastImage, class
     if (clickPosition === "left") {
       let prev: number | undefined;
       if (queryImage) prev = Number(queryImage) - 1;
-      if (!queryImage) prev = lastImage;
-      if (prev! < 1) return router.push(`/photo/${queryPhotoLabel}?image=${lastImage}`);
+      if (!queryImage) prev = locationImages.length;
+      if (prev! < 1) return router.push(`/photo/${queryPhotoLabel}?image=${locationImages.length}`);
       router.push(`/photo/${queryPhotoLabel}?image=${prev}`);
     }
     if (clickPosition === "right") {
       let next: number;
       if (queryImage) next = Number(queryImage) + 1;
       if (!queryImage) next = 2;
-      if (next! > lastImage) return router.push(`/photo/${queryPhotoLabel}?image=1`);
+      if (next! > locationImages.length) return router.push(`/photo/${queryPhotoLabel}?image=1`);
       router.push(`/photo/${queryPhotoLabel}?image=${next!}`);
     }
   };
@@ -85,15 +85,26 @@ export const ImageViewerContainer = ({ imageData, imagesLength: lastImage, class
   };
   return (
     <>
-      <ImageViewer
-        className={className}
-        imageData={imageData}
-        imageClick={imageClick}
-        tapOn={tapOn}
-        tapOff={tapOff}
-        isImageLoading={isImageLoading}
-        imageLoaded={imageLoaded}
-      />
+      <div className="relative t-main-height flex justify-center items-center">
+        <AnimatePresence>
+          {locationImages.map(
+            (imageData, index) =>
+              Number(queryImage) === index + 1 && (
+                <ImageViewer
+                  key={imageData.id}
+                  className={className}
+                  imageData={imageData}
+                  imageClick={imageClick}
+                  tapOn={tapOn}
+                  tapOff={tapOff}
+                  // isImageLoading={isImageLoading}
+                  imageLoaded={imageLoaded}
+                />
+              )
+          )}
+        </AnimatePresence>
+        <AnimatePresence>{isImageLoading && <LoadingBound />}</AnimatePresence>
+      </div>
     </>
   );
 };
