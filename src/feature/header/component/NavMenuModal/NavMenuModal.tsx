@@ -2,7 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import clsx from "clsx";
-
+//! context
+import { useModalDispatchContext } from "@/context/modalStateContext";
 export type NavMenuModalType = {
   locations: string[] | undefined;
   photoLabelName: string | string[] | undefined;
@@ -15,10 +16,12 @@ export const NavMenuModal = ({ locations, photoLabelName }: NavMenuModalType) =>
     photo_label = photoLabelName;
   }
 
+  const { modalCloseDispatcher } = useModalDispatchContext();
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, location: string) => {
     e.preventDefault();
     if (photo_label === location) return;
-    router.push(`/photo/${location}`);
+    router.push(`/photo/${location}?image=1`);
+    modalCloseDispatcher();
   };
 
   return (
