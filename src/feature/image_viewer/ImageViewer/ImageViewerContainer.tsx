@@ -80,9 +80,9 @@ export const ImageViewerContainer = ({ locationImages, className }: Params) => {
   //? image loading check
   const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
 
-  const imageLoaded = () => {
-    setIsImageLoading(false);
-  };
+  // const imageLoaded = () => {
+  //   setIsImageLoading(false);
+  // };
   return (
     <>
       <div className="relative t-main-height flex justify-center items-center">
@@ -97,13 +97,13 @@ export const ImageViewerContainer = ({ locationImages, className }: Params) => {
                   imageClick={imageClick}
                   tapOn={tapOn}
                   tapOff={tapOff}
-                  // isImageLoading={isImageLoading}
-                  imageLoaded={imageLoaded}
+                  isImageLoading={isImageLoading}
+                  imageLoaded={() => setIsImageLoading(false)}
                 />
               )
           )}
+          {/* {isImageLoading && <LoadingBound />} */}
         </AnimatePresence>
-        <AnimatePresence>{isImageLoading && <LoadingBound />}</AnimatePresence>
       </div>
     </>
   );

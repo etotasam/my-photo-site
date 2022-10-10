@@ -1,6 +1,6 @@
 import React from "react";
 import NextImage from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
 //! type
 import type { ImagesType } from "@/types";
@@ -8,13 +8,15 @@ import type { ImagesType } from "@/types";
 import { useHeihgtStateContext } from "@/context/heightStateContext";
 //! hooks
 import { useAdjustSizeForWrapperPhoto } from "@/hooks";
+//! component
+import { LoadingBound } from "@/components/Element/LoadingBound";
 
 export type ImageViewerType = {
   imageData: ImagesType;
   imageClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   tapOn: (e: React.TouchEvent<HTMLImageElement>) => void;
   tapOff: (e: React.TouchEvent<HTMLImageElement>) => void;
-  // isImageLoading: boolean;
+  isImageLoading: boolean;
   imageLoaded: () => void;
   className?: string;
 };
@@ -37,6 +39,9 @@ export const ImageViewer = ({
     animate?: { x: number };
   };
 
+  //? image loading check
+  const [isImageLoading, setIsImageLoading] = React.useState<boolean>(true);
+
   return (
     <>
       <div className={clsx("absolute")}>
@@ -58,10 +63,11 @@ export const ImageViewer = ({
             priority={true}
             layout={`fill`}
             objectFit={`contain`}
-            onLoad={imageLoaded}
+            onLoad={() => setIsImageLoading(false)}
           />
         </motion.div>
       </div>
+      <AnimatePresence>{isImageLoading && <LoadingBound />}</AnimatePresence>
       {/* <AnimatePresence>{isImageLoading && <LoadingBound />}</AnimatePresence> */}
     </>
   );
