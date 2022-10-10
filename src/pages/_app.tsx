@@ -7,7 +7,7 @@ import { initializeApp } from "firebase/app";
 
 //! context
 import { ModalStateProvider } from "@/context/modalStateContext";
-import { LoadStateProvider } from "@/context/loadStateContext";
+import { TopImagesLoadStateProvider } from "@/context/topImagesLoadStateContext";
 import { HeightProvider } from "@/context/heightStateContext";
 import { LocationNamesProvider } from "@/context/locationNamesContext";
 import { CurrentImageIndexProvider } from "@/context/currentImageIndexContext";
@@ -52,13 +52,13 @@ function MyApp({ Component, pageProps }) {
           <CurrentImageIndexProvider>
             <LocationNamesProvider>
               <HeightProvider>
-                <LoadStateProvider>
+                <TopImagesLoadStateProvider>
                   <ModalStateProvider>
                     <Default>
                       <Component {...pageProps} />
                     </Default>
                   </ModalStateProvider>
-                </LoadStateProvider>
+                </TopImagesLoadStateProvider>
               </HeightProvider>
             </LocationNamesProvider>
           </CurrentImageIndexProvider>

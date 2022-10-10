@@ -12,7 +12,7 @@ import { Loading } from "@/components/Element/Loading";
 
 export type TopImageType = {
   topImages: ImagesType[];
-  isTopImageAllLoaded: boolean;
+  isTopImagesLoaded: boolean;
   currentImageIndex: number | undefined;
   imageLoaded: (id: string) => void;
   tapOn: (event: React.TouchEvent<HTMLImageElement>) => void;
@@ -20,12 +20,11 @@ export type TopImageType = {
   setCurrentImageIndex: (payload: number) => void;
 };
 
-
 //! main
 export const TopImage = ({
   currentImageIndex,
   topImages,
-  isTopImageAllLoaded,
+  isTopImagesLoaded,
   imageLoaded,
   tapOn,
   tapOff,
@@ -37,7 +36,7 @@ export const TopImage = ({
         <AnimatePresence>
           {topImages.map(
             (imageData, index) =>
-              (currentImageIndex === index || !isTopImageAllLoaded) && (
+              (currentImageIndex === index || !isTopImagesLoaded) && (
                 <ImageWrapper
                   key={imageData.id}
                   imageData={imageData}
@@ -50,7 +49,7 @@ export const TopImage = ({
               )
           )}
         </AnimatePresence>
-        <AnimatePresence>{!isTopImageAllLoaded || (currentImageIndex === null && <Loading />)}</AnimatePresence>
+        <AnimatePresence>{(!isTopImagesLoaded || currentImageIndex === null) && <Loading />}</AnimatePresence>
       </div>
       <BulletNav
         topImages={topImages}
