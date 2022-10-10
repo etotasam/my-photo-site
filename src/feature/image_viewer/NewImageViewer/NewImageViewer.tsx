@@ -1,52 +1,44 @@
 import React from "react";
-import NextImage from "next/image";
 import { animate, AnimatePresence, motion } from "framer-motion";
+import NextImage from "next/image";
 import clsx from "clsx";
 //! type
 import type { ImagesType } from "@/types";
-//! context
-import { useHeihgtStateContext } from "@/context/heightStateContext";
 //! hooks
 import { useAdjustSizeForWrapperPhoto } from "@/hooks";
+import { useWindowResize } from "@/hooks";
+//! context
+import { useHeihgtStateContext } from "@/context/heightStateContext";
 //! component
-import { LoadingBound } from "@/components/Element/LoadingBound";
+import { Loading } from "@/components/Element/Loading";
 
-export type ImageViewerType = {
-  imageData: ImagesType;
+type PropType = {
   imageClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   tapOn: (e: React.TouchEvent<HTMLImageElement>) => void;
   tapOff: (e: React.TouchEvent<HTMLImageElement>) => void;
   isImageLoading: boolean;
-  imageLoaded: () => void;
+  closeLoadingModal: () => void;
   className?: string;
+  locationImages: ImagesType[];
+  queryImage: string | string[] | undefined;
 };
 
-export const ImageViewer = ({
-  imageData,
-  imageClick,
-  tapOn,
-  tapOff,
-  isImageLoading,
-  imageLoaded,
-  className,
-}: ImageViewerType) => {
+export const NewImageViewer = (props: PropType) => {
+  const { queryImage, locationImages, isImageLoading, className, tapOn, tapOff, imageClick, closeLoadingModal } = props;
+
   const { headerHeight, footerHeight } = useHeihgtStateContext();
   const { photoSize } = useAdjustSizeForWrapperPhoto({ imageData, headerHeight, footerHeight });
-
   return (
     <>
-      <div className={className}>
-        <motion.div
+      {/* {index + 1 === Number(queryImage) && ( */}
+      <div className={"absolute top-0 left-0"}>
+        <div
           data-testid={`imageWrap`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
           onTouchStart={tapOn}
           onTouchEnd={tapOff}
-          transition={{ duration: 0.3 }}
           className={`relative leading-3`}
           style={{ ...photoSize }}
-          onClick={(e) => imageClick(e)}
+          // onClick={(e) => imageClick(e)}
         >
           <NextImage
             className={`cursor-pointer`}
@@ -55,11 +47,13 @@ export const ImageViewer = ({
             priority={true}
             layout={`fill`}
             objectFit={`contain`}
-            onLoad={imageLoaded}
+            onLoad={closeLoadingModal}
           />
-        </motion.div>
-        <AnimatePresence>{isImageLoading && <LoadingBound />}</AnimatePresence>
+        </div>
       </div>
+      {/* )} */}
+      {/* </div> */}
+      {/* <AnimatePresence>{isImageLoading && <Loading />}</AnimatePresence> */}
     </>
   );
 };

@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { animate, AnimatePresence, motion } from "framer-motion";
+import clsx from "clsx";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 //! component
-import { ImageViewer } from "./ImageViewer";
+import { NewImageViewer } from "./NewImageViewer";
 //! types
 import type { ImagesType } from "@/types";
 //! context
 import { useModalDispatchContext } from "@/context/modalStateContext";
-import { react } from "@babel/types";
+//! hooks
+import { useAdjustSizeForWrapperPhoto } from "@/hooks/useViewPhotoSize";
 
 type Params = {
-  imageData: ImagesType;
+  // imageData: ImagesType;
   imagesLength: number;
+  locationImages: ImagesType[];
   className?: string;
 };
-export const ImageViewerContainer = ({ imageData, imagesLength: lastImage, className }: Params) => {
+export const NewImageViewerContainer = ({ locationImages, imagesLength: lastImage, className }: Params) => {
   const router = useRouter();
   const { photo_label: queryPhotoLabel, image: queryImage } = router.query;
 
@@ -79,20 +88,20 @@ export const ImageViewerContainer = ({ imageData, imagesLength: lastImage, class
 
   //? image loading check
   const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
-
-  const imageLoaded = () => {
+  const closeLoadingModal = () => {
     setIsImageLoading(false);
   };
   return (
     <>
-      <ImageViewer
+      <NewImageViewer
         className={className}
-        imageData={imageData}
         imageClick={imageClick}
         tapOn={tapOn}
         tapOff={tapOff}
         isImageLoading={isImageLoading}
-        imageLoaded={imageLoaded}
+        closeLoadingModal={closeLoadingModal}
+        locationImages={locationImages}
+        queryImage={queryImage}
       />
     </>
   );
