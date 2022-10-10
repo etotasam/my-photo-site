@@ -2,6 +2,7 @@ import React, { memo, useState, useEffect, useRef } from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { animate, AnimatePresence, motion } from "framer-motion";
 //! component
 import { ImageViewerContainer } from "@/feature/image_viewer/ImageViewer";
 //! api
@@ -11,10 +12,12 @@ import { useLocationNamesDispatchContext } from "@/context/locationNamesContext"
 //! types
 import { ImagesType } from "@/types";
 
-const PhotoLabel = ({ images, locationNames }: { images: ImagesType[]; locationNames: string[] }) => {
+type PropsType = { locationImages: ImagesType[]; locationNames: string[] };
+
+const PhotoLabel = ({ locationImages, locationNames }: PropsType) => {
   const route = useRouter();
   const [viewImageIndex, setViewImageIndex] = useState<number>();
-  const imagesLength = images.length;
+  const imagesLength = locationImages.length;
   const { photo_label, image } = route.query;
 
   //? Nav,Modalに表示させるlocation名をcontextにセット
@@ -39,14 +42,14 @@ const PhotoLabel = ({ images, locationNames }: { images: ImagesType[]; locationN
     setViewImageIndex(0);
   }, [photo_label]);
 
-  const sortImagesByIdInDesc: ImagesType[] = images.sort((a, b) => {
+  const sortImagesByIdInDesc: ImagesType[] = locationImages.sort((a, b) => {
     return Number(b.id.split(`_`).pop()) - Number(a.id.split(`_`).pop());
   });
 
   //? imageのpre-loading
   useEffect(() => {
     const imagesPreload = () => {
-      images.map((el) => {
+      locationImages.map((el) => {
         const img = new Image();
         img.src = el.url as string;
       });
@@ -66,18 +69,22 @@ const PhotoLabel = ({ images, locationNames }: { images: ImagesType[]; locationN
             : process.env.NEXT_PUBLIC_SITE_TITLE}
         </title>
       </Head>
-      {/* <div ref={element} className={`t-main-height flex justify-center items-center`}> */}
-      {sortImagesByIdInDesc.map(
-        (imageData, index) =>
-          viewImageIndex === index && (
-            <ImageViewerContainer
-              className={`t-main-height flex justify-center items-center`}
-              key={imageData.id}
-              imageData={imageData}
-              imagesLength={imagesLength}
-            />
-          )
-      )}
+      <div className="relative t-main-height flex justify-center items-center">
+        <AnimatePresence>
+          {sortImagesByIdInDesc.map(
+            (imageData, index) =>
+              viewImageIndex === index && (
+                <ImageViewerContainer
+                  className={`absolute`}
+                  key={imageData.id}
+                  imageData={imageData}
+                  imagesLength={imagesLength}
+                />
+              )
+          )}
+        </AnimatePresence>
+      </div>
+      {/* <div className="bg-red-400"> */}
       {/* </div> */}
     </>
   );
@@ -108,7 +115,7 @@ export const getStaticProps: GetStaticProps = async ({
 }: {
   params: { photo_label: string };
 }) => {
-  const images = await fetchImagesByLocationApi(photo_label as string);
+  const locationImages = await fetchImagesByLocationApi(photo_label as string);
   //? Navに表示する為のlocation名を取得する(フォルダが存在しても写真が入ってないモノは除外する)
   const allImages = await fetchAllImagesApi();
   const locationNames = Object.keys(allImages)
@@ -119,8 +126,9 @@ export const getStaticProps: GetStaticProps = async ({
     .sort();
   return {
     props: {
-      images,
+      locationImages,
       locationNames: locationNames,
+      allImages,
     },
   };
 };
