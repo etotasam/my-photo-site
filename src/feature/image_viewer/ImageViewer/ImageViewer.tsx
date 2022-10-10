@@ -1,13 +1,13 @@
 import React from "react";
 import NextImage from "next/image";
-import { animate, AnimatePresence, motion } from "framer-motion";
+import { animate, AnimatePresence, motion, useAnimation } from "framer-motion";
 import clsx from "clsx";
 //! type
 import type { ImagesType } from "@/types";
 //! context
 import { useHeihgtStateContext } from "@/context/heightStateContext";
 //! hooks
-import { useAdjustSizeForWrapperPhoto } from "@/hooks";
+import { useAdjustSizeForWrapperPhoto, useDeviceCheck } from "@/hooks";
 //! component
 import { LoadingBound } from "@/components/Element/LoadingBound";
 
