@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import clsx from "clsx";
 //! context
 import { useModalDispatchContext } from "@/context/modalStateContext";
+
 export type NavMenuModalType = {
   locations: string[] | undefined;
   photoLabelName: string | string[] | undefined;

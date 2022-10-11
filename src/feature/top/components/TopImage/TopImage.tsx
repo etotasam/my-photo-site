@@ -30,7 +30,12 @@ export const TopImage = ({
 }: TopImageType) => {
   return (
     <div className={`md:w-[65%] max-w-[700px] flex md:flex-col`}>
-      <div className={`relative pt-[90%] w-[90%] md:pt-[95%] md:w-[95%]`}>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        className={`relative pt-[90%] w-[90%] md:pt-[95%] md:w-[95%]`}
+      >
         <AnimatePresence>
           {topImages.map((imageData, index) => (
             <figure key={imageData.id}>
@@ -56,7 +61,7 @@ export const TopImage = ({
           {/* <Loading /> */}
         </AnimatePresence>
         <AnimatePresence>{(!isTopImagesLoaded || currentImageIndex === null) && <Loading />}</AnimatePresence>
-      </div>
+      </motion.div>
       <BulletNav
         topImages={topImages}
         currentImageIndex={currentImageIndex}

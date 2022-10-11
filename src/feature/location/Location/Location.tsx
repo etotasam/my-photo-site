@@ -31,7 +31,6 @@ export const Location = ({ locationsImages }: LocationType) => {
               isAllImagesloaded={isAllImagesloaded}
             />
           ))}
-        {/* {!isAllImagesloaded && <LoadingBound />} */}
       </ul>
     </section>
   );
