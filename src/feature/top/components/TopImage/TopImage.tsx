@@ -48,8 +48,8 @@ export const TopImage = ({
                 />
               )
           )}
+          {(!isTopImagesLoaded || currentImageIndex === null) && <Loading />}
         </AnimatePresence>
-        <AnimatePresence>{(!isTopImagesLoaded || currentImageIndex === null) && <Loading />}</AnimatePresence>
       </div>
       <BulletNav
         topImages={topImages}

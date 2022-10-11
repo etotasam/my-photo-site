@@ -9,7 +9,7 @@ export default {
 
 const Template: Story<typeof NavOnSP> = (args: any) => {
   return (
-    <div style={{ backgroundColor: "#a3a3a3", height: "100vh", padding: "25px" }}>
+    <div style={{ backgroundColor: "#dbdbdb", height: "100vh", padding: "25px" }}>
       <NavOnSP {...args} />
     </div>
   );
