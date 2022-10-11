@@ -38,12 +38,8 @@ const Home = ({ allImages, topImages, locationsImages, newsTitles, locationNames
   return (
     <>
       <Top topImages={topImages} />
-      <section className={`mt-5`}>
-        <News news={newsTitles} />
-      </section>
-      <section>
-        <Location locationsImages={locationsImages} />
-      </section>
+      <News news={newsTitles} />
+      <Location locationsImages={locationsImages} />
     </>
   );
 };

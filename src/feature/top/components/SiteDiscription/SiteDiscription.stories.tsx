@@ -1,4 +1,4 @@
-import { SiteDiscription } from "./SiteDiscription";
+import { SiteDiscription, SiteDiscriptionPropsType } from "./SiteDiscription";
 import { Story, Meta } from "@storybook/react";
 
 export default {
@@ -16,5 +16,7 @@ const Template: Story<typeof SiteDiscription> = (args: any) => {
     </>
   );
 };
-export const Default = Template.bind({});
-Default.args = {};
+export const Default = Template.bind({
+  device: "PC",
+});
+Default.args = {} as SiteDiscriptionPropsType;

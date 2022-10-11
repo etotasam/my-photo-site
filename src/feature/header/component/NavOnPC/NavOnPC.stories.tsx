@@ -17,10 +17,10 @@ const Template: Story<typeof NavOnPC> = (args: any) => {
 };
 export const PC = Template.bind({});
 PC.args = {
-  locationNames: ["test1", "test2", "test3"],
+  locationNames: ["egypt", "france", "turky"],
   toLink: (location, e) => {
     e.preventDefault();
     toLink(location, e);
   },
-  photoLabelName: "test1",
+  photoLabelName: "france",
 } as NavOnPCType;

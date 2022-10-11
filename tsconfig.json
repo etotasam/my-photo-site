@@ -5,7 +5,7 @@
     "paths": {
       "@/*": [
         "./*"
-      ],
+      ]
     },
     "lib": [
       "dom",
@@ -23,7 +23,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "esModuleInterop": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",

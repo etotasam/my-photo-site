@@ -1,23 +1,18 @@
 import React from "react";
 import dayjs from "dayjs";
-import { motion, useAnimationControls } from "framer-motion";
+import { animationControls, motion, useAnimationControls } from "framer-motion";
 //! component
 import { MyLink } from "@/components/Element/MyLink";
 import { Headline, HeadlineAnime } from "@/components/Element/Headline";
 
-export type NewsType = {
+export type TestNewsType = {
   news: {
     title: string;
     date: string;
   }[];
 };
 
-// const variants = {
-//   initial: { opacity: 0, y: 30 },
-//   in: { opacity: 1, y: 0, transition: { duration: 1 } },
-// };
-
-export const News = ({ news }: NewsType) => {
+export const TestNews = ({ news }: TestNewsType) => {
   return (
     <>
       <HeadlineAnime>News</HeadlineAnime>

@@ -3,7 +3,7 @@ import React, { memo, useState, useEffect, useRef } from "react";
 import { ImagesType } from "@/types";
 //! component
 import { Photo, PhotoContainer } from "../component/Photo";
-import { Headline } from "@/components/Element/Headline";
+import { HeadlineAnime, Headline } from "@/components/Element/Headline";
 import { LoadingBound } from "@/components/Element/LoadingBound";
 
 export type LocationType = {
@@ -20,8 +20,8 @@ export const Location = ({ locationsImages }: LocationType) => {
   }, [locationImagesLoaded]);
 
   return (
-    <>
-      <Headline>Location</Headline>
+    <section>
+      <HeadlineAnime>Location</HeadlineAnime>
       <ul className={`mt-10 mx-auto relative`}>
         {locationsImages &&
           locationsImages.map((locationImage, index) => (
@@ -35,6 +35,6 @@ export const Location = ({ locationsImages }: LocationType) => {
           ))}
         {/* {!isAllImagesloaded && <LoadingBound />} */}
       </ul>
-    </>
+    </section>
   );
 };

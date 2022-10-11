@@ -15,7 +15,7 @@ export const PhotoContainer = (props: PhotoContainerType) => {
   //? photoContainer props
   const { isAllImagesloaded, imageIndex } = props;
 
-  //? photo表示部分のアニメーション
+  //? image表示部分のアニメーション
   const photoElRef = React.useRef<HTMLAnchorElement>(null);
   React.useEffect(() => {
     if (!isAllImagesloaded) return;
@@ -29,11 +29,9 @@ export const PhotoContainer = (props: PhotoContainerType) => {
     const callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
       if (entries[0].isIntersecting) {
         photoElRef.current?.classList.remove("opacity-0");
-        // photoElRef.current?.classList.add("opacity-100");
         Object.assign(photoElRef.current!.style, {
           opacity: "1",
           transition: `opacity 1s ${(imageIndex + 1) * 5}00ms`,
-          // animation: `vertical-slide 1s`,
           animationDelay: `${(imageIndex + 1) * 5}00ms`,
         });
         observer.unobserve(entries[0].target);
@@ -72,20 +70,6 @@ export const PhotoContainer = (props: PhotoContainerType) => {
     const io = new IntersectionObserver(callback, options);
     io.observe(breakPoint);
   }, [h2ElRef, photoElRef, isAllImagesloaded]);
-
-  //? 写真にhoverした時のアニメーション(jsで実装)
-  const hover = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    Object.assign((e.target as HTMLDivElement).style, {
-      transform: "scale(1.1)",
-      transition: ".5s",
-    });
-  };
-  const unHover = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    Object.assign((e.target as HTMLDivElement).style, {
-      transform: "scale(1)",
-      transition: ".5s",
-    });
-  };
 
   return (
     <Photo

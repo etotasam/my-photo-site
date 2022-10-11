@@ -22,6 +22,20 @@ const Hamburger = ({ isModalActive, toggleModal }: NavOnSPType) => {
     }
   };
 
+  const initialAnime = () => {
+    controls.start((i: number) => i === 2 && { opacity: [0, 0.3, 1], x: [-20, 2, 0], transition: { duration: 1 } });
+    controls.start(
+      (i: number) => i === 1 && { opacity: [0, 0.3, 1], x: [-20, 4, 0], transition: { duration: 1, delay: 0.3 } }
+    );
+    controls.start(
+      (i: number) => i === 0 && { opacity: [0, 0.3, 1], x: [-20, 6, 0], transition: { duration: 1, delay: 0.6 } }
+    );
+  };
+
+  useEffect(() => {
+    initialAnime();
+  }, []);
+
   useEffect(() => {
     startAnimate();
   }, [isModalActive]);
@@ -31,6 +45,7 @@ const Hamburger = ({ isModalActive, toggleModal }: NavOnSPType) => {
       <motion.span
         className={clsx(`absolute top-0 left-0 inline-block w-1/2 h-[1px]`, isModalActive ? `bg-white` : `bg-gray-700`)}
         custom={0}
+        initial={{ opacity: 0, x: -20 }}
         animate={controls}
         transition={{ duration: 0.4 }}
       ></motion.span>
@@ -40,6 +55,7 @@ const Hamburger = ({ isModalActive, toggleModal }: NavOnSPType) => {
           isModalActive ? `bg-white` : `bg-gray-700`
         )}
         custom={1}
+        initial={{ opacity: 0, x: -20 }}
         animate={controls}
         transition={{ duration: 0.4 }}
       ></motion.span>
@@ -49,6 +65,7 @@ const Hamburger = ({ isModalActive, toggleModal }: NavOnSPType) => {
           isModalActive ? `bg-white` : `bg-gray-700`
         )}
         custom={2}
+        initial={{ opacity: 0, x: -20 }}
         animate={controls}
         transition={{ duration: 0.4 }}
       ></motion.span>
