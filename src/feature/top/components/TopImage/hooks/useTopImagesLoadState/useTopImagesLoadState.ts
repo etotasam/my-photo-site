@@ -26,6 +26,7 @@ export const useTopImagesLoadState = ({ topImages }: PropsType) => {
   const imageOnloaded = (id: string) => {
     if (isTopImagesLoaded) return
     const key = id.split("_")[0];
+    console.log("loaded:", key);
     setInitialStateObj((v) => {
       return { ...v, [key]: true }
     })
