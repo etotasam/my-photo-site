@@ -14,8 +14,8 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@babel/core": "^7.16.5",
-    "@mdx-js/loader": "^0.15.4",
+    "@babel/core": "^7.19.3",
+    "@mdx-js/loader": "^0.15.7",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
@@ -27,15 +27,14 @@
     "express": "^4.17.2",
     "firebase": "^9.1.0",
     "firebase-tools": "^9.6.1",
-    "framer-motion": "^4.1.17",
+    "framer-motion": "^5.6.0",
     "gray-matter": "^4.0.3",
     "marked": "^0.7.0",
-    "next": "11.1.2",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "next": "^11.1.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-test-renderer": "^17.0.2",
-    "react-transition-group": "^4.4.2",
-    "swiper": "^8.4.3"
+    "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^6.5.12",

@@ -1,4 +1,4 @@
-import { News, NewsType } from "./News";
+import { News, NewsType } from "../News";
 import { Story, Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
@@ -14,8 +14,8 @@ const Template: Story<typeof News> = (args: any) => {
     </div>
   );
 };
-export const DefaultNews = Template.bind({});
-DefaultNews.args = {
+export const Default = Template.bind({});
+Default.args = {
   news: [
     {
       title: "てすとタイトル1",
