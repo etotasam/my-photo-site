@@ -68,7 +68,6 @@ export const ImageViewer = ({
         </motion.div>
       </div>
       <AnimatePresence>{isImageLoading && <LoadingBound />}</AnimatePresence>
-      {/* <AnimatePresence>{isImageLoading && <LoadingBound />}</AnimatePresence> */}
     </>
   );
 };
