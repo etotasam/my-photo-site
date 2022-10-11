@@ -5,8 +5,6 @@ import clsx from "clsx";
 import NextImage from "next/image";
 //! component
 import { MyLink } from "@/components/Element/MyLink";
-// import { BulletNav } from "../BulletNav";
-// import { ImageWrapperContainer } from "../ImageWrapper";
 import { Loading } from "@/components/Element/Loading";
 //! context
 
@@ -34,20 +32,28 @@ export const TopImage = ({
     <div className={`md:w-[65%] max-w-[700px] flex md:flex-col`}>
       <div className={`relative pt-[90%] w-[90%] md:pt-[95%] md:w-[95%]`}>
         <AnimatePresence>
-          {topImages.map(
-            (imageData, index) =>
-              (currentImageIndex === index || !isTopImagesLoaded) && (
-                <ImageWrapper
-                  key={imageData.id}
-                  imageData={imageData}
-                  imageIndex={index}
-                  tapOn={tapOn}
-                  tapOff={tapOff}
-                  imageLoaded={(id) => imageLoaded(id)}
-                  currentImageIndex={currentImageIndex}
+          {topImages.map((imageData, index) => (
+            <figure key={imageData.id}>
+              <MyLink
+                href={`/photo/${imageData.id.split("_")[0]}?image=1`}
+                className={clsx(
+                  "block cursor-pointer duration-500",
+                  (!isTopImagesLoaded || currentImageIndex !== index) && "invisible opacity-0"
+                )}
+              >
+                <NextImage
+                  onTouchStart={tapOn}
+                  onTouchEnd={tapOff}
+                  onLoad={() => imageLoaded(imageData.id)}
+                  src={imageData.url}
+                  layout="fill"
+                  objectFit="cover"
+                  alt={``}
                 />
-              )
-          )}
+              </MyLink>
+            </figure>
+          ))}
+          {/* <Loading /> */}
         </AnimatePresence>
         <AnimatePresence>{(!isTopImagesLoaded || currentImageIndex === null) && <Loading />}</AnimatePresence>
       </div>
@@ -59,56 +65,6 @@ export const TopImage = ({
     </div>
   );
 };
-
-//! ImageWrapper
-export type ImageWrapperType = {
-  imageData: ImagesType;
-  tapOn: (event: React.TouchEvent<HTMLImageElement>) => void;
-  tapOff: (event: React.TouchEvent<HTMLImageElement>) => void;
-  imageLoaded: (id: string) => void;
-  imageIndex: number;
-  currentImageIndex: number | undefined;
-};
-
-export const ImageWrapper = React.memo(
-  ({ imageIndex, imageData, tapOn, tapOff, imageLoaded, currentImageIndex }: ImageWrapperType) => {
-    const variables = {
-      hide: {
-        opacity: 0,
-        transition: {
-          duration: 0.5,
-        },
-      },
-      show: {
-        opacity: 1,
-        transition: {
-          duration: 0.5,
-        },
-      },
-    };
-
-    const linkUrl = `/photo/${imageData.id.split("_")[0]}?image=1`;
-
-    return (
-      <motion.div initial="hide" animate="show" exit="hide" variants={variables}>
-        <MyLink
-          href={linkUrl}
-          className={clsx("block cursor-pointer duration-500", currentImageIndex !== imageIndex && "opacity-0")}
-        >
-          <NextImage
-            onTouchStart={tapOn}
-            onTouchEnd={tapOff}
-            onLoad={() => imageLoaded(imageData.id)}
-            src={imageData.url}
-            layout="fill"
-            objectFit="cover"
-            alt={``}
-          />
-        </MyLink>
-      </motion.div>
-    );
-  }
-);
 
 //! BulletNav
 export type BulletNavType = {
