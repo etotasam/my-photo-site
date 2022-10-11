@@ -4,7 +4,6 @@ import { ImagesType } from "@/types";
 //! component
 import { Photo, PhotoContainer } from "../component/Photo";
 import { HeadlineAnime, Headline } from "@/components/Element/Headline";
-
 export type LocationType = {
   locationsImages: ImagesType[];
 };

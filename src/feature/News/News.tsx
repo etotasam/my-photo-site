@@ -65,6 +65,7 @@ export const Messages = ({ news }: MessagesPropsType) => {
   }, []);
 
   return (
+
     <section className={`mt-5 overflow-hidden`}>
       <ul ref={ulElRef} className={`mt-5`}>
         {news &&
