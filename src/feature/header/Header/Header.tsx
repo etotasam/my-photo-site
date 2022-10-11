@@ -19,9 +19,12 @@ export const Header = (props: HeaderType) => {
   //? NavOnSP props
   const { toggleModal, isModalActive } = props;
   //? NavOnPC props
-  const { locationNames, toLink, photoLabelName } = props;
+  const { locationNames, toLink, imagesLocationNamesOnRouterQuery } = props;
   //? MainModal props
-  const { locationNames: locationNamesForModal, photoLabelName: photoLabelNameForModal } = props;
+  const {
+    locationNames: locationNamesForModal,
+    imagesLocationNamesOnRouterQuery: imagesLocationNamesOnRouterQueryForModal,
+  } = props;
 
   return (
     <header
@@ -34,7 +37,11 @@ export const Header = (props: HeaderType) => {
       <div className={`flex relative items-center w-[90%] max-w-[1024px] mx-auto`}>
         {device === "SP" && <NavOnSP isModalActive={isModalActive} toggleModal={toggleModal} />}
         {device === "PC" && (
-          <NavOnPC locationNames={locationNames.sort()} toLink={toLink} photoLabelName={photoLabelName} />
+          <NavOnPC
+            locationNames={locationNames.sort()}
+            toLink={toLink}
+            imagesLocationNamesOnRouterQuery={imagesLocationNamesOnRouterQuery}
+          />
         )}
         {/* //? title */}
         <div className={`absolute right-0`}>
@@ -53,7 +60,10 @@ export const Header = (props: HeaderType) => {
       {/* //? modal */}
       <AnimatePresence>
         {isModalActive && (
-          <NavMenuModal locations={locationNamesForModal.sort()} photoLabelName={photoLabelNameForModal} />
+          <NavMenuModal
+            locationNames={locationNamesForModal.sort()}
+            imagesLocationNamesOnRouterQuery={imagesLocationNamesOnRouterQueryForModal}
+          />
         )}
       </AnimatePresence>
     </header>

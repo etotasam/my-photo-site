@@ -1,43 +1,42 @@
 import React from "react";
 import { NavMenuModal } from ".";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, getByText, render, screen } from "@testing-library/react";
 import { cleanup } from "@testing-library/react-hooks";
-
-const nextRouer = jest.spyOn(require("next/router"), `useRouter`);
-const push = jest.fn();
-const query = { photo_label: "egypt" };
-nextRouer.mockImplementation(() => {
-  return { push, query };
-});
+//! context provider
+import { ModalStateProvider, useModalDispatchContext } from "@/context/modalStateContext";
+import userEvent from "@testing-library/user-event";
 
 const props = {
-  locations: ["jordan", "egypt"],
-  error: { message: "エラーです", name: "エラー" },
-  photoLabelName: "jordan",
+  locationNames: ["jordan", "egypt", "turkey"],
+  imagesLocationNamesOnRouterQuery: "jordan",
 };
 
 afterEach(() => {
   cleanup();
+  jest.clearAllMocks();
+});
+const spyNextRouer = jest.spyOn(require("next/router"), `useRouter`);
+const push = jest.fn();
+const query = { photo_label: "egypt" };
+spyNextRouer.mockImplementation(() => {
+  return { push, query };
 });
 
-describe(`MainModal`, () => {
-  // it(`propsで受け取るerrorの有無での表示検証 `, () => {
-  //   const { rerender, queryByText, asFragment } = render(<MainModal {...props} />);
-  //   expect(queryByText(/データ取得/)).toBeInTheDocument();
-  //   expect(queryByText(/Jordan/)).toBeNull();
-  //   expect(queryByText(/Egypt/)).toBeNull();
-  //   expect(asFragment()).toMatchSnapshot();
-  //   rerender(<MainModal locations={props.locations} />);
-  //   expect(queryByText(/データ取得/)).toBeNull();
-  //   expect(queryByText(/Jordan/)).toBeInTheDocument();
-  //   expect(queryByText(/Egypt/)).toBeInTheDocument();
-  //   expect(asFragment()).toMatchSnapshot();
-  // });
+const spyModalDispatch = jest.spyOn(require("@/context/modalStateContext"), "useModalDispatchContext");
+const modalCloseDispatcher = jest.fn();
+spyModalDispatch.mockImplementation(() => {
+  return { modalCloseDispatcher };
+});
 
-  it(`router.pushのURLの検証`, async () => {
-    // const { queryByText } = render(<MainModal locations={props.locations} photoLabelName={props.photoLabelName} />);
-    // expect(queryByText(/Jordan/)).toBeInTheDocument();
-    // fireEvent.click(queryByText(/Jordan/) as HTMLElement);
-    // expect(push).toHaveBeenCalledWith(`/photo/jordan`);
-  });
+it("NavModalMenu内のinactiveなlistいずれかを選択した時modalは閉じ、任意のimageへ遷移する", () => {
+  render(<NavMenuModal {...props} />);
+  userEvent.click(screen.getByText("Egypt"));
+  expect(modalCloseDispatcher).toBeCalledTimes(1);
+  expect(push).toBeCalledWith("/photo/egypt?image=1");
+});
+it("NavModalMenu内のactiveなlistを選択した時はmodalも閉じず、画面遷移もしない", () => {
+  render(<NavMenuModal {...props} />);
+  userEvent.click(screen.getByText("Jordan"));
+  expect(modalCloseDispatcher).toBeCalledTimes(0);
+  expect(push).toBeCalledTimes(0);
 });
