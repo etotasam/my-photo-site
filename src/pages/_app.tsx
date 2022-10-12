@@ -4,7 +4,7 @@ import Default from "@/layouts/Default";
 import CSRLayout from "@/layouts/CSRLayout";
 import Plain from "@/layouts/Plain";
 import { initializeApp } from "firebase/app";
-
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 //! context
 import { ModalStateProvider } from "@/context/modalStateContext";
 import { TopImagesLoadStateProvider } from "@/context/topImagesLoadStateContext";
@@ -22,8 +22,13 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
+//? Initialize Firebase
 initializeApp(firebaseConfig);
+//? firestore emulator
+// if (process.env.NEXT_PUBLIC_IS_DEV) {
+//   const db = getFirestore();
+//   connectFirestoreEmulator(db, "localhost", 8080);
+// }
 
 function MyApp({ Component, pageProps }) {
   const NoSSR = dynamic(() => import("@/layouts/NoSSR/NoSSR"), {

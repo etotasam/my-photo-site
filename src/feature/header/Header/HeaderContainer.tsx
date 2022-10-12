@@ -12,13 +12,13 @@ import { useHeihgtDispatchContext } from "@/context/heightStateContext";
 export const HeaderContainer = () => {
   //! NavOnPC logic
   const router = useRouter();
-  const photoLabelName = router.query.photo_label;
+  const imagesLocationNamesOnRouterQuery = router.query.photo_label;
 
   const { locationNames } = useLocationNamesStateContext();
 
   const toLink = (locationName: string, e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault;
-    if (locationName === photoLabelName) return;
+    if (locationName === imagesLocationNamesOnRouterQuery) return;
     router.push(`/photo/${locationName}?image=1`);
   };
 
@@ -59,7 +59,7 @@ export const HeaderContainer = () => {
     <Header
       locationNames={locationNames}
       device={device}
-      photoLabelName={photoLabelName}
+      imagesLocationNamesOnRouterQuery={imagesLocationNamesOnRouterQuery}
       toLink={toLink}
       isModalActive={isModalActive}
       toggleModal={toggleModal}

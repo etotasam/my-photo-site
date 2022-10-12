@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { Photo, PhotoType } from ".";
-
+import { Photo, PhotoType } from "..";
+import { cleanup } from "@testing-library/react-hooks";
 //? mock
 jest.mock("next/link", () => ({
   __esModule: true,
@@ -36,6 +36,10 @@ const props = {
 } as PhotoType;
 
 describe(`Photo Component`, () => {
+  afterEach(() => {
+    cleanup();
+    jest.clearAllMocks();
+  });
   it(`imgが表示され、そのimgのlocationNameが表示される`, () => {
     render(<Photo {...props} />);
     expect(screen.getByRole("img")).toBe;

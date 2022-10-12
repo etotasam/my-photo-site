@@ -5,7 +5,7 @@ import clsx from "clsx";
 export type NavOnPCType = {
   locationNames: string[];
   toLink: (location: string, e: React.MouseEvent<HTMLAnchorElement>) => void;
-  photoLabelName: string | string[] | undefined;
+  imagesLocationNamesOnRouterQuery: string | string[] | undefined;
 };
 
 const variants = {
@@ -20,7 +20,7 @@ const variants = {
   },
 };
 
-export const NavOnPC = ({ locationNames, toLink, photoLabelName }: NavOnPCType) => {
+export const NavOnPC = ({ locationNames, toLink, imagesLocationNamesOnRouterQuery }: NavOnPCType) => {
   return (
     <>
       <ul className={`flex`}>
@@ -33,7 +33,10 @@ export const NavOnPC = ({ locationNames, toLink, photoLabelName }: NavOnPCType) 
                 animate="animate"
                 onClick={(e) => toLink(locationName, e)}
                 whileHover={{ y: -4, transition: { duration: 0.3 } }}
-                className={clsx(`inline-block cursor-pointer`, photoLabelName === locationName && `text-green-600`)}
+                className={clsx(
+                  `inline-block cursor-pointer`,
+                  imagesLocationNamesOnRouterQuery === locationName && `text-green-600`
+                )}
               >
                 {`${locationName.charAt(0).toUpperCase()}${locationName.slice(1)}`}
               </motion.a>

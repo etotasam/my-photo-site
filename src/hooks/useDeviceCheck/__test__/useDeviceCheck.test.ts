@@ -1,4 +1,4 @@
-import { useDeviceCheck } from "./useDeviceCheck";
+import { useDeviceCheck } from "../useDeviceCheck";
 import { act, renderHook } from "@testing-library/react-hooks"
 import { useWindowResize } from "@/hooks";
 

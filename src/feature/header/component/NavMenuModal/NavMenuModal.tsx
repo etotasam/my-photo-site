@@ -6,22 +6,22 @@ import clsx from "clsx";
 import { useModalDispatchContext } from "@/context/modalStateContext";
 
 export type NavMenuModalType = {
-  locations: string[] | undefined;
-  photoLabelName: string | string[] | undefined;
+  locationNames: string[] | undefined;
+  imagesLocationNamesOnRouterQuery: string | string[] | undefined;
 };
 
-export const NavMenuModal = ({ locations, photoLabelName }: NavMenuModalType) => {
+export const NavMenuModal = ({ locationNames, imagesLocationNamesOnRouterQuery }: NavMenuModalType) => {
   const router = useRouter();
-  let photo_label: string;
-  if (typeof photoLabelName === "string") {
-    photo_label = photoLabelName;
+  const imagesLocationName = React.useRef<string>();
+  if (typeof imagesLocationNamesOnRouterQuery === "string") {
+    imagesLocationName.current = imagesLocationNamesOnRouterQuery;
   }
 
   const { modalCloseDispatcher } = useModalDispatchContext();
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, location: string) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, locaName: string) => {
     e.preventDefault();
-    if (photo_label === location) return;
-    router.push(`/photo/${location}?image=1`);
+    if (imagesLocationName.current === locaName) return;
+    router.push(`/photo/${locaName}?image=1`);
     modalCloseDispatcher();
   };
 
@@ -35,14 +35,16 @@ export const NavMenuModal = ({ locations, photoLabelName }: NavMenuModalType) =>
       >
         <div className={`border border-white/90 px-5 py-7 min-w-[200px]`}>
           <ul>
-            {locations &&
-              locations.map((location) => (
-                <li key={location} className={`text-center pb-2 last-of-type:pb-0`}>
+            {locationNames &&
+              locationNames.map((locaName) => (
+                <li key={locaName} className={`text-center pb-2 last-of-type:pb-0`}>
                   <a
-                    onClick={(e) => handleClick(e, location)}
-                    className={clsx(photo_label === location ? `text-white/50` : `text-white/90 cursor-pointer`)}
+                    onClick={(e) => handleClick(e, locaName)}
+                    className={clsx(
+                      imagesLocationName.current === locaName ? `text-white/50` : `text-white/90 cursor-pointer`
+                    )}
                   >
-                    {`${location.charAt(0).toUpperCase()}${location.slice(1)}`}
+                    {`${locaName.charAt(0).toUpperCase()}${locaName.slice(1)}`}
                   </a>
                 </li>
               ))}
