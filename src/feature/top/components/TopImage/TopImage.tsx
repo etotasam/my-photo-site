@@ -19,6 +19,10 @@ export type TopImageType = {
 };
 
 //! main
+
+/**
+ *トップ画面に表示されるimage
+ */
 export const TopImage = ({
   currentImageIndex,
   topImages,
@@ -38,13 +42,18 @@ export const TopImage = ({
       >
         <AnimatePresence>
           {topImages.map((imageData, index) => (
-            <figure key={imageData.id}>
+            <motion.figure
+              key={imageData.id}
+              initial={{ opacity: 0 }}
+              animate={
+                !isTopImagesLoaded || currentImageIndex !== index
+                  ? { opacity: 0, visibility: "hidden", transition: { duration: 0.5 } }
+                  : { opacity: 1, visibility: "visible", transition: { duration: 0.5 } }
+              }
+            >
               <MyLink
                 href={`/photo/${imageData.id.split("_")[0]}?image=1`}
-                className={clsx(
-                  "block cursor-pointer duration-500",
-                  (!isTopImagesLoaded || currentImageIndex !== index) && "invisible opacity-0"
-                )}
+                className={clsx("block cursor-pointer duration-500")}
               >
                 <NextImage
                   onTouchStart={tapOn}
@@ -56,7 +65,7 @@ export const TopImage = ({
                   alt={``}
                 />
               </MyLink>
-            </figure>
+            </motion.figure>
           ))}
           {/* <Loading /> */}
         </AnimatePresence>

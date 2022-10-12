@@ -21,11 +21,7 @@ const allImages: Record<string, any[]> = {
 };
 
 const Template: Story<typeof TopImage> = (args: any) => {
-  return (
-    <div className="bg-gray-300">
-      <TopImage {...args} />
-    </div>
-  );
+  return <TopImage {...args} />;
 };
 export const Default = Template.bind({});
 Default.args = {
