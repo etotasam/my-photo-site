@@ -1,6 +1,6 @@
 import React from "react";
 import { act, cleanup, renderHook } from "@testing-library/react-hooks";
-import { useScrollPosition } from "."
+import { useScrollPosition } from ".."
 
 describe(`useScrollPosition`, () => {
   it(`useScrollPositionが正常に動いているか`, () => {

@@ -35,6 +35,7 @@ type MessagesPropsType = {
 };
 export const Messages = ({ news }: MessagesPropsType) => {
   const ulElRef = React.useRef<HTMLUListElement>(null);
+
   const control = useAnimation();
   const animation = () => {
     const delay = 0.3;
@@ -65,7 +66,6 @@ export const Messages = ({ news }: MessagesPropsType) => {
   }, []);
 
   return (
-
     <section className={`mt-5 overflow-hidden`}>
       <ul ref={ulElRef} className={`mt-5`}>
         {news &&
@@ -75,7 +75,7 @@ export const Messages = ({ news }: MessagesPropsType) => {
               <motion.div
                 animate={control}
                 custom={index}
-                className={`pl-3 t-news_title-base hover:t-news_title pointer-events-none`}
+                className={`pl-3 t-news_title-base hover:t-news_title pointer-events-none opacity-0`}
               >
                 <MyLink href={`/news/${f.title}`} className={`pointer-events-auto text-gray-600 font-light`}>
                   {f.title}

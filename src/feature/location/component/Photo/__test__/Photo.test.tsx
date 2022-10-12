@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { Photo, PhotoType } from ".";
+import { Photo, PhotoType } from "..";
 
 //? mock
 jest.mock("next/link", () => ({
