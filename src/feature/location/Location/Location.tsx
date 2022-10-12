@@ -1,4 +1,5 @@
 import React, { memo, useState, useEffect, useRef } from "react";
+import { useInView } from "react-intersection-observer";
 //!type
 import { ImagesType } from "@/types";
 //! component
@@ -17,13 +18,17 @@ export const Location = ({ locationsImages }: LocationType) => {
     }
   }, [locationImagesLoaded]);
 
+  //? アニメーションのトリガー
+  const { ref: triggerRef, inView } = useInView({ triggerOnce: true });
+
   return (
     <section>
       <HeadlineAnime>Location</HeadlineAnime>
-      <ul className={`mt-10 mx-auto relative`}>
+      <ul ref={triggerRef} className={`mt-10 mx-auto relative`}>
         {locationsImages &&
           locationsImages.map((locationImage, index) => (
             <PhotoContainer
+              inView={inView}
               key={locationImage.id}
               locationImage={locationImage}
               imageIndex={index}

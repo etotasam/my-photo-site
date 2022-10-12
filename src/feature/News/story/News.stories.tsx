@@ -9,9 +9,14 @@ export default {
 
 const Template: Story<typeof News> = (args: any) => {
   return (
-    <div style={{ padding: "30px" }}>
-      <News {...args} />
-    </div>
+    <>
+      <div className="w-full h-[100vh] bg-red-400 flex justify-center items-center">
+        <h1>↓スクロール↓</h1>
+      </div>
+      <div style={{ padding: "30px" }}>
+        <News {...args} />
+      </div>
+    </>
   );
 };
 export const Default = Template.bind({});
