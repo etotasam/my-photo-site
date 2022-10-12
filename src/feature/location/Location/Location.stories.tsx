@@ -41,7 +41,7 @@ const AboveComponent = () => {
 const Template: Story<typeof Location> = (args: any) => {
   return (
     <>
-      <AboveComponent />
+      {/* <AboveComponent /> */}
       <div style={{ height: "100vh", padding: "25px" }}>
         <Location {...args} />
       </div>

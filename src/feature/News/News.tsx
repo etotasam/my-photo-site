@@ -1,6 +1,7 @@
 import React from "react";
 import dayjs from "dayjs";
 import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 //! component
 import { MyLink } from "@/components/Element/MyLink";
 import { Headline, HeadlineAnime } from "@/components/Element/Headline";
@@ -11,11 +12,6 @@ export type NewsType = {
     date: string;
   }[];
 };
-
-// const variants = {
-//   initial: { opacity: 0, y: 30 },
-//   in: { opacity: 1, y: 0, transition: { duration: 1 } },
-// };
 
 export const News = ({ news }: NewsType) => {
   return (
@@ -34,8 +30,7 @@ type MessagesPropsType = {
   }[];
 };
 export const Messages = ({ news }: MessagesPropsType) => {
-  const ulElRef = React.useRef<HTMLUListElement>(null);
-
+  //? アニメーション
   const control = useAnimation();
   const animation = () => {
     const delay = 0.3;
@@ -43,27 +38,16 @@ export const Messages = ({ news }: MessagesPropsType) => {
       return { x: [50, 0], opacity: [0, 1], transition: { duration: 1, delay: delay * i } };
     });
   };
-  //? intersection observer
+
+  //? react-intersection-observer
+  const { ref: ulElRef, inView } = useInView({
+    rootMargin: "0px",
+    triggerOnce: true,
+  });
   React.useEffect(() => {
-    const trigger = [ulElRef.current];
-    const options: IntersectionObserverInit = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0,
-    };
-    const callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          animation();
-          observer.unobserve(entry.target); // 終了させる
-        }
-      });
-    };
-    const io = new IntersectionObserver(callback, options);
-    if (trigger[0]) {
-      io.observe(trigger[0]);
-    }
-  }, []);
+    if (!inView) return;
+    animation();
+  }, [inView]);
 
   return (
     <section className={`mt-5 overflow-hidden`}>
