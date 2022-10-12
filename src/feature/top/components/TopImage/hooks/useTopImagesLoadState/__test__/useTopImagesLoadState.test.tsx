@@ -1,4 +1,4 @@
-import { useTopImagesLoadState } from "./useTopImagesLoadState";
+import { useTopImagesLoadState } from "../useTopImagesLoadState";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { cleanup } from "@testing-library/react";
 //! context provider

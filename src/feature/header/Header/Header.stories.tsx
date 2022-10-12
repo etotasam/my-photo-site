@@ -9,7 +9,7 @@ export default {
 
 const handleClick = action("テスト");
 
-const locationNames = ["てすと1", "てすと2"];
+const locationNames = ["egypt", "turkey"];
 
 const Template: Story<typeof Header> = (args: any) => {
   return (
@@ -22,7 +22,7 @@ export const Default = Template.bind({});
 Default.args = {
   device: "PC",
   locationNames,
-  photoLabelName: locationNames[0],
+  imagesLocationNamesOnRouterQuery: locationNames[0],
   toggleModal: action("toggleModalFunc"),
   isModalActive: false,
   toLink: action("toLink"),
@@ -30,4 +30,4 @@ Default.args = {
     e.preventDefault();
     handleClick(e);
   },
-} as HeaderType;
+};

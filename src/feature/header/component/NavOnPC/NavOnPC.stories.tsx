@@ -22,5 +22,5 @@ PC.args = {
     e.preventDefault();
     toLink(location, e);
   },
-  photoLabelName: "test1",
+  imagesLocationNamesOnRouterQuery: "test1",
 } as NavOnPCType;
