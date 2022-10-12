@@ -23,6 +23,9 @@ const Template: Story<typeof Location> = (args: any) => {
 };
 export const Default = Template.bind({});
 Default.args = {
+  index: 1,
+  inView: true,
   locationImage: locationImage,
   opacity: false,
+  loadedLocationImage: () => {},
 } as PhotoType;
