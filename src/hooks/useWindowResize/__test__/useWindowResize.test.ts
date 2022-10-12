@@ -1,6 +1,6 @@
 import React from "react";
 import { act, renderHook } from "@testing-library/react-hooks";
-import { useWindowResize } from "."
+import { useWindowResize } from ".."
 
 describe(`useWindowResize`, () => {
   it(`useWindowResizeが正常に動いているか`, () => {

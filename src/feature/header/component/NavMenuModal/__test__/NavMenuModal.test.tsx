@@ -1,5 +1,5 @@
 import React from "react";
-import { NavMenuModal } from ".";
+import { NavMenuModal } from "..";
 import { fireEvent, getByText, render, screen } from "@testing-library/react";
 import { cleanup } from "@testing-library/react-hooks";
 //! context provider
