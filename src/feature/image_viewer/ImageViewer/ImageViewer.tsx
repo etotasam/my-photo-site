@@ -11,36 +11,79 @@ import { useAdjustSizeForWrapperPhoto } from "@/hooks";
 //! component
 import { LoadingBound } from "@/components/Element/LoadingBound";
 
-export type ImageViewerType = {
+export type ImageViewerPropsType = {
+  isImageLoaded: boolean;
+  locationImages: ImagesType[];
+  imageClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  tapOn: (e: React.TouchEvent<HTMLImageElement>) => void;
+  tapOff: (e: React.TouchEvent<HTMLImageElement>) => void;
+  imageIndexByQuery: string | string[] | undefined;
+  imageLoadedStateWithPara: (state: boolean) => void;
+};
+
+export const ImageViewer = ({
+  locationImages,
+  imageClick,
+  tapOn,
+  tapOff,
+  imageLoadedStateWithPara,
+  isImageLoaded,
+  imageIndexByQuery,
+}: ImageViewerPropsType) => {
+  return (
+    <>
+      <div className="relative t-main-height flex justify-center items-center">
+        <AnimatePresence>
+          {locationImages.map(
+            (imageData, index) =>
+              Number(imageIndexByQuery) === index + 1 && (
+                <Image
+                  key={imageData.id}
+                  // className={className}
+                  imageData={imageData}
+                  imageClick={imageClick}
+                  tapOn={tapOn}
+                  tapOff={tapOff}
+                  imageLoadedStateWithPara={imageLoadedStateWithPara}
+                  // imageLoaded={imageLoaded}
+                />
+              )
+          )}
+          {!isImageLoaded && <LoadingBound />}
+        </AnimatePresence>
+      </div>
+    </>
+  );
+};
+
+//! parts
+export type ImageType = {
   imageData: ImagesType;
   imageClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   tapOn: (e: React.TouchEvent<HTMLImageElement>) => void;
   tapOff: (e: React.TouchEvent<HTMLImageElement>) => void;
-  isImageLoading: boolean;
-  imageLoaded: () => void;
-  className?: string;
+  // isImageLoading: boolean;
+  // imageLoaded: () => void;
+  // className?: string;
+  imageLoadedStateWithPara: (state: boolean) => void;
 };
-
-export const ImageViewer = ({
+export const Image = ({
   imageData,
   imageClick,
   tapOn,
   tapOff,
-  // isImageLoading,
-  imageLoaded,
-  className,
-}: ImageViewerType) => {
+  imageLoadedStateWithPara,
+}: // isImageLoading,
+// imageLoaded,
+// className,
+ImageType) => {
   const { headerHeight, footerHeight } = useHeihgtStateContext();
   const { photoSize } = useAdjustSizeForWrapperPhoto({ imageData, headerHeight, footerHeight });
-
-  type Test = {
-    initial?: { x: number };
-    exit?: { x: number };
-    animate?: { x: number };
-  };
-
-  //? image loading check
-  const [isImageLoading, setIsImageLoading] = React.useState<boolean>(true);
+  //? imageの読み込み状態
+  const [isImageLoaded, setIsImageLoaded] = React.useState(false);
+  React.useEffect(() => {
+    imageLoadedStateWithPara(isImageLoaded);
+  }, [isImageLoaded]);
 
   return (
     <>
@@ -52,7 +95,7 @@ export const ImageViewer = ({
           exit={{ opacity: 0 }}
           onTouchStart={tapOn}
           onTouchEnd={tapOff}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.5 }}
           className={`relative leading-3 cursor-pointer`}
           style={{ ...photoSize }}
           onClick={(e) => imageClick(e)}
@@ -63,11 +106,10 @@ export const ImageViewer = ({
             priority={true}
             layout={`fill`}
             objectFit={`contain`}
-            onLoad={() => setIsImageLoading(false)}
+            onLoad={() => setIsImageLoaded(true)}
           />
         </motion.div>
       </div>
-      <AnimatePresence>{isImageLoading && <LoadingBound />}</AnimatePresence>
     </>
   );
 };

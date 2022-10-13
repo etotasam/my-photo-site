@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { AnimatePresence } from "framer-motion";
 //! component
 import { ImageViewer } from "./";
-import { LoadingBound } from "@/components/Element/LoadingBound";
 //! types
 import type { ImagesType } from "@/types";
 //! context
@@ -15,23 +13,23 @@ type Params = {
 };
 export const ImageViewerContainer = ({ locationImages, className }: Params) => {
   const router = useRouter();
-  const { photo_label: queryPhotoLabel, image: queryImage } = router.query;
+  const { photo_label: photoLabelByQuery, image: imageIndexByQuery } = router.query;
 
   //? image transition
   const imageTransition = (clickPosition: "right" | "left") => {
     if (clickPosition === "left") {
       let prev: number | undefined;
-      if (queryImage) prev = Number(queryImage) - 1;
-      if (!queryImage) prev = locationImages.length;
-      if (prev! < 1) return router.push(`/photo/${queryPhotoLabel}?image=${locationImages.length}`);
-      router.push(`/photo/${queryPhotoLabel}?image=${prev}`);
+      if (imageIndexByQuery) prev = Number(imageIndexByQuery) - 1;
+      if (!imageIndexByQuery) prev = locationImages.length;
+      if (prev! < 1) return router.push(`/photo/${photoLabelByQuery}?image=${locationImages.length}`);
+      router.push(`/photo/${photoLabelByQuery}?image=${prev}`);
     }
     if (clickPosition === "right") {
       let next: number;
-      if (queryImage) next = Number(queryImage) + 1;
-      if (!queryImage) next = 2;
-      if (next! > locationImages.length) return router.push(`/photo/${queryPhotoLabel}?image=1`);
-      router.push(`/photo/${queryPhotoLabel}?image=${next!}`);
+      if (imageIndexByQuery) next = Number(imageIndexByQuery) + 1;
+      if (!imageIndexByQuery) next = 2;
+      if (next! > locationImages.length) return router.push(`/photo/${photoLabelByQuery}?image=1`);
+      router.push(`/photo/${photoLabelByQuery}?image=${next!}`);
     }
   };
 
@@ -78,33 +76,22 @@ export const ImageViewerContainer = ({ locationImages, className }: Params) => {
   };
 
   //? image loading check
-  const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
+  const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
+  const imageLoadedStateWithPara = (state: boolean) => {
+    setIsImageLoaded(state);
+  };
 
-  // const imageLoaded = () => {
-  //   setIsImageLoading(false);
-  // };
   return (
     <>
-      <div className="relative t-main-height flex justify-center items-center">
-        <AnimatePresence>
-          {locationImages.map(
-            (imageData, index) =>
-              Number(queryImage) === index + 1 && (
-                <ImageViewer
-                  key={imageData.id}
-                  className={className}
-                  imageData={imageData}
-                  imageClick={imageClick}
-                  tapOn={tapOn}
-                  tapOff={tapOff}
-                  isImageLoading={isImageLoading}
-                  imageLoaded={() => setIsImageLoading(false)}
-                />
-              )
-          )}
-          {/* {isImageLoading && <LoadingBound />} */}
-        </AnimatePresence>
-      </div>
+      <ImageViewer
+        locationImages={locationImages}
+        imageIndexByQuery={imageIndexByQuery}
+        imageClick={imageClick}
+        tapOn={tapOn}
+        tapOff={tapOff}
+        isImageLoaded={isImageLoaded}
+        imageLoadedStateWithPara={imageLoadedStateWithPara}
+      />
     </>
   );
 };
