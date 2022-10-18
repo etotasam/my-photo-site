@@ -39,13 +39,11 @@ export const ImageViewer = ({
               Number(imageIndexByQuery) === index + 1 && (
                 <Image
                   key={imageData.id}
-                  // className={className}
                   imageData={imageData}
                   imageClick={imageClick}
                   tapOn={tapOn}
                   tapOff={tapOff}
                   imageLoadedStateWithPara={imageLoadedStateWithPara}
-                  // imageLoaded={imageLoaded}
                 />
               )
           )}
@@ -62,21 +60,9 @@ export type ImageType = {
   imageClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   tapOn: (e: React.TouchEvent<HTMLImageElement>) => void;
   tapOff: (e: React.TouchEvent<HTMLImageElement>) => void;
-  // isImageLoading: boolean;
-  // imageLoaded: () => void;
-  // className?: string;
   imageLoadedStateWithPara: (state: boolean) => void;
 };
-export const Image = ({
-  imageData,
-  imageClick,
-  tapOn,
-  tapOff,
-  imageLoadedStateWithPara,
-}: // isImageLoading,
-// imageLoaded,
-// className,
-ImageType) => {
+export const Image = ({ imageData, imageClick, tapOn, tapOff, imageLoadedStateWithPara }: ImageType) => {
   const { headerHeight, footerHeight } = useHeihgtStateContext();
   const { photoSize } = useAdjustSizeForWrapperPhoto({ imageData, headerHeight, footerHeight });
   //? imageの読み込み状態
@@ -102,7 +88,7 @@ ImageType) => {
         >
           <NextImage
             src={imageData.url}
-            alt={``}
+            alt={`Image`}
             priority={true}
             layout={`fill`}
             objectFit={`contain`}

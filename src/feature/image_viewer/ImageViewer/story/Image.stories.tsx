@@ -17,9 +17,7 @@ const Template: Story<typeof Image> = (args: any) => {
 export const Default = Template.bind({});
 Default.args = {
   imageData,
-  // isImageLoading: false,
   imageClick: action("click"),
-  // imageLoaded: () => {},
   tapOn: (e: React.TouchEvent<HTMLImageElement>) => {},
   tapOff: (e: React.TouchEvent<HTMLImageElement>) => {},
   imageLoadedStateWithPara: () => {},
