@@ -2,8 +2,6 @@ import React, { memo, useState, useEffect, useRef } from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-// import { animate, AnimatePresence, motion } from "framer-motion";
-//! component
 import { ImageViewerContainer } from "@/feature/image_viewer/ImageViewer";
 //! api
 import { fetchImagesByLocationApi, fetchAllImagesApi } from "@/api/imagesApi";

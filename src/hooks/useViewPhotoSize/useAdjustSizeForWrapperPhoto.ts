@@ -18,15 +18,6 @@ type PropType = {
   footerHeight: number
 }
 
-type TmpPhotoSizeType = {
-  width: number,
-  height: number,
-  minWidth: number,
-  minHeight: number,
-  maxWidth: number,
-  maxHeight: number,
-}
-
 const initialPhotoSize = {
   width: 0,
   height: 0,
@@ -34,7 +25,7 @@ const initialPhotoSize = {
   minHeight: 0,
   maxWidth: 0,
   maxHeight: 0,
-}
+} as const
 
 export const useAdjustSizeForWrapperPhoto = ({ imageData, headerHeight, footerHeight }: PropType) => {
   const [photoSize, setPhotoSize] = useState<PhotoSizeType>({ ...initialPhotoSize });
