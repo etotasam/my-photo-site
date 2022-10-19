@@ -7,6 +7,7 @@ import { ImageViewerContainer } from "@/feature/image_viewer/ImageViewer";
 import { fetchImagesByLocationApi, fetchAllImagesApi } from "@/api/imagesApi";
 //! context
 import { useLocationNamesDispatchContext } from "@/context/locationNamesContext";
+import { ImageLoadStateProvider } from "@/feature/image_viewer/ImageViewer/context/imageLoadedStateContext";
 //! types
 import { ImagesType } from "@/types";
 
@@ -67,7 +68,9 @@ const PhotoLabel = ({ locationImages, locationNames }: PropsType) => {
             : process.env.NEXT_PUBLIC_SITE_TITLE}
         </title>
       </Head>
-      <ImageViewerContainer locationImages={locationImages} />
+      <ImageLoadStateProvider>
+        <ImageViewerContainer locationImages={locationImages} />
+      </ImageLoadStateProvider>
     </>
   );
 };
