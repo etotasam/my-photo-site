@@ -1,6 +1,8 @@
 import { ImageViewer, ImageViewerPropsType } from "../ImageViewer";
 import { Story, Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
+//!context
+import { ImageLoadStateProvider } from "../context/imageLoadedStateContext";
 
 import img1 from "../../../../test_image/huge_img.jpg";
 import img2 from "../../../../test_image/huge2_img.jpg";
@@ -17,16 +19,19 @@ export default {
 } as Meta<typeof ImageViewer>;
 
 const Template: Story<typeof ImageViewer> = (args: any) => {
-  return <ImageViewer {...args} />;
+  return (
+    <ImageLoadStateProvider>
+      <ImageViewer {...args} />
+    </ImageLoadStateProvider>
+  );
 };
 export const Default = Template.bind({});
 Default.args = {
   locationImages: locationImages,
   imageLoaded: () => {},
-  isImageLoaded: true,
   imageIndexByQuery: "1",
   imageClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {},
   tapOn: (e: React.TouchEvent<HTMLImageElement>) => {},
   tapOff: (e: React.TouchEvent<HTMLImageElement>) => {},
-  imageLoadedStateWithPara: (state: boolean) => {},
+  isImageLoading: false,
 } as ImageViewerPropsType;

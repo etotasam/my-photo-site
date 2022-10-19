@@ -6,19 +6,19 @@ import clsx from "clsx";
 import type { ImagesType } from "@/types";
 //! context
 import { useHeihgtStateContext } from "@/context/heightStateContext";
+import { useImageLoadDispatchContext } from "./context/imageLoadedStateContext";
 //! hooks
 import { useAdjustSizeForWrapperPhoto } from "@/hooks";
 //! component
 import { LoadingBound } from "@/components/Element/LoadingBound";
 
 export type ImageViewerPropsType = {
-  isImageLoaded: boolean;
   locationImages: ImagesType[];
   imageClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   tapOn: (e: React.TouchEvent<HTMLImageElement>) => void;
   tapOff: (e: React.TouchEvent<HTMLImageElement>) => void;
   imageIndexByQuery: string | string[] | undefined;
-  imageLoadedStateWithPara: (state: boolean) => void;
+  isImageLoading: boolean;
 };
 
 export const ImageViewer = ({
@@ -26,8 +26,7 @@ export const ImageViewer = ({
   imageClick,
   tapOn,
   tapOff,
-  imageLoadedStateWithPara,
-  isImageLoaded,
+  isImageLoading,
   imageIndexByQuery,
 }: ImageViewerPropsType) => {
   return (
@@ -37,17 +36,10 @@ export const ImageViewer = ({
           {locationImages.map(
             (imageData, index) =>
               Number(imageIndexByQuery) === index + 1 && (
-                <Image
-                  key={imageData.id}
-                  imageData={imageData}
-                  imageClick={imageClick}
-                  tapOn={tapOn}
-                  tapOff={tapOff}
-                  imageLoadedStateWithPara={imageLoadedStateWithPara}
-                />
+                <Image key={imageData.id} imageData={imageData} imageClick={imageClick} tapOn={tapOn} tapOff={tapOff} />
               )
           )}
-          {!isImageLoaded && <LoadingBound />}
+          {isImageLoading && <LoadingBound />}
         </AnimatePresence>
       </div>
     </>
@@ -60,16 +52,16 @@ export type ImageType = {
   imageClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   tapOn: (e: React.TouchEvent<HTMLImageElement>) => void;
   tapOff: (e: React.TouchEvent<HTMLImageElement>) => void;
-  imageLoadedStateWithPara: (state: boolean) => void;
 };
-export const Image = ({ imageData, imageClick, tapOn, tapOff, imageLoadedStateWithPara }: ImageType) => {
+export const Image = ({ imageData, imageClick, tapOn, tapOff }: ImageType) => {
   const { headerHeight, footerHeight } = useHeihgtStateContext();
   const { photoSize } = useAdjustSizeForWrapperPhoto({ imageData, headerHeight, footerHeight });
-  //? imageの読み込み状態
-  const [isImageLoaded, setIsImageLoaded] = React.useState(false);
-  React.useEffect(() => {
-    imageLoadedStateWithPara(isImageLoaded);
-  }, [isImageLoaded]);
+
+  const { imageLoadingDispatcher, imageLoadedDispatcher } = useImageLoadDispatchContext();
+
+  React.useLayoutEffect(() => {
+    imageLoadingDispatcher();
+  }, []);
 
   return (
     <>
@@ -92,7 +84,7 @@ export const Image = ({ imageData, imageClick, tapOn, tapOff, imageLoadedStateWi
             priority={true}
             layout={`fill`}
             objectFit={`contain`}
-            onLoad={() => setIsImageLoaded(true)}
+            onLoad={imageLoadedDispatcher}
           />
         </motion.div>
       </div>
