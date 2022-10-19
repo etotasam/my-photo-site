@@ -2,7 +2,8 @@ import axios from "axios";
 //! type
 import { ImagesType } from "@/types";
 
-const apiUrl = process.env.API_URL;
+// const apiUrl = process.env.API_URL
+const apiUrl = process.env.NEXT_PUBLIC_IS_DEV ? `http://localhost:3000/api` : process.env.API_URL;
 
 export const fetchAllImagesApi = async (): Promise<Record<string, ImagesType[]>> => {
   const { data: allImages }: { data: Record<string, ImagesType[]> } = await axios.get(`${apiUrl}/all_images`)
