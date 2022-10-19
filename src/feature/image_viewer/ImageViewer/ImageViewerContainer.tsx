@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 //! component
 import { ImageViewer } from "./";
@@ -6,14 +6,18 @@ import { ImageViewer } from "./";
 import type { ImagesType } from "@/types";
 //! context
 import { useModalDispatchContext } from "@/context/modalStateContext";
+import { useImageLoadStateContext } from "./context/imageLoadedStateContext";
 
 type Params = {
   className?: string;
   locationImages: ImagesType[];
 };
+
 export const ImageViewerContainer = ({ locationImages, className }: Params) => {
   const router = useRouter();
   const { photo_label: photoLabelByQuery, image: imageIndexByQuery } = router.query;
+  //? image load state in context (storybookでチェックしたいからpropで渡してる)
+  const { isImageLoading } = useImageLoadStateContext();
 
   //? image transition
   const imageTransition = (clickPosition: "right" | "left") => {
@@ -34,14 +38,9 @@ export const ImageViewerContainer = ({ locationImages, className }: Params) => {
   };
 
   const { modalCloseDispatcher } = useModalDispatchContext();
-
-  const closeModal = () => {
-    modalCloseDispatcher();
-  };
-
   //? menu modalを閉じる
-  useEffect(() => {
-    closeModal();
+  React.useEffect(() => {
+    modalCloseDispatcher();
   }, []);
 
   //? image transtion
@@ -75,12 +74,6 @@ export const ImageViewerContainer = ({ locationImages, className }: Params) => {
     imageTransition(swipeDirection);
   };
 
-  //? image loading check
-  const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
-  const imageLoadedStateWithPara = (state: boolean) => {
-    setIsImageLoaded(state);
-  };
-
   return (
     <>
       <ImageViewer
@@ -89,8 +82,7 @@ export const ImageViewerContainer = ({ locationImages, className }: Params) => {
         imageClick={imageClick}
         tapOn={tapOn}
         tapOff={tapOff}
-        isImageLoaded={isImageLoaded}
-        imageLoadedStateWithPara={imageLoadedStateWithPara}
+        isImageLoading={isImageLoading}
       />
     </>
   );

@@ -16,16 +16,29 @@ router
       const imagesRef = db.collection(`images`)
       const snapshot = await imagesRef.get()
       let locations: string[] = []
+      let promises: Promise<void>[] = []
       if (snapshot) {
-        snapshot.forEach(doc => {
-          locations.push(doc.id)
+        snapshot.forEach((doc) => {
+          //? 中身(imgeデータ)があるドキュメントIDだけ取得する
+          promises.push(
+            new Promise<void>((resolve) => {
+              db.collection(`images`).doc(doc.id).collection("photos").get().then(ref => {
+                if (ref.docs.length) {
+                  locations.push(doc.id)
+                }
+                resolve()
+              })
+            })
+          )
+        })
+        Promise.all(promises).then(() => {
+          res.set("Access-Control-Allow-Origin", "*");
+          res.set('Access-Control-Allow-Methods', 'GET');
+          res.json(locations)
         })
       }
-      res.set("Access-Control-Allow-Origin", "*");
-      res.set('Access-Control-Allow-Methods', 'GET');
-      res.json(locations)
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   })
 
