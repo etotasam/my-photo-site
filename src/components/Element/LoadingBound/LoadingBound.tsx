@@ -2,7 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 
 export const LoadingBound = (): JSX.Element => {
-  // const loading = Array.from("Loading...");
   const loading = Array.from("Loading...");
 
   const boundVariant = {
@@ -34,7 +33,7 @@ export const LoadingBound = (): JSX.Element => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 0.5 } }}
       exit={{ opacity: 0, transition: { duration: 0.5 } }}
-      className={`absolute top-0 left-0 w-full h-full bg-white flex justify-center items-center z-20`}
+      className={`absolute top-0 left-0 w-full h-full bg-white flex justify-center items-center`}
     >
       <motion.div
         className="flex justify-center items-center"
