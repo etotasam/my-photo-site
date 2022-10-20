@@ -33,7 +33,7 @@
   }
 
   .t-main {
-    @apply min-h-[var(--inner-main-div-height)] w-[95vw] md:w-[90vw] max-w-[1024px] mx-auto mt-[var(--header-height)];
+    @apply min-h-[var(--inner-main-div-height)] w-[90vw] max-w-[1024px] mx-auto mt-[var(--header-height)];
   }
 
   .t-main-height {
