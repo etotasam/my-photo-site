@@ -1,9 +1,9 @@
 import React from "react";
 import { act, cleanup, renderHook } from "@testing-library/react-hooks";
-import { useScrollPosition } from ".."
+import { useScrollPosition } from "../"
 
 describe(`useScrollPosition`, () => {
-  it(`useScrollPositionが正常に動いているか`, () => {
+  it(`scroll時、useScrollPositionがscrollポジションを正しく取得`, () => {
     scrollY(5)
     const { result } = renderHook(() => useScrollPosition())
     expect(result.current).toEqual(5)

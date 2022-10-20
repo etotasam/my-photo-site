@@ -15,10 +15,10 @@ export type NewsType = {
 
 export const News = ({ news }: NewsType) => {
   return (
-    <>
+    <section className="overflow-hidden">
       <HeadlineAnime>News</HeadlineAnime>
       <Messages news={news} />
-    </>
+    </section>
   );
 };
 
@@ -50,24 +50,24 @@ export const Messages = ({ news }: MessagesPropsType) => {
   }, [inView]);
 
   return (
-    <section className={`mt-5 overflow-hidden`}>
-      <ul ref={ulElRef} className={`mt-5`}>
-        {news &&
-          news.map((f, index) => (
-            <li key={index} className={`animate flex flex-col font-thin text-sm mb-2 last-of-type:mb-0`}>
-              <time className={`text-xs`}>{dayjs(f.date).format(`YYYY/M/D`)}</time>
-              <motion.div
-                animate={control}
-                custom={index}
-                className={`pl-3 t-news_title-base hover:t-news_title pointer-events-none opacity-0`}
-              >
-                <MyLink href={`/news/${f.title}`} className={`pointer-events-auto text-gray-600 font-light`}>
-                  {f.title}
-                </MyLink>
-              </motion.div>
-            </li>
-          ))}
-      </ul>
-    </section>
+    // <section className={`mt-5 overflow-hidden`}>
+    <ul ref={ulElRef} className={`mt-5`}>
+      {news &&
+        news.map((f, index) => (
+          <li key={index} className={`animate flex flex-col font-thin text-sm mb-2 last-of-type:mb-0`}>
+            <time className={`text-xs`}>{dayjs(f.date).format(`YYYY/M/D`)}</time>
+            <motion.div
+              animate={control}
+              custom={index}
+              className={`pl-3 t-news_title-base hover:t-news_title pointer-events-none opacity-0`}
+            >
+              <MyLink href={`/news/${f.title}`} className={`pointer-events-auto text-gray-600 font-light`}>
+                {f.title}
+              </MyLink>
+            </motion.div>
+          </li>
+        ))}
+    </ul>
+    // </section>
   );
 };
