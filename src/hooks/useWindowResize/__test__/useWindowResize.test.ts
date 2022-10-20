@@ -1,9 +1,9 @@
 import React from "react";
 import { act, renderHook } from "@testing-library/react-hooks";
-import { useWindowResize } from ".."
+import { useWindowResize } from "../"
 
 describe(`useWindowResize`, () => {
-  it(`useWindowResizeが正常に動いているか`, () => {
+  it(`windowサイズが変更された時、useWindowResizeがwindowのwidth,heightの値を正しく取得する`, () => {
     resizeWindow(500, 500)
     const { result } = renderHook(() => useWindowResize())
     expect(result.current).toEqual({ width: 500, height: 500 })

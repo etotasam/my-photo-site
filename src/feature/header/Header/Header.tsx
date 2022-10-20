@@ -29,12 +29,9 @@ export const Header = (props: HeaderType) => {
   return (
     <header
       ref={headerRef}
-      className={clsx(
-        `t-header-height fixed flex justify-center top-0 left-0 w-[100vw] z-30 duration-300 bg-white/90`
-        // isModalActive ? `bg-transparent` : `bg-white/90`
-      )}
+      className={clsx(`t-header-height fixed flex justify-center top-0 left-0 w-full z-30 duration-300 bg-white/90`)}
     >
-      <div className={`flex relative items-center w-[90%] max-w-[1024px] mx-auto`}>
+      <div className={`flex relative items-center w-[90vw] max-w-[1024px] mx-auto`}>
         {device === "SP" && <NavOnSP isModalActive={isModalActive} toggleModal={toggleModal} />}
         {device === "PC" && (
           <NavOnPC
