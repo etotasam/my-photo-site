@@ -31,7 +31,7 @@ export const ImageViewer = ({
 }: ImageViewerPropsType) => {
   return (
     <>
-      <div className="relative t-main-height flex justify-center items-center">
+      <div className="relative t-main-height flex justify-center overflow-y-hidden items-center">
         <AnimatePresence>
           {locationImages.map(
             (imageData, index) =>
@@ -39,6 +39,7 @@ export const ImageViewer = ({
                 <Image key={imageData.id} imageData={imageData} imageClick={imageClick} tapOn={tapOn} tapOff={tapOff} />
               )
           )}
+          {/* <LoadingBound /> */}
           {isImageLoading && <LoadingBound />}
         </AnimatePresence>
       </div>

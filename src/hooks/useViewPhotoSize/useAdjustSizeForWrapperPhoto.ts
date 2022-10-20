@@ -46,7 +46,7 @@ export const useAdjustSizeForWrapperPhoto = ({ imageData, headerHeight, footerHe
     const isWideImg = imageData.height <= imageData.width
 
     //? 高さの最低値と最大値を設定
-    const minLongSide = 350;
+    const minLongSide = Math.min(350, elementWidth);
     const maxLongSide = Math.min(1000, Math.max(imageData.width, imageData.height));
     if (isTallEl) {
       if (isTallImg) {
