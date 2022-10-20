@@ -16,6 +16,7 @@ type Params = {
 export const ImageViewerContainer = ({ locationImages, className }: Params) => {
   const router = useRouter();
   const { photo_label: photoLabelByQuery, image: imageIndexByQuery } = router.query;
+
   //? image load state in context (storybookでチェックしたいからpropで渡してる)
   const { isImageLoading } = useImageLoadStateContext();
 
