@@ -39,7 +39,6 @@ export const ImageViewer = ({
                 <Image key={imageData.id} imageData={imageData} imageClick={imageClick} tapOn={tapOn} tapOff={tapOff} />
               )
           )}
-          {/* <LoadingBound /> */}
           {isImageLoading && <LoadingBound />}
         </AnimatePresence>
       </div>
