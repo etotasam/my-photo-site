@@ -2,7 +2,7 @@
 
 [Journery's Photo](https://www.teraphoto.net/)
 
-## 以下、使用言語　フレームワーク ライブラリ等
+## 以下、使用言語 フレームワーク ライブラリ等
 
 ### Next.js
 
@@ -24,7 +24,7 @@ SSG を使ってみたかったので Next.js を採用しました。
 
 css ライブラリは Tailwind CSS を使ってみました。
 
-Material-UI 等を使わず Tailwind CSS を採用したのは、基本的に自分でデザインをしてみたいと思ったからですが、やはりデザインはきつかったです。
+自分でデザインをしてみたいと思ったので Material-UI 等を使わず Tailwind CSS を採用しました。
 
 ### JEST
 

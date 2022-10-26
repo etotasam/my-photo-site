@@ -5,22 +5,39 @@ import matter from "gray-matter";
 import marked from "marked";
 import Head from "next/head";
 import dayjs from "dayjs";
+import { motion } from "framer-motion";
+//! api
+import { fetchLocationNamesApi } from "@/api/imagesApi";
+//! context
+import { useLocationNamesDispatchContext } from "@/context/locationNamesContext";
+import React from "react";
 
 interface Props {
   date: string;
   content: string;
   title: string;
+  locationNames: string[];
 }
 
-const Title = ({ date, content, title }: Props) => {
+const Title = ({ date, content, title, locationNames }: Props) => {
+  const { setLocationNamesDispatcher } = useLocationNamesDispatchContext();
+
+  React.useEffect(() => {
+    setLocationNamesDispatcher(locationNames);
+  }, []);
   return (
     <>
       <Head>
         <title>{`News ${title}`}</title>
       </Head>
       <div className={`font-serif`}>
-        <p className={`text-gray-400 pt-5`}>{dayjs(date).format(`YYYY年M月D日`)}</p>
-        <article className={`py-5`} dangerouslySetInnerHTML={{ __html: marked(content) }} />
+        <time className={`text-gray-400 pt-5`}>{dayjs(date).format(`YYYY年M月D日`)}</time>
+        <motion.article
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { duration: 1 } }}
+          className={`py-5`}
+          dangerouslySetInnerHTML={{ __html: marked(content) }}
+        />
       </div>
     </>
   );
@@ -38,12 +55,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params: { title } }: { params: { title: string } }) => {
+  const locationNames = await fetchLocationNamesApi();
   const posts = getPostsAll().find((p) => p!.title === title);
   return {
     props: {
       date: posts!.date,
       content: posts!.content,
       title,
+      locationNames,
     },
   };
 };
