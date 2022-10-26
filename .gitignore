@@ -20,6 +20,7 @@
 
 # firebase conf
 /.firebase/
+.firebaserc
 
 # misc
 .DS_Store
@@ -32,10 +33,7 @@ yarn-error.log*
 
 # local env files
 .env.local
-.env.development.local
-.env.test.local
 .env.production.local
-.env.sample
 
 # vercel
 .vercel
@@ -57,5 +55,7 @@ yarn-error.log*
 /pages/test.tsx
 
 # prettier
-.prettierignore
 prettier.config.js
+
+# eslint
+.eslintrc.js
