@@ -3,14 +3,21 @@ import dynamic from "next/dynamic";
 import Default from "@/layouts/Default";
 import CSRLayout from "@/layouts/CSRLayout";
 import Plain from "@/layouts/Plain";
+import Admin from "@/layouts/Admin";
+//! middleware
+import { AdminMiddleware } from "../../middleware/adminMiddleware";
+//! firebase
 import { initializeApp } from "firebase/app";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 //! context
 import { ModalStateProvider } from "@/context/modalStateContext";
 import { TopImagesLoadStateProvider } from "@/context/topImagesLoadStateContext";
 import { HeightProvider } from "@/context/heightStateContext";
 import { LocationNamesProvider } from "@/context/locationNamesContext";
 import { CurrentImageIndexProvider } from "@/context/currentImageIndexContext";
+import { AuthProvider } from "@/context/authContext";
+import { ResultOfLoginExecutionProvider } from "@/context/resultOfLoginExecution";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -23,7 +30,10 @@ const firebaseConfig = {
 };
 
 //? Initialize Firebase
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+
+//? initialize firebase authentication
+getAuth(app);
 //? firestore emulator
 // if (process.env.NEXT_PUBLIC_IS_DEV) {
 //   const db = getFirestore();
@@ -49,6 +59,19 @@ function MyApp({ Component, pageProps }) {
         <Plain>
           <Component {...pageProps} />
         </Plain>
+      );
+    }
+    case "admin": {
+      return (
+        <AuthProvider>
+          <ResultOfLoginExecutionProvider>
+            <AdminMiddleware>
+              <Admin>
+                <Component {...pageProps} />
+              </Admin>
+            </AdminMiddleware>
+          </ResultOfLoginExecutionProvider>
+        </AuthProvider>
       );
     }
     default: {
