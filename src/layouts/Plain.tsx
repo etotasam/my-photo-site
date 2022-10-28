@@ -9,7 +9,6 @@ type ChildElement = {
 
 const Plain: React.FC<ChildElement> = ({ children }) => {
   // const siteTitle = useSelector((state: StoreState) => state.siteTitle);
-
   return (
     <>
       <header className={`t-header-height bg-white fixed flex justify-center top-0 left-0 w-full z-50 duration-300`}>

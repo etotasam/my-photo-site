@@ -145,5 +145,6 @@ export const allImagesByTestData = {
       id: "jordan_3",
       url: "https://storage.googleapis.com/my-photo-site-9a0d8.appspot.com/images/jordan/_MG_7025.jpg"
     },
-  ]
+  ],
+  israel: []
 }

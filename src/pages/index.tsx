@@ -2,7 +2,6 @@ import { GetStaticProps } from "next";
 import matter from "gray-matter";
 import * as fs from "fs";
 import * as path from "path";
-import { fetchAllImagesApi } from "@/api/imagesApi";
 import dayjs from "dayjs";
 //! types
 import { CreateAtType, ImagesType } from "@/types";
@@ -13,6 +12,8 @@ import { useEffect } from "react";
 import { Top } from "@/feature/top";
 import { News } from "@/feature/News";
 import { Location } from "@/feature/location";
+//! api
+import { fetchAllImagesApi } from "@/api/imagesApi";
 
 type Params = {
   allImages: Record<string, ImagesType[]>;

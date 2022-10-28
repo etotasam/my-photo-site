@@ -12,6 +12,8 @@ const router = express.Router()
 router
   .route(`/locations`)
   .get(async (req, res) => {
+    // const all = req.params.all
+    const all = req.query.all
     try {
       const imagesRef = db.collection(`images`)
       const snapshot = await imagesRef.get()
@@ -19,23 +21,29 @@ router
       let promises: Promise<void>[] = []
       if (snapshot) {
         snapshot.forEach((doc) => {
+          if (all == "true") {
+            locations = [...locations, doc.id]
+          }
           //? 中身(imgeデータ)があるドキュメントIDだけ取得する
-          promises.push(
-            new Promise<void>((resolve) => {
-              db.collection(`images`).doc(doc.id).collection("photos").get().then(ref => {
-                if (ref.docs.length) {
-                  locations.push(doc.id)
-                }
-                resolve()
+          if (all == "false") {
+            promises.push(
+              new Promise<void>((resolve) => {
+                db.collection(`images`).doc(doc.id).collection("photos").get().then(ref => {
+                  if (ref.docs.length) {
+                    locations.push(doc.id)
+                  }
+                  resolve()
+                })
               })
-            })
-          )
+            )
+          }
         })
-        Promise.all(promises).then(() => {
-          res.set("Access-Control-Allow-Origin", "*");
-          res.set('Access-Control-Allow-Methods', 'GET');
-          res.json(locations)
-        })
+        if (promises.length) {
+          await Promise.all(promises)
+        }
+        res.set("Access-Control-Allow-Origin", "*");
+        res.set('Access-Control-Allow-Methods', 'GET');
+        res.json(locations)
       }
     } catch (error) {
       console.error(error);
