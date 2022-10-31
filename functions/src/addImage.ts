@@ -50,6 +50,21 @@ export const addImageUrl = functions.region(`asia-northeast1`).storage.object().
     if (!object.contentType?.match(/image\//)) return
     if (topCollection !== `images`) throw new Error(`imagesに入れて下さい`)
 
+    //? ディレクトリ(photo_label)が存在してるかをチェック
+    let photoLabelDirs: string[] = []
+    const imagesCollectionDirRef = db.collection(`images`)
+    const dirs = await imagesCollectionDirRef.get()
+    if (dirs) {
+      dirs.forEach(doc => {
+        photoLabelDirs = [...photoLabelDirs, doc.id]
+      })
+    }
+    //? ディレクトリ(photo_label)が存在しない場合idを作成する
+    if (!photoLabelDirs.includes(photoLabel)) {
+      await db.collection(topCollection).doc(photoLabel).set({
+        id: 0
+      })
+    }
     //? 一時保存用ファイルパスの作成
     const tempFile = path.join(os.tmpdir(), filePath.split('/').pop()!);
     //? リサイズ完了ファイルの一時保存パスの作成

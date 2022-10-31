@@ -1,6 +1,6 @@
 # 自身の写真サイトです
 
-[Journery's Photo](https://www.teraphoto.net/)
+[Journery's Photo](https://www.teraphoto.site/)
 
 ## 以下、使用言語 フレームワーク ライブラリ等
 
