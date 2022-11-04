@@ -6,7 +6,7 @@ import clsx from "clsx";
 import type { ImagesType } from "@/types";
 //! context
 import { useHeihgtStateContext } from "@/context/heightStateContext";
-import { useImageLoadDispatchContext } from "./context/imageLoadedStateContext";
+import { useImageLoadDispatchContext } from "./context/imageLoadStateContext";
 //! hooks
 import { useAdjustSizeForWrapperPhoto } from "@/hooks";
 //! component

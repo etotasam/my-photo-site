@@ -6,14 +6,14 @@ import { ImageViewer } from "./";
 import type { ImagesType } from "@/types";
 //! context
 import { useModalDispatchContext } from "@/context/modalStateContext";
-import { useImageLoadStateContext } from "./context/imageLoadedStateContext";
+import { useImageLoadStateContext } from "./context/imageLoadStateContext";
 
-type Params = {
+type PropsType = {
   className?: string;
   locationImages: ImagesType[];
 };
 
-export const ImageViewerContainer = ({ locationImages, className }: Params) => {
+export const ImageViewerContainer = ({ locationImages, className }: PropsType) => {
   const router = useRouter();
   const { photo_label: photoLabelByQuery, image: imageIndexByQuery } = router.query;
 

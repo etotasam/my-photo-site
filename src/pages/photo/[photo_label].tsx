@@ -2,12 +2,11 @@ import React, { memo, useEffect } from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { ImageViewerContainer } from "@/feature/image_viewer/ImageViewer";
+import { ImageViewerWrapperContext } from "@/feature/image_viewer/ImageViewer";
 //! api
 import { fetchImagesByLocationApi, fetchLocationNamesApi } from "@/api/imagesApi";
 //! context
 import { useLocationNamesDispatchContext } from "@/context/locationNamesContext";
-import { ImageLoadStateProvider } from "@/feature/image_viewer/ImageViewer/context/imageLoadedStateContext";
 //! types
 import { ImagesType } from "@/types";
 
@@ -55,9 +54,7 @@ const PhotoLabel = ({ locationImages, locationNames }: PropsType) => {
             : process.env.NEXT_PUBLIC_SITE_TITLE}
         </title>
       </Head>
-      <ImageLoadStateProvider>
-        <ImageViewerContainer locationImages={locationImages} />
-      </ImageLoadStateProvider>
+      <ImageViewerWrapperContext locationImages={locationImages} />
     </>
   );
 };
