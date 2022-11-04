@@ -44,7 +44,7 @@ export const ImageViewerContainer = ({ locationImages, className }: PropsType) =
     modalCloseDispatcher();
   }, []);
 
-  //? image transtion
+  //? imageのクリック時、左右どちらがわがクリックされたかを判定
   const imageClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const el = e.target as HTMLElement;
     const elWidth = el.clientWidth;

@@ -36,7 +36,14 @@ export const ImageViewer = ({
           {locationImages.map(
             (imageData, index) =>
               Number(imageIndexByQuery) === index + 1 && (
-                <Image key={imageData.id} imageData={imageData} imageClick={imageClick} tapOn={tapOn} tapOff={tapOff} />
+                <Image
+                  key={imageData.id}
+                  imagesLength={locationImages.length}
+                  imageData={imageData}
+                  imageClick={imageClick}
+                  tapOn={tapOn}
+                  tapOff={tapOff}
+                />
               )
           )}
           {isImageLoading && <LoadingBound />}
@@ -52,8 +59,9 @@ export type ImageType = {
   imageClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   tapOn: (e: React.TouchEvent<HTMLImageElement>) => void;
   tapOff: (e: React.TouchEvent<HTMLImageElement>) => void;
+  imagesLength: number;
 };
-export const Image = ({ imageData, imageClick, tapOn, tapOff }: ImageType) => {
+export const Image = ({ imageData, imageClick, tapOn, tapOff, imagesLength }: ImageType) => {
   const { headerHeight, footerHeight } = useHeihgtStateContext();
   const { photoSize } = useAdjustSizeForWrapperPhoto({ imageData, headerHeight, footerHeight });
 
@@ -62,7 +70,6 @@ export const Image = ({ imageData, imageClick, tapOn, tapOff }: ImageType) => {
   React.useLayoutEffect(() => {
     imageLoadingDispatcher();
   }, []);
-
   return (
     <>
       <div className={clsx("absolute")}>
@@ -74,7 +81,7 @@ export const Image = ({ imageData, imageClick, tapOn, tapOff }: ImageType) => {
           onTouchStart={tapOn}
           onTouchEnd={tapOff}
           transition={{ duration: 0.5 }}
-          className={`relative leading-3 cursor-pointer`}
+          className={clsx(`relative leading-3`, imagesLength > 1 && `cursor-pointer`)}
           style={{ ...photoSize }}
           onClick={(e) => imageClick(e)}
         >

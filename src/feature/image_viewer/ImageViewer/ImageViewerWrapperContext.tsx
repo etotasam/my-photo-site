@@ -13,7 +13,7 @@ type PropsType = {
 export const ImageViewerWrapperContext = ({ locationImages }: PropsType) => {
   return (
     <ImageLoadStateProvider>
-      <ImageViewerContainer locationImages={locationImages} />;
+      <ImageViewerContainer locationImages={locationImages} />
     </ImageLoadStateProvider>
   );
 };
