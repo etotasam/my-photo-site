@@ -1,6 +1,6 @@
 import React from "react";
 import { motion, Variants } from "framer-motion";
-import clsx from "clsx";
+// import clsx from "clsx";
 
 type LoadingType = {};
 

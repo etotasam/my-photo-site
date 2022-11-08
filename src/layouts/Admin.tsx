@@ -8,7 +8,6 @@ import {
   useResultOfLoginExectionStateContext,
   useResultOfLoginExectionDispatchContext,
 } from "@/context/resultOfLoginExecution";
-import { useAuthStateContext } from "@/context/authContext";
 
 type PropsType = {
   children: JSX.Element | JSX.Element[];

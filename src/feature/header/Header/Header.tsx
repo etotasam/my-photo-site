@@ -1,4 +1,3 @@
-import { useRef, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import clsx from "clsx";
 //! component
