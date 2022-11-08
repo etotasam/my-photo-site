@@ -42,7 +42,7 @@ export const AdminContaienr = () => {
       loginSuccessDispathcer();
     } catch (error) {
       loginFailedDispathcer();
-      console.error(error.message);
+      // console.error(error.message);
     }
   };
 
