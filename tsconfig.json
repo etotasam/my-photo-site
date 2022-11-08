@@ -23,7 +23,9 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "esModuleInterop": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
   },
   "include": [
     "next-env.d.ts",
