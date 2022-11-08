@@ -28,7 +28,7 @@ type NewsTitles = {
   date: string;
 };
 
-const Home = ({ allImages, topImages, locationsImages, newsTitles, locationNames }: Params) => {
+const Home = ({ topImages, locationsImages, newsTitles, locationNames }: Params) => {
   const { setLocationNamesDispatcher } = useLocationNamesDispatchContext();
 
   //? locationの名前をheaderに渡す(context)

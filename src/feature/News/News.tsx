@@ -4,7 +4,7 @@ import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 //! component
 import { MyLink } from "@/components/Element/MyLink";
-import { Headline, HeadlineAnime } from "@/components/Element/Headline";
+import { HeadlineAnime } from "@/components/Element/Headline";
 
 export type NewsType = {
   news: {

@@ -30,4 +30,4 @@ Default.args = {
     e.preventDefault();
     handleClick(e);
   },
-};
+} as HeaderType;

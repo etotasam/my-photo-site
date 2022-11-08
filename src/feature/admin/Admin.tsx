@@ -1,6 +1,5 @@
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import clsx from "clsx";
+import { AnimatePresence } from "framer-motion";
 //! component
 import { LoadingBound } from "@/components/Element/LoadingBound";
 import { Button } from "@/components/Element/Button";

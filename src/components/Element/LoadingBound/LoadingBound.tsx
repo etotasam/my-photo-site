@@ -2,8 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 
 export const LoadingBound = ({ noInitialAnimate = false }: { noInitialAnimate?: boolean }): JSX.Element => {
-  const loading = Array.from("Loading...");
-
   const boundVariant = {
     bound: (i: number) => ({
       y: [0, -15],
@@ -12,18 +10,6 @@ export const LoadingBound = ({ noInitialAnimate = false }: { noInitialAnimate?: 
         yoyo: Infinity,
         ease: "easeOut",
         delay: i * 0.25,
-      },
-    }),
-  };
-
-  const loadingVariant = {
-    hidden: { opacity: 0 },
-    laoding: (i: number) => ({
-      opacity: 1,
-      transition: {
-        duration: 1,
-        yoyo: Infinity,
-        delay: i * 0.1,
       },
     }),
   };

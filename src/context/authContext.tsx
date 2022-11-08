@@ -12,7 +12,7 @@ export type AuthStateType = {
 
 const authStateContext = createContext<AuthStateType>(initialState);
 const authDispatchContext = createContext({
-  authDispathcer: (payload: string) => {},
+  authDispathcer: (_: string) => {},
   unauthDispathcer: () => {},
 });
 
@@ -48,7 +48,7 @@ type Action = {
   payload?: string;
 };
 
-export const reducer = (state: AuthStateType, action: Action) => {
+export const reducer = (_: AuthStateType, action: Action) => {
   switch (action.type) {
     case "auth":
       return { isAuth: true, authUsersEmail: action.payload };

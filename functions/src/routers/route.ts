@@ -53,7 +53,7 @@ router
 
 router
   .route(`/all_images`)
-  .get(async (req, res) => {
+  .get(async (_, res) => {
     try {
       const imagesRef = db.collection(`images`)
       const snapshot = await imagesRef.get()

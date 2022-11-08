@@ -1,15 +1,14 @@
 import { Messages } from "../News";
 import { Story, Meta } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
 
 export default {
   title: "News/Messages",
   component: Messages,
 } as Meta<typeof Messages>;
 
-const Above = () => {
-  return <div className="w-full h-[100vh] bg-blue-100">スクロール↓</div>;
-};
+// const Above = () => {
+//   return <div className="w-full h-[100vh] bg-blue-100">スクロール↓</div>;
+// };
 
 const Template: Story<typeof Messages> = (args: any) => {
   return (

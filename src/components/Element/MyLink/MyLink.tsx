@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import clsx from "clsx";
 
 export type MyLinkType = {
   children: React.ReactNode;
