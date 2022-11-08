@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 //! firebase
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -6,10 +6,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Admin } from "./Admin";
 //! context
 import { useAuthDispatchContext, useAuthStateContext } from "@/context/authContext";
-import {
-  useResultOfLoginExectionDispatchContext,
-  useResultOfLoginExectionStateContext,
-} from "@/context/resultOfLoginExecution";
+import { useResultOfLoginExectionDispatchContext } from "@/context/resultOfLoginExecution";
 
 export const AdminContaienr = () => {
   const router = useRouter();
@@ -42,7 +39,7 @@ export const AdminContaienr = () => {
       loginSuccessDispathcer();
     } catch (error) {
       loginFailedDispathcer();
-      console.error(error.message);
+      // console.error(error.message);
     }
   };
 

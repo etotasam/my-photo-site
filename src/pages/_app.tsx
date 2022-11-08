@@ -4,11 +4,13 @@ import Default from "@/layouts/Default";
 import CSRLayout from "@/layouts/CSRLayout";
 import Plain from "@/layouts/Plain";
 import Admin from "@/layouts/Admin";
+//! google analytics
+// import GoogleAnalytics, { usePageView } from "@/lib/gtag";
 //! middleware
 import { AdminMiddleware } from "../../middleware/adminMiddleware";
 //! firebase
 import { initializeApp } from "firebase/app";
-import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+// import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 //! context
 import { ModalStateProvider } from "@/context/modalStateContext";
@@ -40,7 +42,8 @@ getAuth(app);
 //   connectFirestoreEmulator(db, "localhost", 8080);
 // }
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: { Component: React.VFC; pageProps: any }) {
+  // usePageView();
   const NoSSR = dynamic(() => import("@/layouts/NoSSR/NoSSR"), {
     ssr: false,
   });
@@ -83,6 +86,7 @@ function MyApp({ Component, pageProps }) {
                 <TopImagesLoadStateProvider>
                   <ModalStateProvider>
                     <Default>
+                      {/* <GoogleAnalytics /> */}
                       <Component {...pageProps} />
                     </Default>
                   </ModalStateProvider>

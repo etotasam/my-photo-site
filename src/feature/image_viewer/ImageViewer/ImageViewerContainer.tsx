@@ -9,11 +9,10 @@ import { useModalDispatchContext } from "@/context/modalStateContext";
 import { useImageLoadStateContext } from "./context/imageLoadStateContext";
 
 type PropsType = {
-  className?: string;
   locationImages: ImagesType[];
 };
 
-export const ImageViewerContainer = ({ locationImages, className }: PropsType) => {
+export const ImageViewerContainer = ({ locationImages }: PropsType) => {
   const router = useRouter();
   const { photo_label: photoLabelByQuery, image: imageIndexByQuery } = router.query;
 
