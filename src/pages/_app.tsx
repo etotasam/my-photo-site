@@ -4,11 +4,15 @@ import Default from "@/layouts/Default";
 import CSRLayout from "@/layouts/CSRLayout";
 import Plain from "@/layouts/Plain";
 import Admin from "@/layouts/Admin";
+//! component
+import { GoogleAnalytics } from "@/components/Google/GoogleAnalytics";
+//! hook
+import { usePageView } from "@/hooks/usePageView";
 //! middleware
 import { AdminMiddleware } from "../../middleware/adminMiddleware";
 //! firebase
 import { initializeApp } from "firebase/app";
-import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+// import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 //! context
 import { ModalStateProvider } from "@/context/modalStateContext";
@@ -41,6 +45,7 @@ getAuth(app);
 // }
 
 function MyApp({ Component, pageProps }) {
+  usePageView();
   const NoSSR = dynamic(() => import("@/layouts/NoSSR/NoSSR"), {
     ssr: false,
   });
@@ -83,6 +88,7 @@ function MyApp({ Component, pageProps }) {
                 <TopImagesLoadStateProvider>
                   <ModalStateProvider>
                     <Default>
+                      <GoogleAnalytics />
                       <Component {...pageProps} />
                     </Default>
                   </ModalStateProvider>
