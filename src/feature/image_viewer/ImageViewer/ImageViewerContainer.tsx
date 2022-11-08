@@ -6,14 +6,13 @@ import { ImageViewer } from "./";
 import type { ImagesType } from "@/types";
 //! context
 import { useModalDispatchContext } from "@/context/modalStateContext";
-import { useImageLoadStateContext } from "./context/imageLoadedStateContext";
+import { useImageLoadStateContext } from "./context/imageLoadStateContext";
 
-type Params = {
-  className?: string;
+type PropsType = {
   locationImages: ImagesType[];
 };
 
-export const ImageViewerContainer = ({ locationImages, className }: Params) => {
+export const ImageViewerContainer = ({ locationImages }: PropsType) => {
   const router = useRouter();
   const { photo_label: photoLabelByQuery, image: imageIndexByQuery } = router.query;
 
@@ -44,7 +43,7 @@ export const ImageViewerContainer = ({ locationImages, className }: Params) => {
     modalCloseDispatcher();
   }, []);
 
-  //? image transtion
+  //? imageのクリック時、左右どちらがわがクリックされたかを判定
   const imageClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const el = e.target as HTMLElement;
     const elWidth = el.clientWidth;

@@ -2,7 +2,7 @@ import { ImageViewer, ImageViewerPropsType } from "../ImageViewer";
 import { Story, Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 //!context
-import { ImageLoadStateProvider } from "../context/imageLoadedStateContext";
+import { ImageLoadStateProvider } from "../context/imageLoadStateContext";
 
 import img1 from "../../../../test_image/huge_img.jpg";
 import img2 from "../../../../test_image/huge2_img.jpg";
