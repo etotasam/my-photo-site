@@ -10,7 +10,7 @@ export type StateType = {
 
 const locationNamesStateContext = createContext(initialState);
 const locationNamesDispatchContext = createContext({
-  setLocationNamesDispatcher: (payload: string[]) => {},
+  setLocationNamesDispatcher: (_: string[]) => {},
 });
 
 export const useLocationNamesStateContext = () => useContext(locationNamesStateContext);

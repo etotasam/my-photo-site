@@ -1,6 +1,5 @@
 import { News, NewsType } from "../News";
 import { Story, Meta } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
 
 export default {
   title: "News",

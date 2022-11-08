@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect, DependencyList } from "react"
+import { useState, useEffect } from "react"
 import { ImagesType } from "@/types";
 
 
