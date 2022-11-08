@@ -1,10 +1,10 @@
-import React, { memo, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 //!type
 import { ImagesType } from "@/types";
 //! component
-import { Photo, PhotoContainer } from "../component/Photo";
-import { HeadlineAnime, Headline } from "@/components/Element/Headline";
+import { PhotoContainer } from "../component/Photo";
+import { HeadlineAnime } from "@/components/Element/Headline";
 export type LocationType = {
   locationsImages: ImagesType[];
 };

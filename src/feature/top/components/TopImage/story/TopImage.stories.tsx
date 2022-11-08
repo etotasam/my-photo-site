@@ -1,6 +1,5 @@
 import { TopImage, TopImageType } from "../TopImage";
 import { Story, Meta } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
 
 import img1 from "@/test_image/img1.jpg";
 import img2 from "@/test_image/img2.jpg";

@@ -1,4 +1,4 @@
-import { BulletNav, BulletNavType } from "../TopImage";
+import { BulletNav } from "../TopImage";
 import { Story, Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 

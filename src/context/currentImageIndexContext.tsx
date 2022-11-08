@@ -10,7 +10,7 @@ export type CurrentImageIndexStateType = {
 
 const currentImageIndexStateContext = createContext<CurrentImageIndexStateType>(initialState);
 const currentImageIndexDispatchContext = createContext({
-  currentImageIndexDispathcer: (payload: number) => {},
+  currentImageIndexDispathcer: (_: number) => {},
 });
 
 export const useCurrentImageIndexStateContext = () => useContext(currentImageIndexStateContext);
@@ -39,7 +39,7 @@ type Action = {
   payload?: any;
 };
 
-export const reducer = (state: CurrentImageIndexStateType, action: Action) => {
+export const reducer = (_: CurrentImageIndexStateType, action: Action) => {
   switch (action.type) {
     case "changeImageIndex":
       return { currentImageIndex: action.payload };

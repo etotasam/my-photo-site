@@ -1,4 +1,4 @@
-import React, { useContext, createContext, useReducer, useRef } from "react";
+import React, { useContext, createContext, useReducer } from "react";
 
 const initialState: resultOfLoginExecutionType = {
   authState: undefined,
@@ -68,7 +68,7 @@ type Action = {
   // payload?: string;
 };
 
-export const reducer = (state: resultOfLoginExecutionType, action: Action) => {
+export const reducer = (_: resultOfLoginExecutionType, action: Action) => {
   switch (action.type) {
     case "login_success":
       return { authState: "loginSuccess" };
