@@ -5,7 +5,7 @@ import CSRLayout from "@/layouts/CSRLayout";
 import Plain from "@/layouts/Plain";
 import Admin from "@/layouts/Admin";
 //! google analytics
-import GoogleAnalytics, { usePageView } from "@/lib/gtag";
+import { GoogleAnalytics, usePageView } from "@/lib/gtag";
 //! middleware
 import { AdminMiddleware } from "../../middleware/adminMiddleware";
 //! firebase
