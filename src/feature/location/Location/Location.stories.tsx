@@ -1,6 +1,5 @@
 import { Location, LocationType } from "./Location";
 import { Story, Meta } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
 
 import img1 from "../../../test_image/img1.jpg";
 import img2 from "../../../test_image/img2.jpg";
@@ -21,22 +20,22 @@ const locationsImages = [
   { id: "america_5", url: img5 },
 ];
 
-const AboveComponent = () => {
-  return (
-    <div
-      style={{
-        backgroundColor: "#fbdddd",
-        width: "100vw",
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <h1>↓↓スクロール↓↓</h1>
-    </div>
-  );
-};
+// const AboveComponent = () => {
+//   return (
+//     <div
+//       style={{
+//         backgroundColor: "#fbdddd",
+//         width: "100vw",
+//         minHeight: "100vh",
+//         display: "flex",
+//         justifyContent: "center",
+//         alignItems: "center",
+//       }}
+//     >
+//       <h1>↓↓スクロール↓↓</h1>
+//     </div>
+//   );
+// };
 
 const Template: Story<typeof Location> = (args: any) => {
   return (

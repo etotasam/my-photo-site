@@ -1,5 +1,5 @@
 
-const fetchAllImages = (req, res) => {
+const fetchAllImages = (_, res) => {
   res.status(200).json(allImagesByTestData)
 }
 

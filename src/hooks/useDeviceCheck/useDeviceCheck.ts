@@ -1,4 +1,3 @@
-import React from 'react'
 import { useWindowResize } from "@/hooks";
 
 const breakpointWidth = 768;
