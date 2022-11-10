@@ -29,6 +29,7 @@ export const ImageViewer = ({
   isImageLoading,
   imageIndexByQuery,
 }: ImageViewerPropsType) => {
+  console.log(isImageLoading);
   return (
     <>
       <div className="relative t-main-height flex justify-center overflow-y-hidden items-center">
