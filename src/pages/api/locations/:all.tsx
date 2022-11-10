@@ -8,7 +8,7 @@ const locationNames = Object.keys(allImagesByTestData)
   })
   .filter((el) => el !== undefined);
 
-const fetchLocationNamesApi = (req, res) => {
+const fetchLocationNamesApi = (_, res) => {
   // const all = req.params.all
   // console.log("all", all);
   res.status(200).json(locationNames);

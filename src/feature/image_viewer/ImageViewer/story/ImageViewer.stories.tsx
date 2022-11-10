@@ -1,12 +1,10 @@
 import { ImageViewer, ImageViewerPropsType } from "../ImageViewer";
 import { Story, Meta } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
 //!context
 import { ImageLoadStateProvider } from "../context/imageLoadStateContext";
 
 import img1 from "../../../../test_image/huge_img.jpg";
 import img2 from "../../../../test_image/huge2_img.jpg";
-import img3 from "../../../../test_image/huge_img.jpg";
 
 const locationImages: any = [
   { id: "test_1", url: img1, width: 1000, height: 1500 },
@@ -30,8 +28,8 @@ Default.args = {
   locationImages: locationImages,
   imageLoaded: () => {},
   imageIndexByQuery: "1",
-  imageClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {},
-  tapOn: (e: React.TouchEvent<HTMLImageElement>) => {},
-  tapOff: (e: React.TouchEvent<HTMLImageElement>) => {},
+  imageClick: (_: React.MouseEvent<HTMLDivElement, MouseEvent>) => {},
+  tapOn: (_: React.TouchEvent<HTMLImageElement>) => {},
+  tapOff: (_: React.TouchEvent<HTMLImageElement>) => {},
   isImageLoading: false,
 } as ImageViewerPropsType;

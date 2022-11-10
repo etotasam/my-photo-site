@@ -9,8 +9,8 @@ export type HeightState = typeof initialState;
 
 const heightStateContext = createContext(initialState);
 const heightDispatchContext = createContext({
-  setHeaderHeightDispatcher: (payload: number) => {},
-  setFooterHeightDispatcher: (payload: number) => {},
+  setHeaderHeightDispatcher: (_: number) => {},
+  setFooterHeightDispatcher: (_: number) => {},
 });
 
 export const useHeihgtStateContext = () => useContext(heightStateContext);

@@ -25,7 +25,7 @@ export const NavOnPC = ({ locationNames, toLink, imagesLocationNamesOnRouterQuer
     <>
       <ul className={`flex`}>
         {locationNames &&
-          locationNames.map((locationName: string, index: number) => (
+          locationNames.map((locationName: string) => (
             <li key={locationName} className={`pr-3 text-gray-900 font-thin`}>
               <motion.a
                 variants={variants}

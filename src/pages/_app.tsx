@@ -4,10 +4,8 @@ import Default from "@/layouts/Default";
 import CSRLayout from "@/layouts/CSRLayout";
 import Plain from "@/layouts/Plain";
 import Admin from "@/layouts/Admin";
-//! component
-import { GoogleAnalytics } from "@/components/Google/GoogleAnalytics";
-//! hook
-import { usePageView } from "@/hooks/usePageView";
+//! google analytics
+import GoogleAnalytics, { usePageView } from "@/lib/GoogleAnalytics/Gtag";
 //! middleware
 import { AdminMiddleware } from "../../middleware/adminMiddleware";
 //! firebase
@@ -44,7 +42,7 @@ getAuth(app);
 //   connectFirestoreEmulator(db, "localhost", 8080);
 // }
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: { Component: React.VFC; pageProps: any }) {
   usePageView();
   const NoSSR = dynamic(() => import("@/layouts/NoSSR/NoSSR"), {
     ssr: false,
