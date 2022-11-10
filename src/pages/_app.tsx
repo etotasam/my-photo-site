@@ -42,6 +42,7 @@ getAuth(app);
 //   connectFirestoreEmulator(db, "localhost", 8080);
 // }
 
+
 function MyApp({ Component, pageProps }: { Component: React.VFC; pageProps: any }) {
   usePageView();
   const NoSSR = dynamic(() => import("@/layouts/NoSSR/NoSSR"), {
