@@ -47,7 +47,7 @@ export const usePageView = () => {
 };
 
 //? _appでコンポーネントとして読み込む
-const GoogleAnalytics: React.FC = () => {
+const GoogleAnalytics: React.FC<{}> = () => {
   return (
     <>
       {existsGaId && (
