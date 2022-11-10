@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
 //! component
 import { Button } from "@/components/Element/Button";
 
@@ -18,12 +18,10 @@ type ImageUploadPropsType = {
 };
 
 export const ImageUpload = ({
-  imageUrl,
   logout,
   isAuth,
   authUsersEmail,
   upload,
-  fileCheck,
   locationNames,
   photoLocation,
   setPhotoLocation,

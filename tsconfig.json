@@ -24,8 +24,8 @@
     "jsx": "preserve",
     "esModuleInterop": true,
     "strictNullChecks": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
   },
   "include": [
     "next-env.d.ts",

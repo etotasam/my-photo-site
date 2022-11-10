@@ -1,4 +1,4 @@
-import { useState, useEffect, DependencyList } from "react"
+import { useState, useEffect } from "react"
 
 export const useScrollPosition = () => {
   const [position, setPosition] = useState<number>(0)
