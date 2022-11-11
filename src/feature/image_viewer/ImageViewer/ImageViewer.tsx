@@ -29,7 +29,7 @@ export const ImageViewer = ({
   isImageLoading,
   imageIndexByQuery,
 }: ImageViewerPropsType) => {
-  console.log(isImageLoading);
+  console.log("test");
   return (
     <>
       <div className="relative t-main-height flex justify-center overflow-y-hidden items-center">
@@ -62,11 +62,22 @@ export type ImageType = {
   tapOff: (e: React.TouchEvent<HTMLImageElement>) => void;
   imagesLength: number;
 };
-export const Image = ({ imageData, imageClick, tapOn, tapOff, imagesLength }: ImageType) => {
+export const Image = ({
+  imageData,
+  imageClick,
+  tapOn,
+  tapOff,
+  imagesLength,
+}: ImageType) => {
   const { headerHeight, footerHeight } = useHeihgtStateContext();
-  const { photoSize } = useAdjustSizeForWrapperPhoto({ imageData, headerHeight, footerHeight });
+  const { photoSize } = useAdjustSizeForWrapperPhoto({
+    imageData,
+    headerHeight,
+    footerHeight,
+  });
 
-  const { imageLoadingDispatcher, imageLoadedDispatcher } = useImageLoadDispatchContext();
+  const { imageLoadingDispatcher, imageLoadedDispatcher } =
+    useImageLoadDispatchContext();
 
   React.useLayoutEffect(() => {
     imageLoadingDispatcher();
@@ -82,7 +93,10 @@ export const Image = ({ imageData, imageClick, tapOn, tapOff, imagesLength }: Im
           onTouchStart={tapOn}
           onTouchEnd={tapOff}
           transition={{ duration: 0.5 }}
-          className={clsx(`relative leading-3`, imagesLength > 1 && `cursor-pointer`)}
+          className={clsx(
+            `relative leading-3`,
+            imagesLength > 1 && `cursor-pointer`
+          )}
           style={{ ...photoSize }}
           onClick={(e) => imageClick(e)}
         >
