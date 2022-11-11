@@ -16,7 +16,8 @@ type PropsType = {
 const Admin: React.FC<PropsType> = ({ children }) => {
   // const { isAuth } = useAuthStateContext();
   const { authState } = useResultOfLoginExectionStateContext();
-  const { loginStateResetDispathcer } = useResultOfLoginExectionDispatchContext();
+  const { loginStateResetDispathcer } =
+    useResultOfLoginExectionDispatchContext();
 
   const setTimeOutId = useRef<NodeJS.Timer>();
   const wait = (ms: number): Promise<void> => {
@@ -26,9 +27,15 @@ const Admin: React.FC<PropsType> = ({ children }) => {
       }, ms);
     });
   };
-  const [loginStateMessage, setLoginStateMessage] = useState<string | undefined>();
-  const [isLoginStateMessageModalVisible, setIsLoginStateMessageModalVisible] = useState<boolean>(false);
-  const authStateModalControl = async ({ message }: { message: string | undefined }) => {
+  const [loginStateMessage, setLoginStateMessage] =
+    useState<string | undefined>();
+  const [isLoginStateMessageModalVisible, setIsLoginStateMessageModalVisible] =
+    useState<boolean>(false);
+  const authStateModalControl = async ({
+    message,
+  }: {
+    message: string | undefined;
+  }) => {
     setIsLoginStateMessageModalVisible(true);
     setLoginStateMessage(message);
     await wait(5000);
@@ -37,6 +44,14 @@ const Admin: React.FC<PropsType> = ({ children }) => {
     setLoginStateMessage(undefined);
     loginStateResetDispathcer();
   };
+
+  const modalInvisible = async () => {
+    setIsLoginStateMessageModalVisible(false);
+    await wait(1000);
+    setLoginStateMessage(undefined);
+    loginStateResetDispathcer();
+  };
+
   useEffect(() => {
     if (authState === undefined) return;
     if (setTimeOutId.current) clearTimeout(setTimeOutId.current);
@@ -63,9 +78,14 @@ const Admin: React.FC<PropsType> = ({ children }) => {
   }, [authState]);
   return (
     <>
-      <header className={`t-header-height bg-white fixed flex justify-center top-0 left-0 w-full z-50 duration-300`}>
+      <header
+        className={`t-header-height bg-white fixed flex justify-center top-0 left-0 w-full z-50 duration-300`}
+      >
         <div>
-          <MyLink href={`/`} className={`n-title-font text-green-600 text-xl tracking-wider font-extralight`}>
+          <MyLink
+            href={`/`}
+            className={`n-title-font text-green-600 text-xl tracking-wider font-extralight`}
+          >
             {process.env.NEXT_PUBLIC_SITE_TITLE}
           </MyLink>
         </div>
@@ -74,7 +94,11 @@ const Admin: React.FC<PropsType> = ({ children }) => {
         {children}
         <AnimatePresence>
           {isLoginStateMessageModalVisible && (
-            <AuthMessageModal authMessage={loginStateMessage} authState={authState} />
+            <AuthMessageModal
+              authMessage={loginStateMessage}
+              authState={authState}
+              modalInvisible={modalInvisible}
+            />
           )}
         </AnimatePresence>
       </main>
@@ -84,14 +108,21 @@ const Admin: React.FC<PropsType> = ({ children }) => {
 
 export default Admin;
 
+//? ログイン状態のお知らせモーダル
 type AuthMessageModalPropsType = {
   authMessage: string | undefined;
   authState: "loginSuccess" | "loginFailed" | "logout" | undefined;
+  modalInvisible: () => void;
 };
 
-const AuthMessageModal = ({ authMessage, authState }: AuthMessageModalPropsType) => {
+const AuthMessageModal = ({
+  authMessage,
+  authState,
+  modalInvisible,
+}: AuthMessageModalPropsType) => {
   return (
     <motion.div
+      onClick={modalInvisible}
       initial={{ y: 0, x: "-50%" }}
       animate={{ y: 85, x: "-50%" }}
       exit={{ y: 0, x: "-50%" }}
