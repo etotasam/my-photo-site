@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 //! components
 import { AdminContaienr } from "@/feature/admin";
-const admin = () => {
+const Admin = () => {
   return (
     <>
       <Head>
@@ -13,7 +13,7 @@ const admin = () => {
   );
 };
 
-export default admin;
+export default Admin;
 
 export const getStaticProps = async () => {
   return {

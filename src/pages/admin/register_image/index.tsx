@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 //! component
 import { ImageUploadContainer } from "@/feature/image_upload";
-const register_image = () => {
+const RegisterImage = () => {
   return (
     <>
       <Head>
@@ -13,7 +13,7 @@ const register_image = () => {
   );
 };
 
-export default register_image;
+export default RegisterImage;
 
 export const getStaticProps = async () => {
   return {

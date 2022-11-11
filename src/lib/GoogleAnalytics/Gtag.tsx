@@ -31,13 +31,14 @@ export const usePageView = () => {
   const router = useRouter();
   useEffect(() => {
     if (!existsGaId) return;
-    //? 管理ページは対象外
-    if (router.pathname.search(/\/admin\//)) return;
 
     const handleRouteChange = (path: string) => {
+      //? 管理ページは対象外
+      if (path.match(/\/admin/)) return;
       pageview(path);
     };
 
+    handleRouteChange(router.pathname);
     router.events.on("routeChangeComplete", handleRouteChange);
 
     return () => {
@@ -52,7 +53,11 @@ const GoogleAnalytics: React.FC<{}> = () => {
     <>
       {existsGaId && (
         <>
-          <Script defer src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+          <Script
+            defer
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+            strategy="afterInteractive"
+          />
           <Script id="ga" defer strategy="afterInteractive">
             {`
               window.dataLayer = window.dataLayer || [];
