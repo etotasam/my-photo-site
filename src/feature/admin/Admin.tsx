@@ -25,7 +25,10 @@ export const Admin = ({
     <>
       <section className="absolute top-0 left-0 w-[100vw] min-h-[100vh] flex justify-center items-center">
         <div className="w-[30vw] min-w-[300px] max-w-[500px] h-[50vh] min-h-[300px] max-h-[500px] border border-gray-500 flex justify-center items-center">
-          <form onSubmit={login} className="w-[75%] max-w-[300px] h-[75%] flex flex-col items-center">
+          <form
+            onSubmit={login}
+            className="w-[75%] max-w-[300px] h-[75%] flex flex-col items-center"
+          >
             <h1>ログイン</h1>
             <div className="flex flex-col w-full">
               <input
@@ -51,7 +54,9 @@ export const Admin = ({
           </form>
         </div>
         <AnimatePresence>
-          {(isAuth === undefined || isAuth === true) && <LoadingBound noInitialAnimate={true} />}
+          {(isAuth === undefined || isAuth === true) && (
+            <LoadingBound noInitialAnimate={true} />
+          )}
         </AnimatePresence>
       </section>
     </>
