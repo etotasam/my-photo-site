@@ -31,21 +31,24 @@ const Admin: React.FC<PropsType> = ({ children }) => {
     useState<string | undefined>();
   const [isLoginStateMessageModalVisible, setIsLoginStateMessageModalVisible] =
     useState<boolean>(false);
+
   const authStateModalControl = async ({
     message,
   }: {
     message: string | undefined;
   }) => {
-    setIsLoginStateMessageModalVisible(true);
-    setLoginStateMessage(message);
+    openModal(message);
     await wait(5000);
-    setIsLoginStateMessageModalVisible(false);
-    await wait(1000);
-    setLoginStateMessage(undefined);
-    loginStateResetDispathcer();
+    closeModal();
   };
 
-  const modalInvisible = async () => {
+  //? open modal
+  const openModal = (message: string | undefined) => {
+    setIsLoginStateMessageModalVisible(true);
+    setLoginStateMessage(message);
+  };
+  //? close modal
+  const closeModal = async () => {
     setIsLoginStateMessageModalVisible(false);
     await wait(1000);
     setLoginStateMessage(undefined);
@@ -97,7 +100,7 @@ const Admin: React.FC<PropsType> = ({ children }) => {
             <AuthMessageModal
               authMessage={loginStateMessage}
               authState={authState}
-              modalInvisible={modalInvisible}
+              closeModal={closeModal}
             />
           )}
         </AnimatePresence>
@@ -112,17 +115,17 @@ export default Admin;
 type AuthMessageModalPropsType = {
   authMessage: string | undefined;
   authState: "loginSuccess" | "loginFailed" | "logout" | undefined;
-  modalInvisible: () => void;
+  closeModal: () => void;
 };
 
 const AuthMessageModal = ({
   authMessage,
   authState,
-  modalInvisible,
+  closeModal,
 }: AuthMessageModalPropsType) => {
   return (
     <motion.div
-      onClick={modalInvisible}
+      onClick={closeModal}
       initial={{ y: 0, x: "-50%" }}
       animate={{ y: 85, x: "-50%" }}
       exit={{ y: 0, x: "-50%" }}
