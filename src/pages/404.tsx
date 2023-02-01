@@ -14,7 +14,10 @@ const NotFound = () => {
           <h1 className={`text-5xl mb-5`}>404</h1>
           <p className={`mb-2`}>ご指定のページが見つかりませんでした</p>
           <p>お探しのページは削除されたか、URLが変更された可能性があります</p>
-          <MyLink href={`/`} className={`inline-block text-white bg-green-400 rounded-full py-2 px-10 mt-5`}>
+          <MyLink
+            href={`/`}
+            className={`inline-block text-white bg-green-400 rounded-full py-2 px-10 mt-5`}
+          >
             Homeへ
           </MyLink>
         </div>

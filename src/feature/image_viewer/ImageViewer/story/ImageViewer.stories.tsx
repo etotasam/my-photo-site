@@ -1,4 +1,5 @@
-import { ImageViewer, ImageViewerPropsType } from "../ImageViewer";
+import { ImageViewer } from "../ImageViewer";
+import type { ImageViewerPropsType } from "../ImageViewer";
 import { Story, Meta } from "@storybook/react";
 //!context
 import { ImageLoadStateProvider } from "../context/imageLoadStateContext";

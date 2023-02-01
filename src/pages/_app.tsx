@@ -42,7 +42,14 @@ getAuth(app);
 //   connectFirestoreEmulator(db, "localhost", 8080);
 // }
 
-function MyApp({ Component, pageProps }: { Component: React.VFC; pageProps: any }) {
+function MyApp({
+  Component,
+  pageProps,
+}: {
+  Component: React.VFC;
+  pageProps: any;
+}) {
+  //? ページ遷移をgoogle analytics伝える
   usePageView();
   const NoSSR = dynamic(() => import("@/layouts/NoSSR/NoSSR"), {
     ssr: false,
