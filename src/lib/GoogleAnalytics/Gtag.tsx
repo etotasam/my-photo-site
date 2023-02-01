@@ -33,8 +33,9 @@ export const usePageView = () => {
     if (!existsGaId) return;
 
     const handleRouteChange = (path: string) => {
-      //? 管理ページは対象外
+      //? 対象外にしたいpageを設定
       if (path.match(/\/admin/)) return;
+      if (path.match(/\/404/)) return;
       pageview(path);
     };
 
