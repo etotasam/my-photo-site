@@ -1,13 +1,11 @@
 import React from "react";
-import Head from "next/head";
+import { CommonMeta } from "@/components/CommonMeta";
 //! component
 import { ImageUploadContainer } from "@/feature/image_upload";
 const RegisterImage = () => {
   return (
     <>
-      <Head>
-        <title>写真の登録画面</title>
-      </Head>
+      <CommonMeta title={`写真の登録画面`} />
       <ImageUploadContainer />
     </>
   );

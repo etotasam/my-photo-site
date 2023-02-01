@@ -1,10 +1,13 @@
 import React, { memo, useEffect } from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { useRouter } from "next/router";
-import Head from "next/head";
+import { CommonMeta } from "@/components/CommonMeta";
 import { ImageViewerWrapperContext } from "@/feature/image_viewer/ImageViewer";
 //! api
-import { fetchImagesByLocationApi, fetchLocationNamesApi } from "@/api/imagesApi";
+import {
+  fetchImagesByLocationApi,
+  fetchLocationNamesApi,
+} from "@/api/imagesApi";
 //! context
 import { useLocationNamesDispatchContext } from "@/context/locationNamesContext";
 //! types
@@ -26,7 +29,11 @@ const PhotoLabel = ({ locationImages, locationNames }: PropsType) => {
 
   useEffect(() => {
     if (!imageIndexByQuery) return;
-    if (Number(imageIndexByQuery) > imagesLength || Number(imageIndexByQuery) < 1 || isNaN(Number(imageIndexByQuery))) {
+    if (
+      Number(imageIndexByQuery) > imagesLength ||
+      Number(imageIndexByQuery) < 1 ||
+      isNaN(Number(imageIndexByQuery))
+    ) {
       route.push(`/photo/${photo_label}?image=1`);
       return;
     }
@@ -43,17 +50,18 @@ const PhotoLabel = ({ locationImages, locationNames }: PropsType) => {
     imagesPreload();
   }, []);
 
-  const locationTitle = typeof photo_label === "string" && photo_label.toUpperCase();
+  const locationTitle =
+    typeof photo_label === "string" && photo_label.toUpperCase();
 
   return (
     <>
-      <Head>
-        <title>
-          {locationTitle
+      <CommonMeta
+        title={
+          locationTitle
             ? `${process.env.NEXT_PUBLIC_SITE_TITLE} ${locationTitle}`
-            : process.env.NEXT_PUBLIC_SITE_TITLE}
-        </title>
-      </Head>
+            : process.env.NEXT_PUBLIC_SITE_TITLE!
+        }
+      />
       <ImageViewerWrapperContext locationImages={locationImages} />
     </>
   );

@@ -1,13 +1,11 @@
 import React from "react";
-import Head from "next/head";
 //! components
+import { CommonMeta } from "@/components/CommonMeta";
 import { AdminContaienr } from "@/feature/admin";
 const Admin = () => {
   return (
     <>
-      <Head>
-        <title>ログイン認証</title>
-      </Head>
+      <CommonMeta title={`ログイン認証`} />
       <AdminContaienr />
     </>
   );

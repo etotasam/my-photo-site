@@ -3,9 +3,9 @@ import * as fs from "fs";
 import { GetStaticPaths, GetStaticProps } from "next";
 import matter from "gray-matter";
 import marked from "marked";
-import Head from "next/head";
 import dayjs from "dayjs";
 import { motion } from "framer-motion";
+import { CommonMeta } from "@/components/CommonMeta";
 //! api
 import { fetchLocationNamesApi } from "@/api/imagesApi";
 //! context
@@ -27,11 +27,11 @@ const Title = ({ date, content, title, locationNames }: Props) => {
   }, []);
   return (
     <>
-      <Head>
-        <title>{`News ${title}`}</title>
-      </Head>
+      <CommonMeta title={`News ${title}`} />
       <div className={`font-serif`}>
-        <time className={`text-gray-400 pt-5`}>{dayjs(date).format(`YYYY年M月D日`)}</time>
+        <time className={`text-gray-400 pt-5`}>
+          {dayjs(date).format(`YYYY年M月D日`)}
+        </time>
         <motion.article
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { duration: 1 } }}
@@ -54,7 +54,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params: { title } }: { params: { title: string } }) => {
+export const getStaticProps: GetStaticProps = async ({
+  params: { title },
+}: {
+  params: { title: string };
+}) => {
   const locationNames = await fetchLocationNamesApi();
   const posts = getPostsAll().find((p) => p!.title === title);
   return {
@@ -71,7 +75,11 @@ const getPostsAll = () => {
   const postsDirPath = path.join(process.cwd(), `src/posts`);
   return fs
     .readdirSync(postsDirPath, { withFileTypes: true })
-    .filter((dirEnt) => !dirEnt.isDirectory() && dirEnt.name.slice(dirEnt.name.lastIndexOf(`.`)).match(/\.mdx?/))
+    .filter(
+      (dirEnt) =>
+        !dirEnt.isDirectory() &&
+        dirEnt.name.slice(dirEnt.name.lastIndexOf(`.`)).match(/\.mdx?/)
+    )
     .map((dirEnt) => {
       const filePath = path.join(postsDirPath, dirEnt.name);
       return fs.readFileSync(filePath);
