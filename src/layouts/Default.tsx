@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import Head from "next/head";
 //! component
+import { CommonMeta } from "@/components/CommonMeta";
 import { HeaderContainer } from "@/feature/header/Header";
 import { Footer } from "@/feature/footer";
 
@@ -23,9 +23,7 @@ const Layout: React.FC<ChildElement> = ({ children }) => {
 
   return (
     <>
-      <Head>
-        <title>{process.env.NEXT_PUBLIC_SITE_TITLE}</title>
-      </Head>
+      <CommonMeta title={process.env.NEXT_PUBLIC_SITE_TITLE!} />
       <HeaderContainer />
       <main className={`t-main`}>{children}</main>
       <Footer />
