@@ -1,5 +1,4 @@
 import NextDocument, { Html, Head, NextScript, Main } from "next/document";
-// import { GA_ID, existsGaId } from "@/lib/gtag";
 
 class Document extends NextDocument {
   render() {
@@ -31,24 +30,6 @@ class Document extends NextDocument {
           />
           <meta name="msapplication-TileColor" content="#da532c" />
           <meta name="theme-color" content="#ffffff" />
-          {/* Google tag (gtag.js) */}
-          {/* {existsGaId && (
-            <>
-              <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
-              <script>
-                dangerouslySetInnerHTML=
-                {{
-                  __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', ${GA_ID});
-            `,
-                }}
-              </script>
-            </>
-          )} */}
         </Head>
         <body>
           <Main />
