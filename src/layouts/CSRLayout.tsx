@@ -1,6 +1,10 @@
 import { HeaderContainer } from "@/feature/header/Header";
 
-export default function TestLayout({ children }) {
+export default function TestLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <HeaderContainer />
