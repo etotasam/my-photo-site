@@ -30,6 +30,10 @@ class Document extends NextDocument {
           />
           <meta name="msapplication-TileColor" content="#da532c" />
           <meta name="theme-color" content="#ffffff" />
+          <meta
+            name="description"
+            content="旅の写真と日常の写真を掲載します。トルコ・エジプト・ヨルダン・モロッコ・フランス・"
+          />
         </Head>
         <body>
           <Main />
